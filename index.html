@@ -42,12 +42,14 @@
 
     <section id="subscribe" class="prose">
       <h2>Get new templates by email</h2>
-      <!-- Free form backend: swap action for Formspree / Cloudflare Forms -->
-      <form action="https://formspree.io/f/your-form-id" method="POST" class="subscribe">
+      <!-- Submissions go to our own Pages Function + Cloudflare D1. No third party sees the address. -->
+      <form action="/subscribe" method="POST" class="subscribe">
         <input type="email" name="email" placeholder="you@example.com" required />
         <button class="btn btn-primary" type="submit">Subscribe</button>
+        <!-- honeypot: hidden from humans, bots may fill it -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
       </form>
-      <p class="hint">No spam. One email when we drop new decks.</p>
+      <p class="hint">No spam. One email when we drop new decks. Stored only in our Cloudflare account.</p>
     </section>
   </main>
 
