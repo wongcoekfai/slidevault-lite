@@ -19,6 +19,8 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+/* Safety net: some generated pages historically used .wrap instead of .container. */
+.wrap, .ph { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
 
 /* Header */
 .site-header { border-bottom: 1px solid #ffffff10; position: sticky; top: 0; background: #0b1020cc; backdrop-filter: blur(8px); z-index: 10; }

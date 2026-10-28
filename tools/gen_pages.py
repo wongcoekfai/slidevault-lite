@@ -116,17 +116,18 @@ PAGE = """<!doctype html>
 <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <a class="brand" href="/">Slide <span>Vault</span></a>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/">Slide<span>Vault</span></a>
     <nav>
       <a href="/#templates">Templates</a>
       <a href="/#faq">FAQ</a>
-      <a href="/#subscribe">Subscribe</a>
+      <a href="/#about">About</a>
+      <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
     </nav>
   </div>
 </header>
-<main class="wrap detail">
+<main class="container detail">
   <p class="crumbs"><a href="/#templates">Templates</a> / {cat_label} / <b>{title}</b></p>
   <h1>{title}</h1>
   <div class="meta-row">
@@ -170,10 +171,10 @@ PAGE = """<!doctype html>
   <button class="lightbox-nav next" type="button" aria-label="Next">&#8250;</button>
 </div>
 
-<footer>
-  <div class="wrap foot">
+<footer class="site-footer">
+  <div class="container foot">
     <div>
-      <b>Slide <span>Vault</span></b>
+      <b>Slide<span>Vault</span></b>
       <p class="hint">Free PowerPoint &amp; Google Slides templates for business and education.</p>
     </div>
     <div class="foot-links">
@@ -183,7 +184,7 @@ PAGE = """<!doctype html>
       <a href="/privacy/">Privacy</a>
     </div>
   </div>
-  <p class="hint copyright">&copy; 2026 Slide Vault. All templates free to download and use.</p>
+  <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
 </footer>
 <script src="/assets/gallery.js"></script>
 <script>
@@ -206,11 +207,16 @@ def file_size(slug_file):
 
 
 def card(t):
-    img = ('<img src="%s" alt="%s preview" loading="lazy" />' % (t["img"], t["title"])) if t["img"] else '<div class="ph"></div>'
-    return ('<article class="card">' + img +
+    """Matches the markup assets/app.js renders on the homepage, so .card/.thumb/.body
+    styles apply identically instead of raw full-size images."""
+    thumb = ('<img class="thumb" src="%s" alt="%s preview" loading="lazy" />' % (t["img"], t["title"])) \
+        if t["img"] else '<div class="thumb thumb-fallback"></div>'
+    return ('<article class="card">' + thumb +
+            '<div class="body">' +
             '<span class="tag">' + t["tag"] + "</span>" +
             "<h3>" + t["title"] + "</h3>" +
             '<div class="actions"><a class="btn btn-primary" href="/templates/' + t["slug"] + '/">View</a></div>' +
+            "</div>" +
             "</article>")
 
 
