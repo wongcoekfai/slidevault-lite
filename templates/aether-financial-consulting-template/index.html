@@ -31,11 +31,23 @@
     <span class="tag">Finance</span>
     <span class="tag cat">Business</span>
     <span class="tag free">Free</span>
+    <span class="tag free">96 KB</span>
+    
     <span class="dl-count" id="dl-count"></span>
   </div>
-  <div class="preview"><img src="assets/img/AETHER-Financial-Consulting-Template.jpg" alt="AETHER – Financial & Consulting Template full preview" /></div>
+
+  <section class="gallery" id="gallery">
+    <div class="gallery-stage">
+      <button class="gallery-nav prev" type="button" aria-label="Previous slide">&#8249;</button>
+      <img class="gallery-main" src="/assets/img/AETHER-Financial-Consulting-Template.jpg" alt="AETHER – Financial & Consulting Template slide 1" />
+      <button class="gallery-nav next" type="button" aria-label="Next slide">&#8250;</button>
+      <span class="gallery-counter" id="gallery-counter"></span>
+    </div>
+    <div class="gallery-thumbs" id="gallery-thumbs"><button class="gallery-thumb active" type="button" data-src="/assets/img/AETHER-Financial-Consulting-Template.jpg" aria-label="Slide 1"><img src="/assets/img/AETHER-Financial-Consulting-Template.jpg" alt="AETHER – Financial & Consulting Template slide 1" loading="lazy" /></button></div>
+  </section>
+
   <div class="detail-actions">
-    <a class="btn btn-primary" href="/download?file=AETHER-Financial-Consulting-Template-1.pptx" rel="nofollow">⬇ Download .pptx</a>
+    <a class="btn btn-primary" href="/download?file=AETHER-Financial-Consulting-Template-1.pptx" rel="nofollow">&#11015; Download .pptx</a>
     <a class="btn btn-ghost" href="/#templates">Browse all templates</a>
   </div>
   <section class="prose">
@@ -45,9 +57,17 @@
   </section>
   <section class="prose">
     <h2>Related templates</h2>
-    <div class="grid related"><article class="card"><img src="assets/img/Modern-Tech-Enterprise-App-PPT-Template.jpg" alt="Modern Tech Enterprise App PPT Template preview" loading="lazy" /><span class="tag">Product / Tech</span><h3>Modern Tech Enterprise App PPT Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/modern-tech-enterprise-app-ppt-template/">View</a></div></article><article class="card"><img src="assets/img/Intelligent-Enterprise-Digital-PPT-Template-3.jpg" alt="Intelligent Enterprise Digital Template preview" loading="lazy" /><span class="tag">AI / Digital</span><h3>Intelligent Enterprise Digital Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/intelligent-enterprise-digital-template/">View</a></div></article><article class="card"><img src="assets/img/VERITAS-Real-Estate-Property-Template.jpg" alt="VERITAS – Real Estate & Property Template preview" loading="lazy" /><span class="tag">Real Estate</span><h3>VERITAS – Real Estate & Property Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/veritas-real-estate-property-template/">View</a></div></article></div>
+    <div class="grid related"><article class="card"><img src="/assets/img/Modern-Tech-Enterprise-App-PPT-Template.jpg" alt="Modern Tech Enterprise App PPT Template preview" loading="lazy" /><span class="tag">Product / Tech</span><h3>Modern Tech Enterprise App PPT Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/modern-tech-enterprise-app-ppt-template/">View</a></div></article><article class="card"><img src="/assets/img/Intelligent-Enterprise-Digital-PPT-Template-3.jpg" alt="Intelligent Enterprise Digital Template preview" loading="lazy" /><span class="tag">AI / Digital</span><h3>Intelligent Enterprise Digital Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/intelligent-enterprise-digital-template/">View</a></div></article><article class="card"><img src="/assets/img/VERITAS-Real-Estate-Property-Template.jpg" alt="VERITAS – Real Estate & Property Template preview" loading="lazy" /><span class="tag">Real Estate</span><h3>VERITAS – Real Estate & Property Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/veritas-real-estate-property-template/">View</a></div></article></div>
   </section>
 </main>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox-close" type="button" aria-label="Close">&#215;</button>
+  <button class="lightbox-nav prev" type="button" aria-label="Previous">&#8249;</button>
+  <img src="" alt="" />
+  <button class="lightbox-nav next" type="button" aria-label="Next">&#8250;</button>
+</div>
+
 <footer>
   <div class="wrap foot">
     <div>
@@ -61,12 +81,13 @@
       <a href="/privacy/">Privacy</a>
     </div>
   </div>
-  <p class="hint copyright">© 2026 Slide Vault. All templates free to download and use.</p>
+  <p class="hint copyright">&copy; 2026 Slide Vault. All templates free to download and use.</p>
 </footer>
+<script src="/assets/gallery.js"></script>
 <script>
 fetch('/downloads?file=AETHER-Financial-Consulting-Template-1.pptx').then(r=>r.json()).then(d=>{
   var el=document.getElementById('dl-count');
-  if(el&&typeof d.count==='number') el.textContent=d.count+' downloads';
+  if(el&&typeof d.count==='number'&&d.count>0) el.textContent=d.count+' downloads';
 }).catch(()=>{});
 </script>
 </body>

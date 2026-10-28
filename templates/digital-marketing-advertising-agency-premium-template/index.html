@@ -31,11 +31,23 @@
     <span class="tag">Digital Agency</span>
     <span class="tag cat">Marketing</span>
     <span class="tag free">Free</span>
+    <span class="tag free">7.0 MB</span>
+    
     <span class="dl-count" id="dl-count"></span>
   </div>
-  <div class="preview"><img src="assets/img/Digital-Marketing-Advertising-Agency-Premium-Template.jpg" alt="Digital Marketing & Advertising Agency Premium Template full preview" /></div>
+
+  <section class="gallery" id="gallery">
+    <div class="gallery-stage">
+      <button class="gallery-nav prev" type="button" aria-label="Previous slide">&#8249;</button>
+      <img class="gallery-main" src="/assets/img/Digital-Marketing-Advertising-Agency-Premium-Template.jpg" alt="Digital Marketing & Advertising Agency Premium Template slide 1" />
+      <button class="gallery-nav next" type="button" aria-label="Next slide">&#8250;</button>
+      <span class="gallery-counter" id="gallery-counter"></span>
+    </div>
+    <div class="gallery-thumbs" id="gallery-thumbs"><button class="gallery-thumb active" type="button" data-src="/assets/img/Digital-Marketing-Advertising-Agency-Premium-Template.jpg" aria-label="Slide 1"><img src="/assets/img/Digital-Marketing-Advertising-Agency-Premium-Template.jpg" alt="Digital Marketing & Advertising Agency Premium Template slide 1" loading="lazy" /></button></div>
+  </section>
+
   <div class="detail-actions">
-    <a class="btn btn-primary" href="/download?file=Digital-Marketing-Advertising-Agency-Premium-Template.pptx" rel="nofollow">⬇ Download .pptx</a>
+    <a class="btn btn-primary" href="/download?file=Digital-Marketing-Advertising-Agency-Premium-Template.pptx" rel="nofollow">&#11015; Download .pptx</a>
     <a class="btn btn-ghost" href="/#templates">Browse all templates</a>
   </div>
   <section class="prose">
@@ -45,9 +57,17 @@
   </section>
   <section class="prose">
     <h2>Related templates</h2>
-    <div class="grid related"><article class="card"><div class="ph"></div><span class="tag">Marketing Report</span><h3>Professional Marketing Report Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/professional-marketing-report-template/">View</a></div></article><article class="card"><img src="assets/img/Professional-Agency-Proposal-Template.jpg" alt="Professional Agency Proposal Template preview" loading="lazy" /><span class="tag">Agency Proposal</span><h3>Professional Agency Proposal Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/professional-agency-proposal-template/">View</a></div></article><article class="card"><img src="assets/img/Modern-Tech-Enterprise-App-PPT-Template.jpg" alt="Modern Tech Enterprise App PPT Template preview" loading="lazy" /><span class="tag">Product / Tech</span><h3>Modern Tech Enterprise App PPT Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/modern-tech-enterprise-app-ppt-template/">View</a></div></article></div>
+    <div class="grid related"><article class="card"><div class="ph"></div><span class="tag">Marketing Report</span><h3>Professional Marketing Report Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/professional-marketing-report-template/">View</a></div></article><article class="card"><img src="/assets/img/Professional-Agency-Proposal-Template.jpg" alt="Professional Agency Proposal Template preview" loading="lazy" /><span class="tag">Agency Proposal</span><h3>Professional Agency Proposal Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/professional-agency-proposal-template/">View</a></div></article><article class="card"><img src="/assets/img/Modern-Tech-Enterprise-App-PPT-Template.jpg" alt="Modern Tech Enterprise App PPT Template preview" loading="lazy" /><span class="tag">Product / Tech</span><h3>Modern Tech Enterprise App PPT Template</h3><div class="actions"><a class="btn btn-primary" href="/templates/modern-tech-enterprise-app-ppt-template/">View</a></div></article></div>
   </section>
 </main>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox-close" type="button" aria-label="Close">&#215;</button>
+  <button class="lightbox-nav prev" type="button" aria-label="Previous">&#8249;</button>
+  <img src="" alt="" />
+  <button class="lightbox-nav next" type="button" aria-label="Next">&#8250;</button>
+</div>
+
 <footer>
   <div class="wrap foot">
     <div>
@@ -61,12 +81,13 @@
       <a href="/privacy/">Privacy</a>
     </div>
   </div>
-  <p class="hint copyright">© 2026 Slide Vault. All templates free to download and use.</p>
+  <p class="hint copyright">&copy; 2026 Slide Vault. All templates free to download and use.</p>
 </footer>
+<script src="/assets/gallery.js"></script>
 <script>
 fetch('/downloads?file=Digital-Marketing-Advertising-Agency-Premium-Template.pptx').then(r=>r.json()).then(d=>{
   var el=document.getElementById('dl-count');
-  if(el&&typeof d.count==='number') el.textContent=d.count+' downloads';
+  if(el&&typeof d.count==='number'&&d.count>0) el.textContent=d.count+' downloads';
 }).catch(()=>{});
 </script>
 </body>
