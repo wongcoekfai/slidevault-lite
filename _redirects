@@ -1,0 +1,7 @@
+# Old WordPress template URLs -> new static detail pages (301)
+/ppt_template/*  /templates/:splat/  301
+
+# Old WordPress utility pages -> homepage sections
+/about/          /#about      301
+/shop-products/  /#templates  301
+/contact/        /#subscribe  301
