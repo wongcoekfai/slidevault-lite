@@ -164,3 +164,15 @@ h2 { font-size: 1.6rem; margin: 36px 0 18px; letter-spacing: -0.01em; }
   .lightbox-nav { width: 40px; height: 40px; }
 }
 
+
+/* Blog */
+.blog-post { max-width: 760px; }
+.blog-post p { margin: 14px 0; }
+.blog-post h2 { margin-top: 40px; }
+.blog-post h3 { font-size: 1.15rem; margin: 28px 0 12px; }
+.blog-post ul, .blog-post ol { color: var(--muted); max-width: 700px; padding-left: 22px; }
+.blog-post li { margin: 8px 0; }
+.blog-post li::marker { color: var(--accent-2); }
+.blog-post strong { color: var(--text); }
+.blog-post a { color: var(--accent-2); text-decoration: underline; text-underline-offset: 3px; }
+.blog-post a:hover { color: var(--accent); }

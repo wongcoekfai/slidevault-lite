@@ -132,6 +132,7 @@ PAGE = """<!doctype html>
     <a class="brand" href="/">Slide<span>Vault</span></a>
     <nav>
       <a href="/#templates">Templates</a>
+      <a href="/blog/">Blog</a>
       <a href="/#faq">FAQ</a>
       <a href="/#about">About</a>
       <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
@@ -190,6 +191,7 @@ PAGE = """<!doctype html>
     </div>
     <div class="foot-links">
       <a href="/#templates">Templates</a>
+      <a href="/blog/">Blog</a>
       <a href="/#faq">FAQ</a>
       <a href="/#subscribe">Subscribe</a>
       <a href="/privacy/">Privacy</a>
