@@ -114,7 +114,17 @@ PAGE = """<!doctype html>
 <meta property="og:image" content="{ogimg}" />
 <link rel="canonical" href="{site}/templates/{slug}/" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{title} — Free PowerPoint Template" />
+<meta name="twitter:description" content="{desc}" />
+<meta name="twitter:image" content="{ogimg}" />
 <link rel="stylesheet" href="/assets/style.css" />
+<script type="application/ld+json">
+{{"@context":"https://schema.org","@type":"SoftwareApplication","name":"{title}","url":"{site}/templates/{slug}/","description":"{desc}","image":"{ogimg}","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{{"@type":"Offer","price":"0","priceCurrency":"USD"}}}}
+</script>
+<script type="application/ld+json">
+{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{{"@type":"ListItem","position":1,"name":"Home","item":"{site}/"}},{{"@type":"ListItem","position":2,"name":"Templates","item":"{site}/#templates"}},{{"@type":"ListItem","position":3,"name":"{title}"}}]}}
+</script>
 </head>
 <body>
 <header class="site-header">
