@@ -113,6 +113,7 @@ PAGE = """<!doctype html>
 <meta property="og:url" content="{site}/templates/{slug}/" />
 <meta property="og:image" content="{ogimg}" />
 <link rel="canonical" href="{site}/templates/{slug}/" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
