@@ -176,3 +176,17 @@ h2 { font-size: 1.6rem; margin: 36px 0 18px; letter-spacing: -0.01em; }
 .blog-post strong { color: var(--text); }
 .blog-post a { color: var(--accent-2); text-decoration: underline; text-underline-offset: 3px; }
 .blog-post a:hover { color: var(--accent); }
+
+/* ===== Monetization components (AdSense Auto Ads need no extra CSS) ===== */
+.affiliate-box { background: var(--surface); border: 1px solid #ffffff0d; border-radius: var(--radius); padding: 24px; margin: 32px 0; }
+.affiliate-box h2 { margin-top: 0; }
+.affiliate-box p { color: var(--muted); }
+.aff-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 14px 0 6px; }
+.aff-btn { display: inline-flex; flex-direction: column; gap: 2px; padding: 12px 18px; border-radius: 12px; font-weight: 700; color: #04122b; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+.aff-btn span { font-weight: 500; font-size: .8rem; opacity: .8; }
+.aff-btn.alt { background: linear-gradient(135deg, #a78bfa, var(--accent-2)); }
+.lead-magnet { background: linear-gradient(135deg, #13203f, #0f1830); border: 1px solid #ffffff12; border-radius: var(--radius); padding: 26px; margin: 32px 0; }
+.lead-magnet h2 { margin-top: 0; }
+.subscribe.compact { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; max-width: 560px; }
+.subscribe.compact input[type=email] { flex: 1; min-width: 220px; padding: 11px 14px; border-radius: 10px; border: 1px solid #ffffff22; background: var(--bg); color: var(--text); }
+.subscribe.compact input:focus { outline: 2px solid var(--accent); }

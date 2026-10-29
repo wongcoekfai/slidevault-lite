@@ -25,12 +25,22 @@ export async function onRequestPost(context) {
     return htmlResponse(400, "Please enter a valid email address.");
   }
 
+  const source = (params.get("source") || "newsletter").slice(0, 32);
+
+  // Defensive: record the lead source if the D1 table has a `source` column;
+  // if not (column not added yet), fall back to the original insert so signups never break.
   try {
     await env.DB.prepare(
-      "INSERT OR IGNORE INTO subscribers (email, created_at) VALUES (?, ?)"
-    ).bind(email, Date.now()).run();
+      "INSERT OR IGNORE INTO subscribers (email, created_at, source) VALUES (?, ?, ?)"
+    ).bind(email, Date.now(), source).run();
   } catch (e) {
-    return htmlResponse(500, "Something went wrong. Please try again later.");
+    try {
+      await env.DB.prepare(
+        "INSERT OR IGNORE INTO subscribers (email, created_at) VALUES (?, ?)"
+      ).bind(email, Date.now()).run();
+    } catch (e2) {
+      return htmlResponse(500, "Something went wrong. Please try again later.");
+    }
   }
 
   return htmlResponse(200, "You're subscribed! We'll email you when new decks drop.");

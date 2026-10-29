@@ -23,6 +23,8 @@
   {"@context":"https://schema.org","@type":"ItemList","name":"Free PPT Templates","itemListElement":[[{"@type": "ListItem", "position": 1, "name": "Professional Marketing Report Template", "url": "https://slidevaulte.com/templates/professional-marketing-report-template/"}, {"@type": "ListItem", "position": 2, "name": "Professional Agency Proposal Template", "url": "https://slidevaulte.com/templates/professional-agency-proposal-template/"}, {"@type": "ListItem", "position": 3, "name": "Digital Marketing & Advertising Agency Premium Template", "url": "https://slidevaulte.com/templates/digital-marketing-advertising-agency-premium-template/"}, {"@type": "ListItem", "position": 4, "name": "Modern Tech Enterprise App PPT Template", "url": "https://slidevaulte.com/templates/modern-tech-enterprise-app-ppt-template/"}, {"@type": "ListItem", "position": 5, "name": "Intelligent Enterprise Digital Template", "url": "https://slidevaulte.com/templates/intelligent-enterprise-digital-template/"}, {"@type": "ListItem", "position": 6, "name": "VERITAS – Real Estate & Property Template", "url": "https://slidevaulte.com/templates/veritas-real-estate-property-template/"}, {"@type": "ListItem", "position": 7, "name": "NOVA – Medical & Healthcare Template", "url": "https://slidevaulte.com/templates/nova-medical-healthcare-template/"}, {"@type": "ListItem", "position": 8, "name": "AETHER – Financial & Consulting Template", "url": "https://slidevaulte.com/templates/aether-financial-consulting-template/"}, {"@type": "ListItem", "position": 9, "name": "SaaS Startup Pitch Deck Template", "url": "https://slidevaulte.com/templates/saas-startup-pitch-deck-template/"}, {"@type": "ListItem", "position": 10, "name": "Annual Summary PPT Template", "url": "https://slidevaulte.com/templates/annual-summary-ppt-template/"}, {"@type": "ListItem", "position": 11, "name": "Professional Business Presentation Template", "url": "https://slidevaulte.com/templates/professional-business-presentation-template/"}, {"@type": "ListItem", "position": 12, "name": "SynergyOS Business PPT Template", "url": "https://slidevaulte.com/templates/synergyos-business-ppt-template/"}, {"@type": "ListItem", "position": 13, "name": "Professional Corporate Presentation Template", "url": "https://slidevaulte.com/templates/professional-corporate-presentation-template-2/"}]]}
   </script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+<!-- ===== Monetization: Google AdSense ===== -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 </head>
 <body>
   <header class="site-header">
@@ -82,12 +84,24 @@
       <p>Slide Vault was born out of a simple frustration: too many presentations waste time on design instead of focusing on the message. We build clean, modern, fully editable templates that let you focus on what matters — telling your story with confidence.</p>
     </section>
 
-    <section id="subscribe" class="prose">
-      <h2>Get new templates by email</h2>
+    <section class="affiliate-box">
+      <h2>Finish your deck faster</h2>
+      <p>Free templates + the right tools = done in minutes. These are the tools we actually use:</p>
+      <div class="aff-row">
+        <a class="aff-btn" href="https://www.canva.com/?YOUR_CANVA_AFF_PARAMS" target="_blank" rel="sponsored noopener">Try Canva Pro<span>design anywhere</span></a>
+        <a class="aff-btn alt" href="https://1.envato.market/YOUR_ENVATO_AFF_ID" target="_blank" rel="sponsored noopener">Millions of assets on Envato<span>photos, fonts, video</span></a>
+      </div>
+      <p class="hint">As an affiliate we may earn a commission at no extra cost to you.</p>
+    </section>
+
+    <section id="subscribe" class="prose lead-magnet">
+      <h2>📦 Get the free template bundle</h2>
+      <p>Leave your email and we'll send you every Slide Vault deck in one drop — plus new releases. No design busywork, just the files.</p>
       <!-- Submissions go to our own Pages Function + Cloudflare D1. No third party sees the address. -->
-      <form action="/subscribe" method="POST" class="subscribe">
+      <form action="/subscribe" method="POST" class="subscribe compact">
+        <input type="hidden" name="source" value="bundle_home" />
         <input type="email" name="email" placeholder="you@example.com" required />
-        <button class="btn btn-primary" type="submit">Subscribe</button>
+        <button class="btn btn-primary" type="submit">Send me the bundle</button>
         <!-- honeypot: hidden from humans, bots may fill it -->
         <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
       </form>
