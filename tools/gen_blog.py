@@ -70,7 +70,7 @@ POST_PAGE = """<!doctype html>
 <meta name="twitter:title" content="{title}" />
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{image}" />
-<link rel="stylesheet" href="/assets/style.css" />
+<link rel="stylesheet" href="/assets/style.css?v=2" />
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"BlogPosting","headline":"{title}","description":"{desc}","image":"{image}","datePublished":"{date}","dateModified":"{date}","author":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"publisher":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{site}/blog/{slug}/"}}}}
 </script>
@@ -110,7 +110,7 @@ INDEX_PAGE = """<!doctype html>
 <meta property="og:url" content="{site}/blog/" />
 <link rel="canonical" href="{site}/blog/" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css" />
+<link rel="stylesheet" href="/assets/style.css?v=2" />
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"Blog","name":"Slide Vault Blog","url":"{site}/blog/","description":"Presentation tips, pitch deck guides and report writing templates."}}
 </script>

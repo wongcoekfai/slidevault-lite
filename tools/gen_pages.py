@@ -119,7 +119,7 @@ PAGE = """<!doctype html>
 <meta name="twitter:title" content="{title} — Free PowerPoint Template" />
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{ogimg}" />
-<link rel="stylesheet" href="/assets/style.css" />
+<link rel="stylesheet" href="/assets/style.css?v=2" />
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"SoftwareApplication","name":"{title}","url":"{site}/templates/{slug}/","description":"{desc}","image":"{ogimg}","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{{"@type":"Offer","price":"0","priceCurrency":"USD"}}}}
 </script>
