@@ -231,6 +231,8 @@ PAGE = """<!doctype html>
       <a href="/tools/compress-ppt/">Compress PPT</a>
       <a href="/#faq">FAQ</a>
       <a href="/#subscribe">Subscribe</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
         <a href="https://tools.slidevaulte.com/">Drainage Calculators</a>
     </div>
@@ -329,9 +331,22 @@ def main():
         os.makedirs(d, exist_ok=True)
         open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(html)
 
-    # sitemap
-    urls = [("/", "1.0", "weekly"), ("/privacy/", "0.3", "yearly")]
+    # sitemap -- keep in sync with gen_blog.py so running either one alone
+    # never drops URLs (blog posts and tools pages are discovered dynamically)
+    urls = [("/", "1.0", "weekly"), ("/blog/", "0.8", "weekly"),
+            ("/about/", "0.4", "yearly"), ("/contact/", "0.4", "yearly"),
+            ("/privacy/", "0.3", "yearly")]
     urls += [("/templates/%s/" % it["slug"], "0.8", "monthly") for it in items]
+    # free browser tools (tools/<name>/index.html)
+    tools_dir = os.path.join(ROOT, "tools")
+    if os.path.isdir(tools_dir):
+        for name in sorted(os.listdir(tools_dir)):
+            if os.path.isfile(os.path.join(tools_dir, name, "index.html")):
+                urls.append(("/tools/%s/" % name, "0.8", "monthly"))
+    blog_dir = os.path.join(ROOT, "blog", "posts")
+    if os.path.isdir(blog_dir):
+        posts = sorted(f[:-3] for f in os.listdir(blog_dir) if f.endswith(".md"))
+        urls += [("/blog/%s/" % p, "0.7", "monthly") for p in posts]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u, p, f in urls:

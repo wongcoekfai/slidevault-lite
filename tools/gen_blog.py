@@ -46,6 +46,8 @@ FOOTER = """<footer class="site-footer">
       <a href="/tools/merge-ppt/">Merge PPT</a>
       <a href="/tools/compress-ppt/">Compress PPT</a>
       <a href="/#subscribe">Subscribe</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
         <a href="https://tools.slidevaulte.com/">Drainage Calculators</a>
     </div>
@@ -73,6 +75,7 @@ POST_PAGE = """<!doctype html>
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{image}" />
 <link rel="stylesheet" href="/assets/style.css?v=2" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"BlogPosting","headline":"{title}","description":"{desc}","image":"{image}","datePublished":"{date}","dateModified":"{date}","author":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"publisher":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{site}/blog/{slug}/"}}}}
 </script>
@@ -113,6 +116,7 @@ INDEX_PAGE = """<!doctype html>
 <link rel="canonical" href="{site}/blog/" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 <link rel="stylesheet" href="/assets/style.css?v=2" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"Blog","name":"Slide Vault Blog","url":"{site}/blog/","description":"Presentation tips, pitch deck guides and report writing templates."}}
 </script>
@@ -201,6 +205,7 @@ def main():
 
     # ---- rebuild full sitemap (templates + blog + static) ----
     urls = [("/", "1.0", "weekly"), ("/blog/", "0.8", "weekly"),
+            ("/about/", "0.4", "yearly"), ("/contact/", "0.4", "yearly"),
             ("/tools/merge-ppt/", "0.8", "monthly"), ("/tools/compress-ppt/", "0.8", "monthly"), ("/privacy/", "0.3", "yearly")]
     urls += [("/templates/%s/" % s, "0.8", "monthly") for s, _ in parse_templates()]
     urls += [("/blog/%s/" % p["slug"], "0.7", "monthly") for p in posts]
