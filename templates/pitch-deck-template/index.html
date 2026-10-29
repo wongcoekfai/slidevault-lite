@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="Startup Pitch Deck Template — Free PowerPoint Template" />
 <meta name="twitter:description" content="Sixteen slides that walk an investor through your startup in the order they expect: problem, solution, market size, business model, traction, team and the ask. Placeholder text on every slide tells you exactly what to say - replace it and the deck is ready to send." />
 <meta name="twitter:image" content="https://slidevaulte.com/assets/img/Pitch-Deck-Template.jpg" />
-<link rel="stylesheet" href="/assets/style.css?v=2" />
+<link rel="stylesheet" href="/assets/style.css?v=4" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Startup Pitch Deck Template","url":"https://slidevaulte.com/templates/pitch-deck-template/","description":"Sixteen slides that walk an investor through your startup in the order they expect: problem, solution, market size, business model, traction, team and the ask. Placeholder text on every slide tells you exactly what to say - replace it and the deck is ready to send.","image":"https://slidevaulte.com/assets/img/Pitch-Deck-Template.jpg","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
@@ -42,9 +42,15 @@
     <nav>
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/merge-ppt/">Merge PPT</a>
-      <a href="/tools/compress-ppt/">Compress PPT</a>
-      <a href="/tools/split-ppt/">Split PPT</a>
+      <div class="nav-drop">
+        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
+        <div class="nav-menu">
+          <a href="/tools/">All PPT Tools</a>
+          <a href="/tools/merge-ppt/">Merge PPT</a>
+          <a href="/tools/compress-ppt/">Compress PPT</a>
+          <a href="/tools/split-ppt/">Split PPT</a>
+        </div>
+      </div>
       <a href="/about/">About</a>
       <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
     </nav>
@@ -127,9 +133,7 @@
     <div class="foot-links">
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/merge-ppt/">Merge PPT</a>
-      <a href="/tools/compress-ppt/">Compress PPT</a>
-      <a href="/tools/split-ppt/">Split PPT</a>
+      <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
@@ -139,6 +143,7 @@
   <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
 </footer>
 <script src="/assets/gallery.js"></script>
+<script src="/assets/nav.js?v=1" defer></script>
 <script>
 fetch('/downloads?file=Pitch-Deck-Template.pptx').then(r=>r.json()).then(d=>{
   var el=document.getElementById('dl-count');

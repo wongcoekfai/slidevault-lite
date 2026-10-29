@@ -119,7 +119,7 @@ PAGE = """<!doctype html>
 <meta name="twitter:title" content="{title} — Free PowerPoint Template" />
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{ogimg}" />
-<link rel="stylesheet" href="/assets/style.css?v=2" />
+<link rel="stylesheet" href="/assets/style.css?v=4" />
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"SoftwareApplication","name":"{title}","url":"{site}/templates/{slug}/","description":"{desc}","image":"{ogimg}","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{{"@type":"Offer","price":"0","priceCurrency":"USD"}}}}
 </script>
@@ -144,9 +144,15 @@ PAGE = """<!doctype html>
     <nav>
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/merge-ppt/">Merge PPT</a>
-      <a href="/tools/compress-ppt/">Compress PPT</a>
-      <a href="/tools/split-ppt/">Split PPT</a>
+      <div class="nav-drop">
+        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
+        <div class="nav-menu">
+          <a href="/tools/">All PPT Tools</a>
+          <a href="/tools/merge-ppt/">Merge PPT</a>
+          <a href="/tools/compress-ppt/">Compress PPT</a>
+          <a href="/tools/split-ppt/">Split PPT</a>
+        </div>
+      </div>
       <a href="/about/">About</a>
       <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
     </nav>
@@ -229,9 +235,7 @@ PAGE = """<!doctype html>
     <div class="foot-links">
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/merge-ppt/">Merge PPT</a>
-      <a href="/tools/compress-ppt/">Compress PPT</a>
-      <a href="/tools/split-ppt/">Split PPT</a>
+      <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
@@ -241,6 +245,7 @@ PAGE = """<!doctype html>
   <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
 </footer>
 <script src="/assets/gallery.js"></script>
+<script src="/assets/nav.js?v=1" defer></script>
 <script>
 fetch('/downloads?file={file}').then(r=>r.json()).then(d=>{{
   var el=document.getElementById('dl-count');

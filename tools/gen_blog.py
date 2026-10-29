@@ -28,9 +28,15 @@ HEADER = """<header class="site-header">
     <nav>
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/merge-ppt/">Merge PPT</a>
-      <a href="/tools/compress-ppt/">Compress PPT</a>
-      <a href="/tools/split-ppt/">Split PPT</a>
+      <div class="nav-drop">
+        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
+        <div class="nav-menu">
+          <a href="/tools/">All PPT Tools</a>
+          <a href="/tools/merge-ppt/">Merge PPT</a>
+          <a href="/tools/compress-ppt/">Compress PPT</a>
+          <a href="/tools/split-ppt/">Split PPT</a>
+        </div>
+      </div>
       <a href="/about/">About</a>
       <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
     </nav>
@@ -46,9 +52,7 @@ FOOTER = """<footer class="site-footer">
     <div class="foot-links">
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/merge-ppt/">Merge PPT</a>
-      <a href="/tools/compress-ppt/">Compress PPT</a>
-      <a href="/tools/split-ppt/">Split PPT</a>
+      <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
@@ -56,7 +60,8 @@ FOOTER = """<footer class="site-footer">
     </div>
   </div>
   <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
-</footer>"""
+</footer>
+<script src="/assets/nav.js?v=1" defer></script>"""
 
 POST_PAGE = """<!doctype html>
 <html lang="en">
@@ -77,7 +82,7 @@ POST_PAGE = """<!doctype html>
 <meta name="twitter:title" content="{title}" />
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{image}" />
-<link rel="stylesheet" href="/assets/style.css?v=2" />
+<link rel="stylesheet" href="/assets/style.css?v=4" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"BlogPosting","headline":"{title}","description":"{desc}","image":"{image}","datePublished":"{date}","dateModified":"{date}","author":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"publisher":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{site}/blog/{slug}/"}}}}
@@ -118,7 +123,7 @@ INDEX_PAGE = """<!doctype html>
 <meta property="og:url" content="{site}/blog/" />
 <link rel="canonical" href="{site}/blog/" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css?v=2" />
+<link rel="stylesheet" href="/assets/style.css?v=4" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"Blog","name":"Slide Vault Blog","url":"{site}/blog/","description":"Presentation tips, pitch deck guides and report writing templates."}}
@@ -208,6 +213,7 @@ def main():
 
     # ---- rebuild full sitemap (templates + blog + static) ----
     urls = [("/", "1.0", "weekly"), ("/blog/", "0.8", "weekly"),
+            ("/tools/", "0.8", "monthly"),
             ("/about/", "0.4", "yearly"), ("/contact/", "0.4", "yearly"),
             ("/tools/merge-ppt/", "0.8", "monthly"), ("/tools/compress-ppt/", "0.8", "monthly"), ("/tools/split-ppt/", "0.8", "monthly"), ("/privacy/", "0.3", "yearly")]
     urls += [("/templates/%s/" % s, "0.8", "monthly") for s, _ in parse_templates()]

@@ -212,3 +212,19 @@ h2 { font-size: 1.6rem; margin: 36px 0 18px; letter-spacing: -0.01em; }
   .blog-row-thumb { flex-basis: 104px; }
   .blog-row h3 { font-size: 1.05rem; }
 }
+
+/* Nav dropdown (PPT Tools) */
+.nav-drop { position: relative; }
+.nav-drop-btn { background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 5px; }
+.nav-drop-btn:hover { color: var(--text); }
+.nav-drop-btn .caret { font-size: .65rem; transition: transform .15s ease; }
+.nav-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: var(--surface); border: 1px solid #ffffff14; border-radius: 12px; padding: 8px; min-width: 210px; box-shadow: 0 12px 32px #00000059; z-index: 30; }
+.nav-menu::before { content: ""; position: absolute; top: -14px; left: 0; right: 0; height: 14px; }
+.nav-menu a { display: block; padding: 9px 12px; border-radius: 8px; color: var(--text); white-space: nowrap; }
+.nav-menu a:hover { background: #ffffff10; color: var(--accent-2); }
+.nav-drop:hover .nav-menu, .nav-drop:focus-within .nav-menu, .nav-drop.open .nav-menu { display: block; }
+.nav-drop:hover .caret, .nav-drop:focus-within .caret, .nav-drop.open .caret { transform: rotate(180deg); }
+
+@media (max-width: 640px) {
+  .nav nav { flex-wrap: wrap; justify-content: center; gap: 10px 16px; height: auto; padding: 10px 0; }
+}

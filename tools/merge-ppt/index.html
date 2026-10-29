@@ -17,7 +17,7 @@
 <meta name="twitter:description" content="Combine multiple .pptx files into one deck in your browser. No upload, no sign-up." />
 <meta name="twitter:image" content="https://slidevaulte.com/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css?v=3" />
+<link rel="stylesheet" href="/assets/style.css?v=4" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Is this PowerPoint merger really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool runs entirely in your browser and is completely free, with no sign-up, watermark or file limit."}},
@@ -70,9 +70,15 @@
     <nav>
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/merge-ppt/">Merge PPT</a>
-      <a href="/tools/compress-ppt/">Compress PPT</a>
-      <a href="/tools/split-ppt/">Split PPT</a>
+      <div class="nav-drop">
+        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
+        <div class="nav-menu">
+          <a href="/tools/">All PPT Tools</a>
+          <a href="/tools/merge-ppt/">Merge PPT</a>
+          <a href="/tools/compress-ppt/">Compress PPT</a>
+          <a href="/tools/split-ppt/">Split PPT</a>
+        </div>
+      </div>
       <a href="/about/">About</a>
       <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
     </nav>
@@ -143,9 +149,7 @@
     <div class="foot-links">
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/merge-ppt/">Merge PPT</a>
-      <a href="/tools/compress-ppt/">Compress PPT</a>
-      <a href="/tools/split-ppt/">Split PPT</a>
+      <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
@@ -156,5 +160,6 @@
 </footer>
 <script src="/assets/tools/merge.bundle.js?v=1" defer></script>
 <script src="/assets/tools/merge-ui.js?v=1" defer></script>
+<script src="/assets/nav.js?v=1" defer></script>
 </body>
 </html>
