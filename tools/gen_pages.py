@@ -228,6 +228,7 @@ PAGE = """<!doctype html>
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/merge-ppt/">Merge PPT</a>
+      <a href="/tools/compress-ppt/">Compress PPT</a>
       <a href="/#faq">FAQ</a>
       <a href="/#subscribe">Subscribe</a>
       <a href="/privacy/">Privacy</a>

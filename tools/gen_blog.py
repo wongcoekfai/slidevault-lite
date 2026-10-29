@@ -44,6 +44,7 @@ FOOTER = """<footer class="site-footer">
       <a href="/#templates">Templates</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/merge-ppt/">Merge PPT</a>
+      <a href="/tools/compress-ppt/">Compress PPT</a>
       <a href="/#subscribe">Subscribe</a>
       <a href="/privacy/">Privacy</a>
         <a href="https://tools.slidevaulte.com/">Drainage Calculators</a>
@@ -200,7 +201,7 @@ def main():
 
     # ---- rebuild full sitemap (templates + blog + static) ----
     urls = [("/", "1.0", "weekly"), ("/blog/", "0.8", "weekly"),
-            ("/tools/merge-ppt/", "0.8", "monthly"), ("/privacy/", "0.3", "yearly")]
+            ("/tools/merge-ppt/", "0.8", "monthly"), ("/tools/compress-ppt/", "0.8", "monthly"), ("/privacy/", "0.3", "yearly")]
     urls += [("/templates/%s/" % s, "0.8", "monthly") for s, _ in parse_templates()]
     urls += [("/blog/%s/" % p["slug"], "0.7", "monthly") for p in posts]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
