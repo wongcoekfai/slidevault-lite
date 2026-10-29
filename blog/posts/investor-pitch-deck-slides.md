@@ -49,7 +49,7 @@ Why *you* — founders' relevant wins in two lines each. Then the ask: how much 
 
 ## Structure it from a template
 
-You do not need to design any of this from scratch. Our [free SaaS startup pitch deck template](https://slidevaulte.com/templates/saas-startup-pitch-deck-template/) is pre-built with all ten sections — problem, solution, market, traction, competition and the ask — in a clean, modern style that works in PowerPoint and Google Slides.
+You do not need to design any of this from scratch. Our [free SaaS startup pitch deck template](https://slidevaulte.com/templates/saas-startup-pitch-deck-template/) is pre-built with all ten sections — problem, solution, market, traction, competition and the ask — in a clean, modern style that works in PowerPoint and Google Slides. If you are raising before you have a SaaS product, the [16-slide startup pitch deck template](https://slidevaulte.com/templates/pitch-deck-template/) follows the same flow with fill-in placeholders on every slide.
 
 ## Final checklist before you send
 
@@ -59,4 +59,4 @@ You do not need to design any of this from scratch. Our [free SaaS startup pitch
 4. File size under 10 MB so it opens on a phone
 5. The ask appears twice: slide 10 and your email body
 
-Send the deck as PDF unless asked otherwise, and keep the editable [presentation template](https://slidevaulte.com/templates/professional-business-presentation-template/) handy for the follow-up meeting — investors notice when the appendix deck is as sharp as the pitch.
+Send the deck as PDF unless asked otherwise, and keep the editable [presentation template](https://slidevaulte.com/templates/professional-business-presentation-template/) handy for the follow-up meeting — investors notice when the appendix deck is as sharp as the pitch. When the conversation moves from raise to plan, our [free business plan template](https://slidevaulte.com/templates/business-plan-template/) covers the financial projections and market analysis investors will ask for next.

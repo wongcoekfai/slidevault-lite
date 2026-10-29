@@ -52,7 +52,7 @@ Three to five initiatives maximum, each with an owner, an expected result, and a
 
 Our [free professional marketing report template](https://slidevaulte.com/templates/professional-marketing-report-template/) is built around this layout: executive summary, KPI dashboard with trend charts, per-channel breakdowns, insights and next-steps slides. It is fully editable in PowerPoint and Google Slides — replace the placeholder data, keep the structure.
 
-For agency-side reporting, the [free agency proposal template](https://slidevaulte.com/templates/professional-agency-proposal-template/) pairs well with it: propose with one, report with the other.
+For agency-side reporting, the [free agency proposal template](https://slidevaulte.com/templates/professional-agency-proposal-template/) pairs well with it: propose with one, report with the other. And if this report is the quarterly checkpoint of a bigger plan, our [free marketing plan template](https://slidevaulte.com/templates/marketing-plan-template/) is the document it should roll up into — sixteen slides for objectives, channels, budget and measurement across the whole year. Teams launching something new this cycle can borrow the [product launch template](https://slidevaulte.com/templates/product-launch-template/) for the GTM section.
 
 ## Delivery tips
 

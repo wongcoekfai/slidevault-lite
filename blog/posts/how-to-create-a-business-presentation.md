@@ -12,7 +12,7 @@ Most business presentations take too long because people design slides one at a 
 Nearly every business presentation fits one of three shapes:
 
 - **Status update** — context, what happened, what is next. Best for weekly and monthly reviews.
-- **Proposal** — problem, options, recommendation, ask. Best for budgets and new initiatives.
+- **Proposal** — problem, options, recommendation, ask. Best for budgets and new initiatives. A [free project proposal template](https://slidevaulte.com/templates/project-proposal-template/) already follows this shape slide by slide.
 - **Report** — results, key metrics, insights, actions. Best for marketing, sales and finance.
 
 Deciding this in one sentence ("this is a quarterly results report for leadership") eliminates half the decisions that slow people down.
@@ -51,4 +51,4 @@ That is it. Structure (2 minutes) → template (2 minutes) → content (4 minute
 
 ## Free tools to use with this workflow
 
-Our [annual summary template](https://slidevaulte.com/templates/annual-summary-ppt-template/) works well for year-end versions of this same structure, and every template on Slide Vault is fully editable in both PowerPoint and Google Slides. Subscribe below and we will send new templates straight to your inbox as they are released.
+Our [annual summary template](https://slidevaulte.com/templates/annual-summary-ppt-template/) works well for year-end versions of this same structure, the [annual report template](https://slidevaulte.com/templates/annual-report-template/) adds a financial and operations layer for formal stakeholder reporting, and every template on Slide Vault is fully editable in both PowerPoint and Google Slides. Subscribe below and we will send new templates straight to your inbox as they are released.
