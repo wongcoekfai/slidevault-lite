@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Merge PowerPoint Files Online Free — Combine PPTX Slides | Slide Vault</title>
+<meta name="description" content="Combine two or more .pptx presentations into one file, right in your browser. Free, no sign-up, no upload — files never leave your device. Keeps every slide's design intact." />
+<meta name="keywords" content="merge powerpoint files online, combine pptx, merge ppt slides free, join powerpoint presentations, combine powerpoint into one, merge pptx without powerpoint" />
+<link rel="canonical" href="https://slidevaulte.com/tools/merge-ppt/" />
+<meta property="og:title" content="Merge PowerPoint Files Online (Free & Private)" />
+<meta property="og:description" content="Combine multiple .pptx files into one deck in your browser. No upload, no sign-up, keeps each slide's original design." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://slidevaulte.com/tools/merge-ppt/" />
+<meta property="og:image" content="https://slidevaulte.com/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Merge PowerPoint Files Online (Free & Private)" />
+<meta name="twitter:description" content="Combine multiple .pptx files into one deck in your browser. No upload, no sign-up." />
+<meta name="twitter:image" content="https://slidevaulte.com/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+<link rel="stylesheet" href="/assets/style.css?v=3" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is this PowerPoint merger really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool runs entirely in your browser and is completely free, with no sign-up, watermark or file limit."}},
+{"@type":"Question","name":"Are my files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The merge happens locally in your browser using JavaScript. Your presentations never leave your device, which makes it safe for confidential decks."}},
+{"@type":"Question","name":"Will the merged slides keep their original design?","acceptedAnswer":{"@type":"Answer","text":"Yes. Each file's slide masters and layouts are imported, so slides from different presentations keep their original fonts, colors and backgrounds."}},
+{"@type":"Question","name":"Does it work with .ppt files or Google Slides?","acceptedAnswer":{"@type":"Answer","text":"Only .pptx files are supported. If your deck is in Google Slides, download it as .pptx first (File → Download → Microsoft PowerPoint). Legacy .ppt files must be converted to .pptx in PowerPoint first."}},
+{"@type":"Question","name":"How do I choose the slide order?","acceptedAnswer":{"@type":"Answer","text":"Slides are combined in the order the files are listed. Use the up and down arrows in the file list to reorder files before merging."}}
+]}
+</script>
+<!-- ===== Monetization: Google AdSense ===== -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
+<style>
+.merge-tool { background: var(--surface); border: 1px solid #ffffff14; border-radius: var(--radius); padding: 28px; margin: 28px 0; }
+.dropzone { border: 2px dashed #ffffff2e; border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: border-color .2s, background .2s; }
+.dropzone:hover, .dropzone.dragging { border-color: var(--accent); background: #3b82f614; }
+.dropzone .dz-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+.dropzone p { margin: 4px 0 0; color: var(--muted); }
+.file-list { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.file-row { display: flex; align-items: center; gap: 12px; background: var(--surface-2); border-radius: 10px; padding: 10px 14px; }
+.file-order { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #04122b; font-weight: 700; font-size: .85rem; display: flex; align-items: center; justify-content: center; }
+.file-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-size { color: var(--muted); font-size: .85rem; flex: none; }
+.file-actions { display: flex; gap: 6px; flex: none; }
+.mini-btn { background: #ffffff12; color: var(--text); border: none; border-radius: 8px; width: 30px; height: 30px; cursor: pointer; font-size: .9rem; }
+.mini-btn:hover:not(:disabled) { background: #ffffff22; }
+.mini-btn:disabled { opacity: .3; cursor: default; }
+.mini-danger:hover:not(:disabled) { background: #ef444455; }
+.tool-status { min-height: 24px; margin-top: 14px; color: var(--muted); font-size: .95rem; }
+.tool-status.tool-error { color: #f87171; }
+.merge-actions { margin-top: 16px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.merge-actions .btn { border: none; font-size: 1rem; }
+.merge-actions .btn:disabled { opacity: .45; cursor: not-allowed; }
+#result { margin-top: 20px; background: #22c55e18; border: 1px solid #22c55e44; border-radius: 12px; padding: 18px; }
+#resultMeta { color: var(--muted); font-size: .9rem; margin: 8px 0 0; }
+.privacy-note { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .9rem; margin-top: 14px; }
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 20px 0; display: grid; gap: 12px; }
+.steps li { background: var(--surface); border-radius: 10px; padding: 14px 16px 14px 52px; position: relative; }
+.steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #04122b; font-weight: 700; font-size: .85rem; display: flex; align-items: center; justify-content: center; }
+.tool-prose h2 { margin-top: 36px; }
+.tool-prose h3 { margin-top: 24px; }
+.tool-faq h3 { margin-bottom: 6px; }
+.tool-faq p { margin-top: 0; color: var(--muted); }
+@media (max-width: 560px) { .merge-tool { padding: 18px; } .file-size { display: none; } }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/">Slide<span>Vault</span></a>
+    <nav>
+      <a href="/#templates">Templates</a>
+      <a href="/blog/">Blog</a>
+      <a href="/tools/merge-ppt/">Merge PPT</a>
+      <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
+    </nav>
+  </div>
+</header>
+<main class="container tool-prose" style="max-width:820px;">
+  <h1>Merge PowerPoint Files Online</h1>
+  <p class="muted" style="font-size:1.1rem;">Combine two or more <b>.pptx</b> presentations into a single deck — free, no sign-up, and no upload. Everything happens inside your browser.</p>
+
+  <section class="merge-tool" aria-label="PPT merge tool">
+    <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Choose or drop .pptx files">
+      <span class="dz-icon">&#128193;</span>
+      <b>Choose .pptx files</b> or drop them here
+      <p>Order matters — slides are combined top to bottom. You can reorder below.</p>
+      <input type="file" id="fileInput" accept=".pptx" multiple hidden />
+    </div>
+    <ul id="fileList" class="file-list"></ul>
+    <div class="merge-actions">
+      <button id="mergeBtn" class="btn btn-primary" type="button" disabled>Select at least 2 files</button>
+    </div>
+    <div id="status" class="tool-status" role="status" aria-live="polite"></div>
+    <div id="result" hidden>
+      <b>&#9989; Merged file ready</b>
+      <p id="resultMeta"></p>
+      <a id="downloadBtn" class="btn btn-primary" href="&#35;">&#11015; Download merged-presentation.pptx</a>
+    </div>
+    <p class="privacy-note">&#128274; 100% private: your files are processed locally and never uploaded to any server.</p>
+  </section>
+
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li><b>Add files.</b> Click the box (or drag &amp; drop) and pick the .pptx presentations you want to combine.</li>
+    <li><b>Set the order.</b> Slides are merged in list order — use the arrows to move files up or down.</li>
+    <li><b>Merge &amp; download.</b> Hit the merge button, wait a few seconds, and download your combined deck.</li>
+  </ol>
+
+  <h2>Why merge decks in the browser?</h2>
+  <p>Most online PPT mergers upload your presentation to a server, process it there, and hand it back — a privacy risk for internal reports, client work or anything confidential. This tool uses modern in-browser technology to merge presentations <b>directly on your device</b>: nothing is transmitted, there is no file queue, no watermark and no registration. It also imports each file's slide masters, so slides from different decks keep their original fonts, colors and backgrounds instead of being restyled.</p>
+
+  <h2>FAQ</h2>
+  <div class="tool-faq">
+    <h3>Is it really free?</h3>
+    <p>Yes — no sign-up, no watermark, no daily limit. The site is supported by ads.</p>
+    <h3>Will slides from different files keep their design?</h3>
+    <p>Yes. Each file's slide master and layouts are carried over, so a slide from deck B still looks like it did in deck B after merging.</p>
+    <h3>Can I merge .ppt or Google Slides files?</h3>
+    <p>Only .pptx is supported. Google Slides: use <i>File → Download → Microsoft PowerPoint (.pptx)</i> first. Legacy .ppt files need a quick save-as .pptx in PowerPoint.</p>
+    <h3>Is there a file size limit?</h3>
+    <p>Practically, your device's memory is the limit. Decks up to ~100&nbsp;MB total merge comfortably on most computers; very large files on old phones may be slow.</p>
+    <h3>Do you keep a copy of my presentation?</h3>
+    <p>No. Files are read into your browser's memory, merged there, and handed straight back to you as a download. Nothing is stored or sent anywhere.</p>
+  </div>
+
+  <h2>Need great-looking slides to merge?</h2>
+  <p>Browse our <a href="/#templates" style="color:var(--accent-2);">free PowerPoint templates</a> — professional decks for business reports, pitch decks, training courses and more. Or subscribe below to get new templates by email.</p>
+
+  <p style="margin-top:32px;"><a class="btn btn-ghost" href="/">&#8592; Back to Slide Vault</a></p>
+</main>
+<footer class="site-footer">
+  <div class="container foot">
+    <div>
+      <b>Slide<span>Vault</span></b>
+      <p class="hint">Free PowerPoint &amp; Google Slides templates for business and education.</p>
+    </div>
+    <div class="foot-links">
+      <a href="/#templates">Templates</a>
+      <a href="/blog/">Blog</a>
+      <a href="/tools/merge-ppt/">Merge PPT</a>
+      <a href="/#subscribe">Subscribe</a>
+      <a href="/privacy/">Privacy</a>
+    </div>
+  </div>
+  <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
+</footer>
+<script src="/assets/tools/merge.bundle.js?v=1" defer></script>
+<script src="/assets/tools/merge-ui.js?v=1" defer></script>
+</body>
+</html>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://slidevaulte.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://slidevaulte.com/blog/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://slidevaulte.com/tools/merge-ppt/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://slidevaulte.com/privacy/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://slidevaulte.com/templates/professional-marketing-report-template/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://slidevaulte.com/templates/professional-agency-proposal-template/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -24,4 +26,10 @@
   <url><loc>https://slidevaulte.com/templates/sales-proposal-template/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://slidevaulte.com/templates/all-hands-template/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://slidevaulte.com/templates/project-proposal-template/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://slidevaulte.com/blog/how-to-write-a-business-plan/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://slidevaulte.com/blog/how-to-write-a-sales-proposal/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://slidevaulte.com/blog/how-to-write-an-annual-report/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://slidevaulte.com/blog/how-to-create-a-business-presentation/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://slidevaulte.com/blog/investor-pitch-deck-slides/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://slidevaulte.com/blog/what-to-include-in-a-marketing-report/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
