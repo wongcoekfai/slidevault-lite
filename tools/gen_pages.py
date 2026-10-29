@@ -230,6 +230,7 @@ PAGE = """<!doctype html>
       <a href="/#faq">FAQ</a>
       <a href="/#subscribe">Subscribe</a>
       <a href="/privacy/">Privacy</a>
+        <a href="https://tools.slidevaulte.com/">Drainage Calculators</a>
     </div>
   </div>
   <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
