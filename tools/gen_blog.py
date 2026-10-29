@@ -35,6 +35,7 @@ HEADER = """<header class="site-header">
           <a href="/tools/merge-ppt/">Merge PPT</a>
           <a href="/tools/compress-ppt/">Compress PPT</a>
           <a href="/tools/split-ppt/">Split PPT</a>
+          <a href="/tools/extract-images/">Extract Images</a>
         </div>
       </div>
       <a href="/about/">About</a>
@@ -215,7 +216,7 @@ def main():
     urls = [("/", "1.0", "weekly"), ("/blog/", "0.8", "weekly"),
             ("/tools/", "0.8", "monthly"),
             ("/about/", "0.4", "yearly"), ("/contact/", "0.4", "yearly"),
-            ("/tools/merge-ppt/", "0.8", "monthly"), ("/tools/compress-ppt/", "0.8", "monthly"), ("/tools/split-ppt/", "0.8", "monthly"), ("/privacy/", "0.3", "yearly")]
+            ("/tools/merge-ppt/", "0.8", "monthly"), ("/tools/compress-ppt/", "0.8", "monthly"), ("/tools/split-ppt/", "0.8", "monthly"), ("/tools/extract-images/", "0.8", "monthly"), ("/privacy/", "0.3", "yearly")]
     urls += [("/templates/%s/" % s, "0.8", "monthly") for s, _ in parse_templates()]
     urls += [("/blog/%s/" % p["slug"], "0.7", "monthly") for p in posts]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
