@@ -121,7 +121,7 @@ INDEX_PAGE = """<!doctype html>
   <p class="crumbs"><a href="/">Home</a> / <b>Blog</b></p>
   <h1>Blog</h1>
   <p class="hint">Practical guides on presentations, pitch decks and reports &mdash; each one pairs with a free, editable template.</p>
-  <div class="grid related">
+  <div class="blog-list">
 {cards}
   </div>
 </main>
@@ -182,14 +182,16 @@ def main():
     cards = []
     for p in posts:
         img = p.get("image")
-        thumb = ('<img class="thumb" src="%s" alt="%s" loading="lazy" />' % (img, p["title"])) \
-            if img else '<div class="thumb thumb-fallback"></div>'
+        thumb = ('<a class="blog-row-thumb" href="/blog/%s/" aria-hidden="true"><img src="%s" alt="" loading="lazy" /></a>'
+                 % (p["slug"], img)) if img else '<div class="blog-row-thumb blog-row-fallback"></div>'
         cards.append(
-            '<article class="card">' + thumb + '<div class="body">' +
-            '<span class="tag">%s</span><h3>%s</h3><p>%s</p>' %
-            (p["date"], p["title"], p["description"]) +
-            '<div class="actions"><a class="btn btn-primary" href="/blog/%s/">Read</a></div>'
-            % p["slug"] + "</div></article>")
+            '<article class="blog-row">' + thumb +
+            '<div class="blog-row-body">'
+            '<time class="blog-date" datetime="%s">%s</time>'
+            '<h3><a href="/blog/%s/">%s</a></h3>'
+            '<p>%s</p>'
+            '<span class="blog-more">Read the guide &rarr;</span>'
+            '</div></article>' % (p["date"], p["date"], p["slug"], p["title"], p["description"]))
     open(os.path.join(ROOT, "blog", "index.html"), "w", encoding="utf-8").write(
         INDEX_PAGE.format(site=SITE, header=HEADER, footer=FOOTER,
                           cards="\n".join(cards)))
