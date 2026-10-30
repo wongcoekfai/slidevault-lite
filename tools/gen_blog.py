@@ -27,6 +27,10 @@ HEADER = """<header class="site-header">
     <a class="brand" href="/">Slide<span>Vault</span></a>
     <nav>
       <a href="/#templates">Templates</a>
+      <a href="/templates/business/">Business</a>
+      <a href="/templates/marketing/">Marketing</a>
+      <a href="/templates/startup/">Startup</a>
+      <a href="/templates/sales/">Sales</a>
       <a href="/blog/">Blog</a>
       <div class="nav-drop">
         <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
@@ -52,6 +56,10 @@ FOOTER = """<footer class="site-footer">
     </div>
     <div class="foot-links">
       <a href="/#templates">Templates</a>
+      <a href="/templates/business/">Business</a>
+      <a href="/templates/marketing/">Marketing</a>
+      <a href="/templates/startup/">Startup</a>
+      <a href="/templates/sales/">Sales</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>
@@ -83,7 +91,7 @@ POST_PAGE = """<!doctype html>
 <meta name="twitter:title" content="{title}" />
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{image}" />
-<link rel="stylesheet" href="/assets/style.css?v=4" />
+<link rel="stylesheet" href="/assets/style.css?v=5" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"BlogPosting","headline":"{title}","description":"{desc}","image":"{image}","datePublished":"{date}","dateModified":"{date}","author":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"publisher":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{site}/blog/{slug}/"}}}}
@@ -124,7 +132,7 @@ INDEX_PAGE = """<!doctype html>
 <meta property="og:url" content="{site}/blog/" />
 <link rel="canonical" href="{site}/blog/" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css?v=4" />
+<link rel="stylesheet" href="/assets/style.css?v=5" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"Blog","name":"Slide Vault Blog","url":"{site}/blog/","description":"Presentation tips, pitch deck guides and report writing templates."}}
@@ -217,7 +225,15 @@ def main():
             ("/tools/", "0.8", "monthly"),
             ("/about/", "0.4", "yearly"), ("/contact/", "0.4", "yearly"),
             ("/tools/merge-ppt/", "0.8", "monthly"), ("/tools/compress-ppt/", "0.8", "monthly"), ("/tools/split-ppt/", "0.8", "monthly"), ("/tools/extract-images/", "0.8", "monthly"), ("/privacy/", "0.3", "yearly")]
-    urls += [("/templates/%s/" % s, "0.8", "monthly") for s, _ in parse_templates()]
+    # Discover every /templates/<dir>/ on disk so category hubs are never dropped
+    # when this generator runs on its own (hubs first, then detail pages).
+    hubs = ["business", "startup", "marketing", "sales"]
+    tdir = os.path.join(ROOT, "templates")
+    names = ([n for n in sorted(os.listdir(tdir))
+              if os.path.isfile(os.path.join(tdir, n, "index.html"))]
+             if os.path.isdir(tdir) else [])
+    urls += [("/templates/%s/" % n, "0.9", "weekly") for n in names if n in hubs]
+    urls += [("/templates/%s/" % n, "0.8", "monthly") for n in names if n not in hubs]
     urls += [("/blog/%s/" % p["slug"], "0.7", "monthly") for p in posts]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
