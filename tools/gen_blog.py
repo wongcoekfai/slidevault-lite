@@ -77,7 +77,7 @@ POST_PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{title} | Slide Vault Blog</title>
+<title>{page_title}</title>
 <meta name="description" content="{desc}" />
 <meta property="og:title" content="{title}" />
 <meta property="og:description" content="{desc}" />
@@ -130,6 +130,8 @@ INDEX_PAGE = """<!doctype html>
 <meta property="og:title" content="Slide Vault Blog — Presentation Tips &amp; Guides" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{site}/blog/" />
+<meta property="og:image" content="{site}/assets/img/Professional-Business-Presentation-Template-2.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="canonical" href="{site}/blog/" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 <link rel="stylesheet" href="/assets/style.css?v=5" />
@@ -193,8 +195,9 @@ def main():
 
         minutes = max(2, len(re.findall(r"\w+", p["html"])) // 200)
         image = p.get("image", SITE + "/assets/favicon.svg")
+        page_title = (p["title"] + " | Slide Vault Blog") if len(p["title"]) <= 46 else p["title"]
         html = POST_PAGE.format(
-            title=p["title"], desc=p["description"], slug=p["slug"],
+            title=p["title"], page_title=page_title, desc=p["description"], slug=p["slug"],
             site=SITE, date=p["date"], minutes=minutes, image=image,
             content=p["html"], header=HEADER, footer=FOOTER)
         d = os.path.join(ROOT, "blog", p["slug"])
@@ -205,8 +208,8 @@ def main():
     cards = []
     for p in posts:
         img = p.get("image")
-        thumb = ('<a class="blog-row-thumb" href="/blog/%s/" aria-hidden="true"><img src="%s" alt="" loading="lazy" /></a>'
-                 % (p["slug"], img)) if img else '<div class="blog-row-thumb blog-row-fallback"></div>'
+        thumb = ('<a class="blog-row-thumb" href="/blog/%s/" tabindex="-1"><img src="%s" alt="%s guide cover" loading="lazy" /></a>'
+                 % (p["slug"], img, p["title"].replace('"', "&quot;"))) if img else '<div class="blog-row-thumb blog-row-fallback"></div>'
         cards.append(
             '<article class="blog-row">' + thumb +
             '<div class="blog-row-body">'

@@ -108,7 +108,7 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{seo} | Slide Vault</title>
+<title>{page_title}</title>
 <meta name="description" content="{desc}" />
 <meta name="keywords" content="{kw}" />
 <meta property="og:title" content="{seo}" />
@@ -231,7 +231,7 @@ PAGE = """<!doctype html>
 <div class="lightbox" id="lightbox" hidden>
   <button class="lightbox-close" type="button" aria-label="Close">&#215;</button>
   <button class="lightbox-nav prev" type="button" aria-label="Previous">&#8249;</button>
-  <img src="" alt="" />
+  <img alt="Full-size slide preview" />
   <button class="lightbox-nav next" type="button" aria-label="Next">&#8250;</button>
 </div>
 
@@ -311,7 +311,7 @@ CAT_PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{seo_title} | Slide Vault</title>
+<title>{page_title}</title>
 <meta name="description" content="{meta_desc}" />
 <meta name="keywords" content="{label} presentation templates, free {low} ppt template, {label} powerpoint template, {label} slide deck, free google slides template" />
 <meta property="og:title" content="{seo_title}" />
@@ -454,7 +454,9 @@ def build_category_pages(items):
             chips.append('<a class="chip" href="/templates/%s/">%s templates</a>' % (c2, l2))
 
         html = CAT_PAGE.format(
-            seo_title=seo_title, h1=h1, meta_desc=meta_desc, lead=lead,
+            seo_title=seo_title,
+            page_title=(seo_title + " | Slide Vault") if len(seo_title) <= 52 else seo_title,
+            h1=h1, meta_desc=meta_desc, lead=lead,
             howto=howto, hub_intro=hub_intro, label=label, low=label.lower(),
             cat=cat, site=SITE, n=len(group), cssver=CSS_VER,
             ogimg=SITE + group[0]["img"] if group[0]["img"] else SITE + "/assets/favicon.svg",
@@ -537,7 +539,9 @@ def main():
             it["seo"].replace("—", ","), it["title"], it["tag"], it["tag"].lower())
 
         html = PAGE.format(
-            title=it["title"], seo=it["seo"], desc=it["desc"], body=it["body"],
+            title=it["title"], seo=it["seo"], page_title=(it["seo"] + " | Slide Vault")
+                     if len(it["seo"]) <= 52 else it["seo"],
+            desc=it["desc"], body=it["body"],
             kw=kw, slug=it["slug"], site=SITE, cat=it["cat"],
             tag=it["tag"], cat_label=it["cat"].capitalize(), low=it["cat"], file=it["file"], cssver=CSS_VER,
             size=file_size(it["file"]),
