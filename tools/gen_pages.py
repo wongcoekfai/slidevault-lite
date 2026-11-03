@@ -14,6 +14,8 @@ Photos are discovered automatically by filename order inside each slug folder,
 so name them  01.jpg  02.jpg  03.jpg  ...  to control slide order.
 """
 import argparse
+import html
+import zipfile
 import json
 import os
 import re
@@ -135,10 +137,8 @@ PAGE = """<!doctype html>
      Enable "Auto Ads" in the AdSense dashboard — ads are placed automatically, no unit IDs needed. -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 
-<!-- FAQ rich result: captures long-tail queries like "is X free?" / "does X work in Google Slides?" -->
-<script type="application/ld+json">
-{{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{"@type":"Question","name":"Is the {title} free?","acceptedAnswer":{{"@type":"Answer","text":"Yes. This template is 100% free for personal and commercial use. Download the .pptx, no signup required."}}}},{{"@type":"Question","name":"Does the {title} work in Google Slides?","acceptedAnswer":{{"@type":"Answer","text":"Yes. Open the .pptx in Google Slides and all layouts, fonts and colors stay fully editable."}}}}]}}
-</script>
+<!-- FAQ rich result: questions are mirrored as visible copy further down the page -->
+{faq_schema}
 </head>
 <body>
 <header class="site-header">
@@ -217,6 +217,33 @@ PAGE = """<!doctype html>
     <p>{desc}</p>
     <p>{body}</p>
     <p>Works with <b>PowerPoint</b> and <b>Google Slides</b>. Fully editable - change colors, fonts, text and images freely. Free for personal and commercial use. No signup required.</p>
+  </section>
+
+  <section class="prose">
+    <h2>What is in the {title}</h2>
+    <p>{lead}</p>
+    <ul class="checklist">{inside}</ul>
+    <p>{quality}</p>
+  </section>
+
+  <section class="prose">
+    <h2>How to customize it in five minutes</h2>
+    <ol class="steps">{steps}</ol>
+  </section>
+
+  <section class="prose">
+    <h2>File details</h2>
+    <ul class="facts">{facts}</ul>
+  </section>
+
+  <section class="prose">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">{faq}</div>
+  </section>
+
+  <section class="prose">
+    <h2>Related reading</h2>
+    <ul class="checklist">{reading}</ul>
   </section>
   <section class="prose">
     <h2>More {cat_label} templates</h2>
@@ -304,7 +331,179 @@ CATS = [
      "Proposals that close, scoping that gets approved, and the reviews that follow."),
 ]
 
-CSS_VER = "5"
+CSS_VER = "6"
+
+# ---------------------------------------------------------------- detail-page copy
+# Per-category editorial blocks. AdSense rejects sites whose template pages are
+# 200-word download shells with identical boilerplate, so every detail page gets
+# an audience note, a contents list, a quality note, an editing walkthrough,
+# file facts and a visible FAQ that matches the FAQPage schema.
+
+CAT_COPY = {
+    "business": {
+        "quality": (
+            "A business deck earns its screen time in the first two minutes. Put the recommendation "
+            "on slide two, keep one idea per slide, and push supporting detail into an appendix. The "
+            "layouts here follow that order, so you can drop your own content in without rebuilding "
+            "the structure from scratch."),
+    },
+    "marketing": {
+        "quality": (
+            "Marketing decks usually carry two kinds of content, the story and the numbers, and they "
+            "read badly when mixed. Keep the campaign narrative on one set of slides and the KPI "
+            "evidence on another, and put the channel result before the explanation of how you got "
+            "it. The layouts here keep those two tracks separate by default."),
+    },
+    "startup": {
+        "quality": (
+            "Investors spend under three minutes on the first pass. Keep one claim per slide, put the "
+            "metric that proves it in the headline, and leave the detail for an appendix. The layouts "
+            "here are sized for that habit: large headline, one chart, short caption, nothing else "
+            "competing for attention."),
+    },
+    "sales": {
+        "quality": (
+            "A proposal deck is read, not presented. Write for the person who opens it on a phone at "
+            "9pm: short headlines, price on one page, next step on the last one. The layouts here "
+            "keep to that rule, so the buyer never has to hunt for the number they actually care "
+            "about."),
+    },
+}
+
+GUIDE_STEPS = [
+    "Download the .pptx and open it in PowerPoint, or upload it to Google Slides with "
+    "File &rarr; Import slides. Layouts and theme colours come through on both.",
+    "Replace the placeholder copy. Every headline, caption and number is a normal text box, so "
+    "you can restyle a single slide without breaking the rest of the deck.",
+    "Apply your brand colours from Design &rarr; Variants &rarr; Colors. The deck is built on a "
+    "handful of theme colours, so one click recolours every slide consistently.",
+    "Swap the images with right-click &rarr; Change Picture and keep the crop. Placeholders are "
+    "sized for 16:9, so replacements fill the frame without shifting the layout.",
+    "Delete the slides you do not need, duplicate a layout for extra content, then export to PDF "
+    "if you are sending the deck ahead of the meeting.",
+]
+
+READING = {
+    "business": [("/blog/how-to-create-a-business-presentation/",
+                  "How to structure a business presentation"),
+                 ("/blog/how-to-structure-a-quarterly-business-review/",
+                  "Structuring a quarterly business review")],
+    "marketing": [("/blog/what-to-include-in-a-marketing-report/",
+                   "What to include in a marketing report"),
+                  ("/blog/how-to-create-a-business-presentation/",
+                   "How to structure a business presentation")],
+    "startup": [("/blog/how-to-make-a-pitch-deck/", "How to make a pitch deck"),
+                ("/blog/investor-pitch-deck-slides/", "The slides investors expect to see")],
+    "sales": [("/blog/how-to-write-a-sales-proposal/", "How to write a sales proposal"),
+              ("/blog/how-to-write-a-project-proposal/",
+               "Writing a project proposal that gets approved")],
+}
+
+
+def faq_pairs(title):
+    """Visible FAQ + schema share one source so rich results never mismatch."""
+    return [
+        ("Is the %s really free?" % title,
+         "Yes. Download the .pptx directly, with no signup, no email and no watermark. It is free "
+         "for personal and commercial use, including client work. The only restriction is that you "
+         "cannot resell or redistribute the template file itself."),
+        ("Does the %s work in Google Slides?" % title,
+         "Yes. Upload the .pptx to Google Drive and open it with Google Slides; layouts, fonts and "
+         "colours stay editable. If the deck uses a typeface Google does not host, swap it for a "
+         "Google font from the toolbar and the layout holds."),
+        ("Can I use the %s for client work?" % title,
+         "Yes. Commercial use is allowed, and you can change the copy, colours and imagery freely. "
+         "What you may not do is sell the file as a template product or bundle it into a paid "
+         "template pack."),
+        ("Do I need design skills to edit the %s?" % title,
+         "No. Every slide is built from standard shapes and text boxes on a 16:9 canvas, so editing "
+         "means typing over text and picking theme colours. If you can use PowerPoint or Google "
+         "Slides at all, you can finish this deck."),
+    ]
+
+
+# Placeholder fragments that tail real slide titles, e.g. "Revenue X X% X".
+_PLACEHOLDER = re.compile(
+    r"^(?:[xX](?:%|\+)?|x[mk]|[nN]|%|\+?[\d.,]+\s?%?|\d{1,2}|currency|currency\s?\w+|"
+    r"\$[\d.,]+\s?[a-zA-Z]?|[Xx]\.[Xx])$")
+
+
+def clean_title(t):
+    t = html.unescape(re.sub(r"\s+", " ", t or "")).strip()
+    t = re.sub(r"\{\{|\}\}", "", t).strip(" :-")
+    toks = t.split()
+    while toks and _PLACEHOLDER.match(toks[-1].strip(".,;:")):
+        toks.pop()
+    return " ".join(toks).strip(" -:|")
+
+
+def slide_outline(path, limit=8):
+    """Read the real slide titles out of a .pptx so the outline printed on the
+    page is what actually ships in the file. Returns (slide_count, titles)."""
+    try:
+        z = zipfile.ZipFile(path)
+    except Exception:
+        return 0, []
+    names = [n for n in z.namelist() if re.match(r"ppt/slides/slide\d+\.xml$", n)]
+    names.sort(key=lambda s: int(re.search(r"(\d+)\.xml$", s).group(1)))
+    out = []
+    for name in names:
+        x = z.read(name).decode("utf-8", "ignore")
+        runs = []
+        for blk in re.findall(r"<a:r>(.*?)</a:r>", x, re.S):
+            size = re.search(r'sz="(\d+)"', blk)
+            txt = re.search(r"<a:t>(.*?)</a:t>", blk, re.S)
+            if txt and txt.group(1).strip():
+                runs.append((int(size.group(1)) if size else 0, txt.group(1)))
+        if not runs:
+            continue
+        biggest = max(r[0] for r in runs)
+        best = clean_title(" ".join(t for s, t in runs if s == biggest))
+        if len(best) < 3 or best.lower() in [o.lower() for o in out]:
+            continue
+        out.append(best[:70])
+        if len(out) >= limit:
+            break
+    return len(names), out
+
+
+def section_html(it):
+    """Builds the long-form body sections for one detail page."""
+    cat = it["cat"]
+    copy = CAT_COPY[cat]
+    n = it.get("slides_n") or 0
+    outline = it.get("outline") or []
+    if outline:
+        inside = "".join("<li>%s</li>" % b for b in outline)
+        lead = (
+            "This deck ships with %d slides on a 16:9 canvas. The outline below is read straight "
+            "from the source file, so the sections listed here are the sections you get after "
+            "download - the five previews above are the opening slides. Anything shown in double "
+            "curly brackets is placeholder copy waiting for your own text." % n)
+    else:
+        inside = "".join("<li>%s</li>" % b for b in (
+            "A cover slide you can rebrand in one click",
+            "Section dividers and an agenda slide",
+            "Content layouts for text, comparison and timelines",
+            "A closing slide with next steps"))
+        lead = ("This deck is built from editable layouts on a 16:9 canvas, so it can be adapted to "
+                "your own content without rebuilding the structure.")
+    steps = "".join("<li>%s</li>" % s for s in GUIDE_STEPS)
+    faq = faq_pairs(it["title"])
+    faq_html = "".join(
+        '<div class="faq-item"><h3>%s</h3><p>%s</p></div>' % (q, a) for q, a in faq)
+    reading = "".join('<li><a href="%s">%s</a></li>' % (u, t) for u, t in READING[cat])
+    facts = [
+        ("Format", "Microsoft PowerPoint (.pptx) — also opens in Google Slides and Keynote"),
+        ("Slides", ("%d slides, 16:9 widescreen" % n) if n else "16:9 widescreen canvas"),
+        ("File size", it["size"] or "under 10 MB"),
+        ("Editing", "Standard shapes and text boxes, no locked master slides"),
+        ("Licence", "Free for personal and commercial use, no attribution required"),
+        ("Download", "Direct .pptx, no account or email address needed"),
+    ]
+    facts_html = "".join("<li><b>%s</b><span>%s</span></li>" % f for f in facts)
+    return dict(inside=inside, steps=steps, faq=faq_html, reading=reading,
+                facts=facts_html, lead=lead, quality=copy["quality"])
 
 CAT_PAGE = """<!doctype html>
 <html lang="en">
@@ -538,14 +737,28 @@ def main():
         kw = "%s, %s, %s, free %s template, free ppt template, free powerpoint template, google slides template" % (
             it["seo"].replace("—", ","), it["title"], it["tag"], it["tag"].lower())
 
+        size = file_size(it["file"])
+        it["size"] = size
+        it["slides_n"], it["outline"] = slide_outline(
+            os.path.join(ROOT, "files", it["file"]))
+        sec = section_html(it)
+        faq_schema = '<script type="application/ld+json">\n%s\n</script>' % json.dumps(
+            {"@context": "https://schema.org", "@type": "FAQPage",
+             "mainEntity": [{"@type": "Question", "name": q,
+                             "acceptedAnswer": {"@type": "Answer", "text": a}}
+                            for q, a in faq_pairs(it["title"])]}, ensure_ascii=False)
+
         html = PAGE.format(
             title=it["title"], seo=it["seo"], page_title=(it["seo"] + " | Slide Vault")
                      if len(it["seo"]) <= 52 else it["seo"],
             desc=it["desc"], body=it["body"],
             kw=kw, slug=it["slug"], site=SITE, cat=it["cat"],
             tag=it["tag"], cat_label=it["cat"].capitalize(), low=it["cat"], file=it["file"], cssver=CSS_VER,
-            size=file_size(it["file"]),
-            slide_count='<span class="tag slides">%d slides</span>' % n if n > 1 else "",
+            size=size, faq_schema=faq_schema,
+            lead=sec["lead"], inside=sec["inside"], quality=sec["quality"],
+            steps=sec["steps"], facts=sec["facts"], faq=sec["faq"], reading=sec["reading"],
+            slide_count='<span class="tag slides">%d slides</span>' % it["slides_n"]
+                        if it["slides_n"] > 1 else "",
             ogimg=(SITE + it["gallery"][0]) if it["gallery"] else "",
             stage_inner=stage_inner,
             thumbs=thumbs,
@@ -565,6 +778,8 @@ def main():
     # free browser tools (tools/<name>/index.html)
     tools_dir = os.path.join(ROOT, "tools")
     if os.path.isdir(tools_dir):
+        if os.path.isfile(os.path.join(tools_dir, "index.html")):
+            urls.append(("/tools/", "0.8", "monthly"))
         for name in sorted(os.listdir(tools_dir)):
             if os.path.isfile(os.path.join(tools_dir, name, "index.html")):
                 urls.append(("/tools/%s/" % name, "0.8", "monthly"))
