@@ -40,6 +40,9 @@ HEADER = """<header class="site-header">
           <a href="/tools/compress-ppt/">Compress PPT</a>
           <a href="/tools/split-ppt/">Split PPT</a>
           <a href="/tools/extract-images/">Extract Images</a>
+          <a href="/tools/remove-notes/">Remove Notes</a>
+          <a href="/tools/clean-metadata/">Clean Metadata</a>
+          <a href="/tools/ppt-stats/">PPT Stats</a>
         </div>
       </div>
       <a href="/about/">About</a>
@@ -227,7 +230,14 @@ def main():
     urls = [("/", "1.0", "weekly"), ("/blog/", "0.8", "weekly"),
             ("/tools/", "0.8", "monthly"),
             ("/about/", "0.4", "yearly"), ("/contact/", "0.4", "yearly"),
-            ("/tools/merge-ppt/", "0.8", "monthly"), ("/tools/compress-ppt/", "0.8", "monthly"), ("/tools/split-ppt/", "0.8", "monthly"), ("/tools/extract-images/", "0.8", "monthly"), ("/privacy/", "0.3", "yearly")]
+            ("/privacy/", "0.3", "yearly")]
+    # Discover every /tools/<dir>/ on disk so new tools are never dropped when
+    # this generator runs on its own.
+    tools_dir = os.path.join(ROOT, "tools")
+    if os.path.isdir(tools_dir):
+        urls += [("/tools/%s/" % n, "0.8", "monthly")
+                 for n in sorted(os.listdir(tools_dir))
+                 if os.path.isfile(os.path.join(tools_dir, n, "index.html"))]
     # Discover every /templates/<dir>/ on disk so category hubs are never dropped
     # when this generator runs on its own (hubs first, then detail pages).
     hubs = ["business", "startup", "marketing", "sales"]
