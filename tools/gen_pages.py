@@ -287,6 +287,7 @@ PAGE = """<!doctype html>
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
       <a href="/templates/education/">Education</a>
+      <a href="/templates/healthcare/">Healthcare</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>
@@ -315,10 +316,10 @@ fetch('/downloads?file={file}').then(r=>r.json()).then(d=>{{
 # (cat, label, seo_title, h1, meta_desc, lead, howto, hub_intro)
 CATS = [
     ("business", "Business",
-     "Free Business Presentation Templates - 21 Editable Corporate Decks",
+     "Free Business Presentation Templates - 19 Editable Corporate Decks",
      "Free Business Presentation Templates",
-     "21 free business presentation templates for corporate reviews, board meetings and strategy offsites. Editable PowerPoint and Google Slides decks, no signup.",
-     "Twenty-one editable business presentation templates for corporate reviews, board meetings, strategy offsites and team updates. Every deck is a real .pptx file that opens cleanly in PowerPoint and Google Slides. No signup, no watermark, and free for personal and commercial use.",
+     "19 free business presentation templates for corporate reviews, board meetings and strategy offsites. Editable PowerPoint and Google Slides decks, no signup.",
+     "Nineteen editable business presentation templates for corporate reviews, board meetings, strategy offsites and team updates. Every deck is a real .pptx file that opens cleanly in PowerPoint and Google Slides. No signup, no watermark, and free for personal and commercial use.",
      "If you are presenting to a board, start with the annual report or corporate template. For internal planning, the strategy or OKR deck fits better. For client-facing work, the proposal decks in the Sales category are a closer match. Teaching and training decks now live under Education. Every template is fully editable, so rebranding colours, fonts and layouts takes a few minutes.",
      "Board decks, quarterly reviews, strategy offsites and all-hands updates all live here."),
     ("startup", "Startup",
@@ -349,9 +350,16 @@ CATS = [
      "Four education presentation templates for the decks teachers, trainers and students actually rebuild: lesson plans, thesis and dissertation defence, staff training courses and workshop sessions. Every file is a plain .pptx, so it opens in PowerPoint, Google Slides or Keynote and stays editable.",
      "For a class you teach weekly, the lesson plan template gives you a reusable structure with objectives, activities and assessment. For a thesis or dissertation defence, use the academic template, which is laid out around the argument rather than around decoration. Corporate trainers should start with the training course deck, and facilitators running a half-day session with the workshop template.",
      "Lesson plans, thesis defences, training courses and the workshops in between."),
+    ("healthcare", "Healthcare",
+     "Free Healthcare Presentation Templates - 5 Medical and Hospital Decks",
+     "Free Healthcare Presentation Templates",
+     "5 free healthcare presentation templates for clinical research readouts, hospital annual reviews, patient education and pharma launches. Editable .pptx, no signup.",
+     "Five healthcare presentation templates for the decks medical teams rebuild every quarter: clinical study readouts, hospital and department yearly reviews, patient education and pharmaceutical launch briefs. Every file is a plain .pptx that opens in PowerPoint and Google Slides and stays editable.",
+     "For reporting a study, the clinical research template is structured around design, endpoints and safety. For a hospital or department yearly review, use the annual report deck. The patient education template fits community and waiting-room settings, and brand teams planning a drug or device launch should start with the pharma launch deck.",
+     "Clinical evidence, hospital operations, patient education and the launches that follow."),
 ]
 
-CSS_VER = "7"
+CSS_VER = "8"
 
 # ---------------------------------------------------------------- detail-page copy
 # Per-category editorial blocks. AdSense rejects sites whose template pages are
@@ -395,6 +403,13 @@ CAT_COPY = {
             "contrast that survives a dim projector. Slides here are built to that rule and export "
             "cleanly to PDF for handouts or a learning management system."),
     },
+    "healthcare": {
+        "quality": (
+            "A healthcare deck usually has two audiences in the room, specialists and everyone "
+            "else. Lead with the evidence, keep statistical claims on their own slides with the "
+            "confidence interval visible, and translate the clinical headline into plain language "
+            "underneath. The layouts here follow that pattern, so findings are never buried."),
+    },
 }
 
 GUIDE_STEPS = [
@@ -428,6 +443,10 @@ READING = {
                    "Exporting slides to PDF for handouts and LMS uploads"),
                   ("/blog/google-slides-vs-powerpoint/",
                    "Google Slides vs PowerPoint in the classroom")],
+    "healthcare": [("/blog/how-to-write-an-annual-report/",
+                    "Writing an annual report that people actually read"),
+                   ("/blog/how-to-convert-ppt-to-pdf/",
+                    "Exporting slides to PDF for distribution")],
 }
 
 
@@ -640,6 +659,7 @@ CAT_PAGE = """<!doctype html>
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
       <a href="/templates/education/">Education</a>
+      <a href="/templates/healthcare/">Healthcare</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>

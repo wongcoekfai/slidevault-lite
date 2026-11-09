@@ -210,7 +210,7 @@ PAGE = """<!doctype html>
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{site}/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css?v=6" />
+<link rel="stylesheet" href="/assets/style.css?v=8" />
 <script type="application/ld+json">
 {faq_schema}
 </script>
@@ -267,6 +267,7 @@ PAGE = """<!doctype html>
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
       <a href="/templates/education/">Education</a>
+      <a href="/templates/healthcare/">Healthcare</a>
       <a href="/blog/">Blog</a>
       <div class="nav-drop">
         <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
@@ -341,6 +342,7 @@ PAGE = """<!doctype html>
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
       <a href="/templates/education/">Education</a>
+      <a href="/templates/healthcare/">Healthcare</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>

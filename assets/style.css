@@ -274,3 +274,11 @@ h2 { font-size: 1.6rem; margin: 36px 0 18px; letter-spacing: -0.01em; }
 .pay-poll label:hover { border-color: #ffffff55; }
 .pay-poll label:has(input:checked) { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-color: transparent; color: #fff; font-weight: 600; }
 .pay-poll input { accent-color: var(--accent); margin: 0; }
+
+/* Fix: .subscribe input { flex:1; min-width:200px } stretched poll radios
+   into 200px boxes, forcing one option per row with detached labels. */
+.subscribe .pay-poll input[type="radio"] {
+  flex: 0 0 auto; min-width: 0; width: 15px; height: 15px;
+  padding: 0; margin: 0; border: 0; border-radius: 0;
+  background: transparent; accent-color: var(--accent-2);
+}

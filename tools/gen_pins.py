@@ -37,6 +37,8 @@ BOARD = {
     "marketing": "Marketing & Brand Decks",
     "startup": "Startup Pitch Decks",
     "sales": "Sales & Proposal Decks",
+    "education": "Education & Teaching Decks",
+    "healthcare": "Healthcare & Medical Decks",
 }
 
 TAGS = {
@@ -44,6 +46,8 @@ TAGS = {
     "marketing": "#powerpoint #marketingtemplate #branding #campaignplanning #slides",
     "startup": "#pitchdeck #startup #fundraising #investordeck #powerpoint",
     "sales": "#salesdeck #proposal #b2bsales #powerpoint #presentationtemplate",
+    "education": "#lessonplan #teachersofpinterest #presentationtemplate #trainingdeck #powerpoint",
+    "healthcare": "#healthcare #medicalpresentation #hospital #clinicalresearch #powerpoint",
 }
 
 

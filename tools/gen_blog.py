@@ -32,6 +32,7 @@ HEADER = """<header class="site-header">
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
       <a href="/templates/education/">Education</a>
+      <a href="/templates/healthcare/">Healthcare</a>
       <a href="/blog/">Blog</a>
       <div class="nav-drop">
         <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
@@ -65,6 +66,7 @@ FOOTER = """<footer class="site-footer">
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
       <a href="/templates/education/">Education</a>
+      <a href="/templates/healthcare/">Healthcare</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>
@@ -96,7 +98,7 @@ POST_PAGE = """<!doctype html>
 <meta name="twitter:title" content="{title}" />
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{image}" />
-<link rel="stylesheet" href="/assets/style.css?v=7" />
+<link rel="stylesheet" href="/assets/style.css?v=8" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"BlogPosting","headline":"{title}","description":"{desc}","image":"{image}","datePublished":"{date}","dateModified":"{date}","author":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"publisher":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{site}/blog/{slug}/"}}}}
@@ -139,7 +141,7 @@ INDEX_PAGE = """<!doctype html>
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="canonical" href="{site}/blog/" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css?v=7" />
+<link rel="stylesheet" href="/assets/style.css?v=8" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"Blog","name":"Slide Vault Blog","url":"{site}/blog/","description":"Presentation tips, pitch deck guides and report writing templates."}}
@@ -242,7 +244,7 @@ def main():
                  if os.path.isfile(os.path.join(tools_dir, n, "index.html"))]
     # Discover every /templates/<dir>/ on disk so category hubs are never dropped
     # when this generator runs on its own (hubs first, then detail pages).
-    hubs = ["business", "startup", "marketing", "sales", "education"]
+    hubs = ["business", "startup", "marketing", "sales", "education", "healthcare"]
     tdir = os.path.join(ROOT, "templates")
     names = ([n for n in sorted(os.listdir(tdir))
               if os.path.isfile(os.path.join(tdir, n, "index.html"))]
