@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+# Binary .pptx download endpoints: no index value, and each crawl costs
+# megabytes of crawl budget. Keep Googlebot on the HTML pages.
+Disallow: /download
+Disallow: /downloads
 
 Sitemap: https://slidevaulte.com/sitemap.xml
