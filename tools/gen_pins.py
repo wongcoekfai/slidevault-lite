@@ -160,8 +160,14 @@ def build_pin(item, cover_path):
     # real slide outline from the .pptx — unique per template, fills the middle.
     # hard-clamped so it can never run into the chips/footer zone
     outline = item.get("outline") or []
+    # drop template placeholders ("[Your Startup Name]", "$XX.X B") — they look
+    # unfinished on a pin; if too few real items remain, skip the block entirely
+    outline = [
+        s for s in outline
+        if "[" not in s and "$XX" not in s and "XXX" not in s
+    ]
     limit = chips_top - 40
-    if outline and y + 44 + 38 <= limit:
+    if len(outline) >= 3 and y + 44 + 38 <= limit:
         y += 26
         f_out = font(FONT_BOLD, 25)
         d.text((pad, y), "SLIDES INCLUDE", font=f_out, fill=ACCENT)
