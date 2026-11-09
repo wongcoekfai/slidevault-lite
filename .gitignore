@@ -6,3 +6,5 @@ node_modules/
 .wrangler/
 marketing/pins/
 marketing/pins/
+__pycache__/
+*.pyc

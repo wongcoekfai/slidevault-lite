@@ -20,6 +20,10 @@ import markdown
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://slidevaulte.com"
+try:
+    from sitemap import write_sitemap
+except ImportError:                       # invoked as `python3 -m tools.gen_blog`
+    from tools.sitemap import write_sitemap
 POSTS_DIR = os.path.join(ROOT, "blog", "posts")
 
 HEADER = """<header class="site-header">
@@ -252,14 +256,9 @@ def main():
     urls += [("/templates/%s/" % n, "0.9", "weekly") for n in names if n in hubs]
     urls += [("/templates/%s/" % n, "0.8", "monthly") for n in names if n not in hubs]
     urls += [("/blog/%s/" % p["slug"], "0.7", "monthly") for p in posts]
-    sm = ['<?xml version="1.0" encoding="UTF-8"?>',
-          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for u, pri, freq in urls:
-        sm.append("  <url><loc>%s%s</loc><changefreq>%s</changefreq><priority>%s</priority></url>"
-                  % (SITE, u, freq, pri))
-    sm.append("</urlset>")
-    open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(sm) + "\n")
-    print("  sitemap rebuilt: %d urls" % len(urls))
+    # sitemap.py adds a real <lastmod> per URL from git history
+    write_sitemap(urls)
+    print("  sitemap rebuilt: %d urls (with lastmod)" % len(urls))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SlideVault · 待收录队列</title>
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;padding:32px 20px 64px;background:#f6f7f9;color:#1c2230;
+ font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-size:24px;margin:0 0 6px}
+.sub{color:#5b6475;margin:0 0 22px}
+.card{background:#fff;border:1px solid #e3e6ec;border-radius:14px;padding:20px 22px;
+ margin-bottom:18px;box-shadow:0 1px 3px rgba(20,30,60,.04)}
+.bar{height:9px;background:#e9ecf2;border-radius:9px;overflow:hidden;margin:12px 0 8px}
+.bar > i{display:block;height:100%;width:0;background:#2563eb;border-radius:9px;
+ transition:width .25s}
+.note{color:#5b6475;font-size:13px}
+table{width:100%;border-collapse:collapse}
+td{padding:11px 8px;border-top:1px solid #eef0f4;vertical-align:middle}
+td.num{width:34px;color:#9aa3b2;font-variant-numeric:tabular-nums}
+.u{color:#1c4fd8;text-decoration:none;word-break:break-all;font-size:13px}
+.u:hover{text-decoration:underline}
+.kind{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:20px;
+ background:#eef2ff;color:#4353a8;font-size:11px;white-space:nowrap}
+.ops{text-align:right;white-space:nowrap;width:280px}
+.btn{display:inline-block;padding:6px 11px;margin-left:6px;border:1px solid #d7dce5;
+ border-radius:8px;background:#fff;color:#33405a;font-size:12px;cursor:pointer;
+ text-decoration:none}
+.btn:hover{border-color:#2563eb;color:#2563eb}
+.btn.primary{background:#2563eb;border-color:#2563eb;color:#fff}
+.btn.primary:hover{background:#1d4ed8;color:#fff}
+.done{margin-left:10px;font-size:12px;color:#5b6475;white-space:nowrap;cursor:pointer}
+.done input{vertical-align:-2px;margin-right:3px}
+tr.ok{opacity:.5} tr.ok .u{text-decoration:line-through}
+code{background:#eef1f6;padding:2px 6px;border-radius:5px;font-size:12px}
+a.ext{color:#2563eb}
+ol{margin:8px 0 0 20px;padding:0} li{margin:6px 0}
+</style></head><body><div class="wrap">
+<h1>待收录队列 · slidevaulte.com</h1>
+<p class="sub">共 17 条新页面待在 Google 提交；全站 sitemap 现有 88 条 URL。</p>
+
+<div class="card">
+  <strong>Google 侧进度</strong>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="note"><span id="count">0 / 17</span> 已提交 · 勾选状态保存在本机浏览器</div>
+</div>
+
+<div class="card">
+  <strong>怎么操作（每条约 10 秒）</strong>
+  <ol>
+    <li>点「打开 GSC」→ 网址检查页会带上该 URL；若未自动填入，点「复制」后粘贴到检查框。</li>
+    <li>检查通过后点 <code>Request indexing / 请求编入索引</code>。</li>
+    <li>回到本页勾选「已提交」。有日配额，提交完当天剩下的次日再点，重复提交不会加快。</li>
+  </ol>
+  <p class="note" style="margin-bottom:0">
+    Bing / Yandex / Seznam / Naver 无需手工：<code>python3 tools/index_queue.py --push</code> 已通过 IndexNow 推送。
+    另外可 <a class="ext" href="https://search.google.com/search-console/sitemaps?resource_id=sc-domain%3Aslidevaulte.com" target="_blank" rel="noopener">在 GSC 重新提交 sitemap.xml</a>（只需一次，之后 Google 会自动重读）。
+  </p>
+</div>
+
+<div class="card" style="padding:8px 12px">
+<table><tbody>
+<tr data-url="https://slidevaulte.com/tools/clean-metadata/">
+  <td class="num">1</td>
+  <td><a class="u" href="https://slidevaulte.com/tools/clean-metadata/" target="_blank" rel="noopener">https://slidevaulte.com/tools/clean-metadata/</a>
+      <span class="kind">工具页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/tools/clean-metadata/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftools%2Fclean-metadata%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/tools/clean-metadata/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/tools/ppt-stats/">
+  <td class="num">2</td>
+  <td><a class="u" href="https://slidevaulte.com/tools/ppt-stats/" target="_blank" rel="noopener">https://slidevaulte.com/tools/ppt-stats/</a>
+      <span class="kind">工具页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/tools/ppt-stats/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftools%2Fppt-stats%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/tools/ppt-stats/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/tools/remove-notes/">
+  <td class="num">3</td>
+  <td><a class="u" href="https://slidevaulte.com/tools/remove-notes/" target="_blank" rel="noopener">https://slidevaulte.com/tools/remove-notes/</a>
+      <span class="kind">工具页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/tools/remove-notes/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftools%2Fremove-notes%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/tools/remove-notes/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/education/">
+  <td class="num">4</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/education/" target="_blank" rel="noopener">https://slidevaulte.com/templates/education/</a>
+      <span class="kind">分类页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/education/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Feducation%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/education/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/healthcare/">
+  <td class="num">5</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/healthcare/" target="_blank" rel="noopener">https://slidevaulte.com/templates/healthcare/</a>
+      <span class="kind">分类页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/healthcare/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fhealthcare%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/healthcare/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/channel-partnership-template/">
+  <td class="num">6</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/channel-partnership-template/" target="_blank" rel="noopener">https://slidevaulte.com/templates/channel-partnership-template/</a>
+      <span class="kind">模板页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/channel-partnership-template/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fchannel-partnership-template%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/channel-partnership-template/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/clinical-research-template/">
+  <td class="num">7</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/clinical-research-template/" target="_blank" rel="noopener">https://slidevaulte.com/templates/clinical-research-template/</a>
+      <span class="kind">模板页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/clinical-research-template/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fclinical-research-template%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/clinical-research-template/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/demo-day-pitch-deck-template/">
+  <td class="num">8</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/demo-day-pitch-deck-template/" target="_blank" rel="noopener">https://slidevaulte.com/templates/demo-day-pitch-deck-template/</a>
+      <span class="kind">模板页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/demo-day-pitch-deck-template/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fdemo-day-pitch-deck-template%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/demo-day-pitch-deck-template/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/hospital-annual-report-template/">
+  <td class="num">9</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/hospital-annual-report-template/" target="_blank" rel="noopener">https://slidevaulte.com/templates/hospital-annual-report-template/</a>
+      <span class="kind">模板页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/hospital-annual-report-template/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fhospital-annual-report-template%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/hospital-annual-report-template/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/pharma-launch-template/">
+  <td class="num">10</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/pharma-launch-template/" target="_blank" rel="noopener">https://slidevaulte.com/templates/pharma-launch-template/</a>
+      <span class="kind">模板页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/pharma-launch-template/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fpharma-launch-template%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/pharma-launch-template/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/pricing-proposal-template/">
+  <td class="num">11</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/pricing-proposal-template/" target="_blank" rel="noopener">https://slidevaulte.com/templates/pricing-proposal-template/</a>
+      <span class="kind">模板页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/pricing-proposal-template/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fpricing-proposal-template%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/pricing-proposal-template/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/product-pitch-deck-template/">
+  <td class="num">12</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/product-pitch-deck-template/" target="_blank" rel="noopener">https://slidevaulte.com/templates/product-pitch-deck-template/</a>
+      <span class="kind">模板页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/product-pitch-deck-template/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fproduct-pitch-deck-template%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/product-pitch-deck-template/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/sales-qbr-template/">
+  <td class="num">13</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/sales-qbr-template/" target="_blank" rel="noopener">https://slidevaulte.com/templates/sales-qbr-template/</a>
+      <span class="kind">模板页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/sales-qbr-template/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fsales-qbr-template%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/sales-qbr-template/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/templates/seed-pitch-deck-template/">
+  <td class="num">14</td>
+  <td><a class="u" href="https://slidevaulte.com/templates/seed-pitch-deck-template/" target="_blank" rel="noopener">https://slidevaulte.com/templates/seed-pitch-deck-template/</a>
+      <span class="kind">模板页</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/templates/seed-pitch-deck-template/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Ftemplates%2Fseed-pitch-deck-template%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/templates/seed-pitch-deck-template/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/blog/how-many-slides-and-words-per-presentation/">
+  <td class="num">15</td>
+  <td><a class="u" href="https://slidevaulte.com/blog/how-many-slides-and-words-per-presentation/" target="_blank" rel="noopener">https://slidevaulte.com/blog/how-many-slides-and-words-per-presentation/</a>
+      <span class="kind">文章</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/blog/how-many-slides-and-words-per-presentation/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Fblog%2Fhow-many-slides-and-words-per-presentation%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/blog/how-many-slides-and-words-per-presentation/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/blog/how-to-remove-metadata-from-powerpoint/">
+  <td class="num">16</td>
+  <td><a class="u" href="https://slidevaulte.com/blog/how-to-remove-metadata-from-powerpoint/" target="_blank" rel="noopener">https://slidevaulte.com/blog/how-to-remove-metadata-from-powerpoint/</a>
+      <span class="kind">文章</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/blog/how-to-remove-metadata-from-powerpoint/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Fblog%2Fhow-to-remove-metadata-from-powerpoint%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/blog/how-to-remove-metadata-from-powerpoint/"> 已提交</label>
+  </td>
+</tr>
+<tr data-url="https://slidevaulte.com/blog/how-to-remove-speaker-notes-from-powerpoint/">
+  <td class="num">17</td>
+  <td><a class="u" href="https://slidevaulte.com/blog/how-to-remove-speaker-notes-from-powerpoint/" target="_blank" rel="noopener">https://slidevaulte.com/blog/how-to-remove-speaker-notes-from-powerpoint/</a>
+      <span class="kind">文章</span></td>
+  <td class="ops">
+    <button class="btn copy" data-url="https://slidevaulte.com/blog/how-to-remove-speaker-notes-from-powerpoint/">复制</button>
+    <a class="btn primary" href="https://search.google.com/search-console/inspect?resource_id=sc-domain%3Aslidevaulte.com&amp;id=https%3A%2F%2Fslidevaulte.com%2Fblog%2Fhow-to-remove-speaker-notes-from-powerpoint%2F" target="_blank" rel="noopener">打开 GSC</a>
+    <label class="done"><input type="checkbox" data-url="https://slidevaulte.com/blog/how-to-remove-speaker-notes-from-powerpoint/"> 已提交</label>
+  </td>
+</tr></tbody></table>
+</div>
+<p class="note">队列来自 sitemap.xml 与基线提交的差量；全部提交完可运行
+<code>python3 tools/index_queue.py --mark-all</code> 清空待办。</p>
+</div>
+<script>
+(function(){
+  var KEY='sv_index_queue_v2', state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  var boxes=[].slice.call(document.querySelectorAll('.done input'));
+  function sync(){
+    var done=boxes.filter(function(b){return b.checked}).length;
+    document.getElementById('count').textContent=done+' / '+boxes.length;
+    document.getElementById('bar').style.width=(boxes.length?done*100/boxes.length:0)+'%';
+  }
+  boxes.forEach(function(b){
+    b.checked=!!state[b.dataset.url];
+    b.closest('tr').classList.toggle('ok',b.checked);
+    b.addEventListener('change',function(){
+      state[b.dataset.url]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
+      b.closest('tr').classList.toggle('ok',b.checked);
+      sync();
+    });
+  });
+  [].slice.call(document.querySelectorAll('.copy')).forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var t=document.createElement('textarea');t.value=btn.dataset.url;
+      document.body.appendChild(t);t.select();
+      try{document.execCommand('copy');btn.textContent='已复制'}catch(e){btn.textContent='复制失败'}
+      document.body.removeChild(t);
+      setTimeout(function(){btn.textContent='复制'},1400);
+    });
+  });
+  sync();
+})();
+</script></body></html>

@@ -24,6 +24,10 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://slidevaulte.com"
+try:
+    from sitemap import write_sitemap
+except ImportError:                       # invoked as `python3 -m tools.gen_pages`
+    from tools.sitemap import write_sitemap
 IMG_EXT = (".jpg", ".jpeg", ".png", ".webp")
 MAX_WIDTH = 1600
 
@@ -851,13 +855,8 @@ def main():
     if os.path.isdir(blog_dir):
         posts = sorted(f[:-3] for f in os.listdir(blog_dir) if f.endswith(".md"))
         urls += [("/blog/%s/" % p, "0.7", "monthly") for p in posts]
-    sm = ['<?xml version="1.0" encoding="UTF-8"?>',
-          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for u, p, f in urls:
-        sm.append("  <url><loc>%s%s</loc><changefreq>%s</changefreq><priority>%s</priority></url>"
-                  % (SITE, u, f, p))
-    sm.append("</urlset>")
-    open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(sm) + "\n")
+    # sitemap.py adds a real <lastmod> per URL from git history
+    write_sitemap(urls)
 
     total = sum(len(it["gallery"]) for it in items)
     print("\ndone: %d detail pages | %d images total | %d sitemap urls"
