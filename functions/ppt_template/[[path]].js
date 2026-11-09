@@ -7,6 +7,6 @@ export async function onRequestGet({ request }) {
   const url = new URL(request.url);
   const rest = decodeURIComponent(url.pathname.replace(/^\/ppt_template\/?/, ""));
   const slug = rest.toLowerCase().replace(/^\/+|\/+$/g, "");
-  const target = slug ? `/templates/${slug}/` : "/templates/";
+  const target = slug ? `/templates/${slug}/` : "/#templates";
   return Response.redirect(new URL(target, url.origin).toString(), 301);
 }
