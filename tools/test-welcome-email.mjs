@@ -83,6 +83,18 @@ const check = (cond, msg) => { console.log((cond ? "  ✓ " : "  ✗ ") + msg); 
   check(payload.textContent.includes("Unsubscribe:"), "plain-text part present");
   check(Boolean(payload.headers["List-Unsubscribe"]), "List-Unsubscribe header set");
   check(calls[0].init.headers["api-key"] === "xkeysib-test", "api-key header uses the secret");
+  check(!JSON.parse(calls[0].init.body).htmlContent.includes("Slide Vault, 12 "), "no postal address in footer when ORG_ADDRESS unset");
+}
+
+// 1b. ORG_ADDRESS set → footer carries the physical postal address
+{
+  calls.length = 0;
+  const env = { BREVO_API_KEY: "xkeysib-test", ORG_ADDRESS: "12 Futian Rd, Shenzhen 518000, China", DB: fakeDB(1) };
+  await onRequestPost({ env, request: post({ email: "org@example.com" }), waitUntil: collect });
+  await settle();
+  const payload = JSON.parse(calls[0].init.body);
+  check(payload.htmlContent.includes("Slide Vault, 12 Futian Rd"), "html footer carries the postal address");
+  check(payload.textContent.includes("Slide Vault, 12 Futian Rd"), "text footer carries the postal address");
 }
 
 // 2. duplicate address → no email

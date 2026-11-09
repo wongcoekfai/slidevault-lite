@@ -33,7 +33,7 @@ export function welcomeSubject() {
   return "Your free PowerPoint templates (+ 7 browser tools)";
 }
 
-export function welcomeText(unsub) {
+export function welcomeText(unsub, orgAddress) {
   return [
     "YOUR FREE POWERPOINT TEMPLATES ARE READY",
     "=========================================",
@@ -72,10 +72,11 @@ export function welcomeText(unsub) {
     "You are receiving this because you subscribed at slidevaulte.com.",
     "Unsubscribe: " + unsub,
     "About Slide Vault: " + SITE + "/about/",
+    ...(orgAddress ? ["Slide Vault, " + orgAddress] : []),
   ].join("\n");
 }
 
-export function welcomeHtml(unsub) {
+export function welcomeHtml(unsub, orgAddress) {
   const link = (href, label) =>
     '<a href="' + href + '" style="color:#3b82f6;text-decoration:none;">' + label + "</a>";
 
@@ -133,6 +134,7 @@ export function welcomeHtml(unsub) {
       You are receiving this because you subscribed at slidevaulte.com.<br>
       <a href="${unsub}" style="color:#8a94a8;">Unsubscribe</a> &nbsp;&middot;&nbsp;
       <a href="${SITE}/about/" style="color:#8a94a8;text-decoration:none;">About Slide Vault</a>
+      ${orgAddress ? `<br>Slide Vault, ${orgAddress}` : ""}
     </p>
   </td></tr>
 </table>
@@ -151,12 +153,17 @@ export async function sendWelcome(env, email, unsub) {
     ? { name: (m[1] || "Slide Vault").trim() || "Slide Vault", email: m[2].trim() }
     : { name: "Slide Vault", email: fromRaw.trim() };
 
+  // CAN-SPAM / anti-spam rules: every commercial email must carry a valid
+  // physical postal address. Set ORG_ADDRESS once the Brevo organization
+  // address is chosen — until then the footer simply omits it.
+  const orgAddress = (env.ORG_ADDRESS || "").trim();
+
   const payload = {
     sender,
     to: [{ email }],
     subject: welcomeSubject(),
-    htmlContent: welcomeHtml(unsub),
-    textContent: welcomeText(unsub),
+    htmlContent: welcomeHtml(unsub, orgAddress),
+    textContent: welcomeText(unsub, orgAddress),
     headers: {
       "List-Unsubscribe": "<" + unsub + ">",
       "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
