@@ -277,6 +277,7 @@ PAGE = """<!doctype html>
       <a href="/templates/marketing/">Marketing</a>
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
+      <a href="/templates/education/">Education</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>
@@ -305,11 +306,11 @@ fetch('/downloads?file={file}').then(r=>r.json()).then(d=>{{
 # (cat, label, seo_title, h1, meta_desc, lead, howto, hub_intro)
 CATS = [
     ("business", "Business",
-     "Free Business Presentation Templates - 25 Editable Corporate Decks",
+     "Free Business Presentation Templates - 21 Editable Corporate Decks",
      "Free Business Presentation Templates",
-     "25 free business presentation templates for corporate reviews, board meetings and strategy offsites. Editable PowerPoint and Google Slides decks, no signup.",
-     "Twenty-five editable business presentation templates for corporate reviews, board meetings, strategy offsites and team updates. Every deck is a real .pptx file that opens cleanly in PowerPoint and Google Slides. No signup, no watermark, and free for personal and commercial use.",
-     "If you are presenting to a board, start with the annual report or corporate template. For internal planning, the strategy or OKR deck fits better. For client-facing work, the proposal decks in the Sales category are a closer match. Every template is fully editable, so rebranding colours, fonts and layouts takes a few minutes.",
+     "21 free business presentation templates for corporate reviews, board meetings and strategy offsites. Editable PowerPoint and Google Slides decks, no signup.",
+     "Twenty-one editable business presentation templates for corporate reviews, board meetings, strategy offsites and team updates. Every deck is a real .pptx file that opens cleanly in PowerPoint and Google Slides. No signup, no watermark, and free for personal and commercial use.",
+     "If you are presenting to a board, start with the annual report or corporate template. For internal planning, the strategy or OKR deck fits better. For client-facing work, the proposal decks in the Sales category are a closer match. Teaching and training decks now live under Education. Every template is fully editable, so rebranding colours, fonts and layouts takes a few minutes.",
      "Board decks, quarterly reviews, strategy offsites and all-hands updates all live here."),
     ("startup", "Startup",
      "Free Startup Pitch Deck Templates - 5 Investor-Ready Decks",
@@ -332,6 +333,13 @@ CATS = [
      "Three sales presentation templates for proposals, project scoping and performance reviews. Each is structured around the decision your buyer or leadership team needs to make, rather than around your product features.",
      "Use the sales proposal template after discovery, when the buyer needs pricing options and a clear next step. The project proposal deck fits internal approval and scoping. For recurring reporting to leadership, use the sales performance template.",
      "Proposals that close, scoping that gets approved, and the reviews that follow."),
+    ("education", "Education",
+     "Free Education Presentation Templates - Lesson, Academic and Training Decks",
+     "Free Education Presentation Templates",
+     "4 free education presentation templates: lesson plans, academic defence, staff training and workshop decks. Editable PowerPoint and Google Slides, no signup.",
+     "Four education presentation templates for the decks teachers, trainers and students actually rebuild: lesson plans, thesis and dissertation defence, staff training courses and workshop sessions. Every file is a plain .pptx, so it opens in PowerPoint, Google Slides or Keynote and stays editable.",
+     "For a class you teach weekly, the lesson plan template gives you a reusable structure with objectives, activities and assessment. For a thesis or dissertation defence, use the academic template, which is laid out around the argument rather than around decoration. Corporate trainers should start with the training course deck, and facilitators running a half-day session with the workshop template.",
+     "Lesson plans, thesis defences, training courses and the workshops in between."),
 ]
 
 CSS_VER = "6"
@@ -371,6 +379,13 @@ CAT_COPY = {
             "keep to that rule, so the buyer never has to hunt for the number they actually care "
             "about."),
     },
+    "education": {
+        "quality": (
+            "Teaching decks are read from the back row of a room or a laptop screen at home, so "
+            "legibility beats decoration: one idea per slide, body text no smaller than 24pt, and "
+            "contrast that survives a dim projector. Slides here are built to that rule and export "
+            "cleanly to PDF for handouts or a learning management system."),
+    },
 }
 
 GUIDE_STEPS = [
@@ -400,6 +415,10 @@ READING = {
     "sales": [("/blog/how-to-write-a-sales-proposal/", "How to write a sales proposal"),
               ("/blog/how-to-write-a-project-proposal/",
                "Writing a project proposal that gets approved")],
+    "education": [("/blog/how-to-convert-ppt-to-pdf/",
+                   "Exporting slides to PDF for handouts and LMS uploads"),
+                  ("/blog/google-slides-vs-powerpoint/",
+                   "Google Slides vs PowerPoint in the classroom")],
 }
 
 
@@ -567,7 +586,7 @@ CAT_PAGE = """<!doctype html>
   <div class="grid">{cards}</div>
 
   <section class="prose">
-    <h2>How to choose a {low} template</h2>
+    <h2>How to choose the right {low} template</h2>
     <p>{howto}</p>
     <p>{hub_intro} Every file is a standard .pptx, so you can open it in PowerPoint, Google Slides or Keynote and edit freely. If you only need one deck, downloading directly from any template page is faster than browsing.</p>
   </section>
@@ -602,6 +621,7 @@ CAT_PAGE = """<!doctype html>
       <a href="/templates/marketing/">Marketing</a>
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
+      <a href="/templates/education/">Education</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>

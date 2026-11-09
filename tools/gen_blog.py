@@ -31,6 +31,7 @@ HEADER = """<header class="site-header">
       <a href="/templates/marketing/">Marketing</a>
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
+      <a href="/templates/education/">Education</a>
       <a href="/blog/">Blog</a>
       <div class="nav-drop">
         <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
@@ -63,6 +64,7 @@ FOOTER = """<footer class="site-footer">
       <a href="/templates/marketing/">Marketing</a>
       <a href="/templates/startup/">Startup</a>
       <a href="/templates/sales/">Sales</a>
+      <a href="/templates/education/">Education</a>
       <a href="/blog/">Blog</a>
       <a href="/tools/">PPT Tools</a>
       <a href="/about/">About</a>
@@ -240,7 +242,7 @@ def main():
                  if os.path.isfile(os.path.join(tools_dir, n, "index.html"))]
     # Discover every /templates/<dir>/ on disk so category hubs are never dropped
     # when this generator runs on its own (hubs first, then detail pages).
-    hubs = ["business", "startup", "marketing", "sales"]
+    hubs = ["business", "startup", "marketing", "sales", "education"]
     tdir = os.path.join(ROOT, "templates")
     names = ([n for n in sorted(os.listdir(tdir))
               if os.path.isfile(os.path.join(tdir, n, "index.html"))]
