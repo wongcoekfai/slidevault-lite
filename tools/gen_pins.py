@@ -213,9 +213,12 @@ def main():
         pin.save(os.path.join(OUT, fname), "JPEG", quality=88, optimize=True)
 
         title = ("%s — Free PowerPoint Template" % it["title"])[:95]
+        # template descriptions already end with a period — strip it so the
+        # caption does not read "…and a signature-to-first-co-sale plan.. Free,"
+        lede = it["desc"].rstrip().rstrip(".").rstrip()
         desc = ("%s. Free, fully editable .pptx that opens in PowerPoint and Google Slides — "
                 "no signup, no watermark, free for commercial use. %s"
-                % (it["desc"], TAGS[it["cat"]]))[:480]
+                % (lede, TAGS[it["cat"]]))[:480]
         rows.append({
             "image": fname,
             "title": title,
