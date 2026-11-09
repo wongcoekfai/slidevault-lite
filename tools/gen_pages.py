@@ -359,7 +359,7 @@ CATS = [
      "Clinical evidence, hospital operations, patient education and the launches that follow."),
 ]
 
-CSS_VER = "8"
+CSS_VER = "9"
 
 # ---------------------------------------------------------------- detail-page copy
 # Per-category editorial blocks. AdSense rejects sites whose template pages are

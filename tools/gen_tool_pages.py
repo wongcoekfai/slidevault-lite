@@ -49,6 +49,7 @@ TOOLS = [
               "pages are deleted from the package, so the text cannot reappear "
               "through \"show notes\" or a different viewer. Slide visuals, "
               "animations and layouts are untouched.",
+        guide=("how-to-remove-speaker-notes-from-powerpoint", "How to remove speaker notes from a PowerPoint (every method, compared)"),
         faq=[
             ("Does removing notes change the slides?",
              "No. Only the notes pages are removed. Slide layouts, fonts, colours, "
@@ -107,6 +108,7 @@ TOOLS = [
         extra="The tool shows you a report of every value it removed, so you can "
               "verify the result before you share the file. Slide content, design "
               "and structure are not touched in any way.",
+        guide=("how-to-remove-metadata-from-powerpoint", "How to remove your name and metadata from a PowerPoint file"),
         faq=[
             ("Which properties get removed?",
              "Author (dc:creator), last-saved-by (cp:lastModifiedBy), company, "
@@ -165,6 +167,7 @@ TOOLS = [
         extra="For multi-deck drops you get one fact sheet per file, which makes "
               "it easy to compare candidate decks before a pitch or to audit a "
               "folder full of presentations.",
+        guide=("how-many-slides-and-words-per-presentation", "How many slides and words a presentation should have"),
         faq=[
             ("Is anything uploaded or changed?",
              "No on both counts. The file is read in your browser's memory, "
@@ -210,7 +213,7 @@ PAGE = """<!doctype html>
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{site}/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css?v=8" />
+<link rel="stylesheet" href="/assets/style.css?v=9" />
 <script type="application/ld+json">
 {faq_schema}
 </script>
@@ -321,6 +324,8 @@ PAGE = """<!doctype html>
   <p>{why}</p>
   <p>{extra}</p>
 
+  {guide}
+
   <h2>FAQ</h2>
   <div class="tool-faq">{faq}</div>
 
@@ -374,10 +379,13 @@ def main():
                             for q, a in t["faq"]]}, ensure_ascii=False)
         steps = "".join("<li>%s</li>" % s for s in t["steps"])
         faq = "".join('<h3>%s</h3><p>%s</p>' % (q, a) for q, a in t["faq"])
+        guide = ('<p class="hint"><b>Full walkthrough:</b> '
+                 '<a href="/blog/%s/" style="color:var(--accent-2);">%s</a></p>'
+                 % t["guide"]) if t.get("guide") else ""
         html = PAGE.format(
             title=t["title"], desc=t["desc"], kw=t["kw"], og=t["og"],
             slug=t["slug"], site=SITE, h1=t["h1"], lead=t["lead"], icon=t["icon"],
-            steps=steps, why=t["why"], extra=t["extra"], faq=faq,
+            steps=steps, why=t["why"], extra=t["extra"], faq=faq, guide=guide,
             faq_schema=faq_schema,
             scripts=SCRIPTS.format(logic=t["slug"]))
         d = os.path.join(ROOT, "tools", t["slug"])

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How to Remove Your Name and Metadata From a PowerPoint File</title>
+<meta name="description" content="Every .pptx carries an author, a company, a "last saved by" and often custom properties from the template it started life in. Here is where that data lives and four ways to strip it." />
+<meta property="og:title" content="How to Remove Your Name and Metadata From a PowerPoint File" />
+<meta property="og:description" content="Every .pptx carries an author, a company, a "last saved by" and often custom properties from the template it started life in. Here is where that data lives and four ways to strip it." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://slidevaulte.com/blog/how-to-remove-metadata-from-powerpoint/" />
+<meta property="og:image" content="https://slidevaulte.com/assets/img/AETHER-Financial-Consulting-Template.jpg" />
+<meta property="article:published_time" content="2026-11-09" />
+<link rel="canonical" href="https://slidevaulte.com/blog/how-to-remove-metadata-from-powerpoint/" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="How to Remove Your Name and Metadata From a PowerPoint File" />
+<meta name="twitter:description" content="Every .pptx carries an author, a company, a "last saved by" and often custom properties from the template it started life in. Here is where that data lives and four ways to strip it." />
+<meta name="twitter:image" content="https://slidevaulte.com/assets/img/AETHER-Financial-Consulting-Template.jpg" />
+<link rel="stylesheet" href="/assets/style.css?v=9" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"How to Remove Your Name and Metadata From a PowerPoint File","description":"Every .pptx carries an author, a company, a "last saved by" and often custom properties from the template it started life in. Here is where that data lives and four ways to strip it.","image":"https://slidevaulte.com/assets/img/AETHER-Financial-Consulting-Template.jpg","datePublished":"2026-11-09","dateModified":"2026-11-09","author":{"@type":"Organization","name":"Slide Vault","url":"https://slidevaulte.com/"},"publisher":{"@type":"Organization","name":"Slide Vault","url":"https://slidevaulte.com/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://slidevaulte.com/blog/how-to-remove-metadata-from-powerpoint/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://slidevaulte.com/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://slidevaulte.com/blog/"},{"@type":"ListItem","position":3,"name":"How to Remove Your Name and Metadata From a PowerPoint File"}]}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/">Slide<span>Vault</span></a>
+    <nav>
+      <a href="/#templates">Templates</a>
+      <a href="/templates/business/">Business</a>
+      <a href="/templates/marketing/">Marketing</a>
+      <a href="/templates/startup/">Startup</a>
+      <a href="/templates/sales/">Sales</a>
+      <a href="/templates/education/">Education</a>
+      <a href="/templates/healthcare/">Healthcare</a>
+      <a href="/blog/">Blog</a>
+      <div class="nav-drop">
+        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
+        <div class="nav-menu">
+          <a href="/tools/">All PPT Tools</a>
+          <a href="/tools/merge-ppt/">Merge PPT</a>
+          <a href="/tools/compress-ppt/">Compress PPT</a>
+          <a href="/tools/split-ppt/">Split PPT</a>
+          <a href="/tools/extract-images/">Extract Images</a>
+          <a href="/tools/remove-notes/">Remove Notes</a>
+          <a href="/tools/clean-metadata/">Clean Metadata</a>
+          <a href="/tools/ppt-stats/">PPT Stats</a>
+        </div>
+      </div>
+      <a href="/about/">About</a>
+      <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
+    </nav>
+  </div>
+</header>
+<main class="container detail">
+  <p class="crumbs"><a href="/blog/">Blog</a> / <b>How to Remove Your Name and Metadata From a PowerPoint File</b></p>
+  <h1>How to Remove Your Name and Metadata From a PowerPoint File</h1>
+  <div class="meta-row"><span class="tag">2026-11-09</span><span class="tag cat">5 min read</span></div>
+  <section class="prose blog-post">
+<p>You built the deck on your old employer's template. It looks clean — your logo, your colours, your content. Then someone opens <strong>File → Info</strong> and reads <em>Company: the company you left two years ago</em>, next to a <strong>Last Modified By</strong> with a name that is not yours.</p>
+<p>That panel is not decoration. Every PowerPoint file carries a document-properties block, and most of it was written by the template before you typed a word.</p>
+<h2>Where the paper trail lives</h2>
+<p>Right-click the file, choose <strong>Properties → Details</strong> without opening it, and you can already see the trail. Inside the <code>.pptx</code> package it sits in three small XML parts:</p>
+<ul>
+<li><code>docProps/core.xml</code> — author (<code>dc:creator</code>), last modified by (<code>cp:lastModifiedBy</code>), revision, created and modified timestamps</li>
+<li><code>docProps/app.xml</code> — company, manager, template name, slide count, total editing time</li>
+<li><code>docProps/custom.xml</code> — anything the template's author added: client names, project codes, an internal classification tag</li>
+</ul>
+<p>None of it appears on a slide. All of it is readable by anyone who receives the file, and searchable by the tools that index shared drives and applicant tracking systems.</p>
+<h2>What actually matters</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Why it bites</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Author</td>
+<td>Your name, or the name of whoever created the original template</td>
+</tr>
+<tr>
+<td>Last saved by</td>
+<td>Whoever touched the file last — often rewritten silently on save</td>
+</tr>
+<tr>
+<td>Company / Manager</td>
+<td>Reveals your employer, or a client you are not allowed to name</td>
+</tr>
+<tr>
+<td>Revision, editing time</td>
+<td>Says how many drafts exist and how long you spent. Oddly revealing in a submission</td>
+</tr>
+<tr>
+<td>Custom properties</td>
+<td>Free-text fields, rarely audited, frequently left over from someone else's project</td>
+</tr>
+</tbody>
+</table>
+<h2>Method 1: Clear the fields in the Info panel</h2>
+<p><strong>File → Info</strong> shows the properties on the right. Click a value and you can usually overwrite it; <strong>Properties → Advanced Properties</strong> exposes the full dialog.</p>
+<p>The catch: <code>lastModifiedBy</code> is rewritten the moment you save, using whichever Microsoft account PowerPoint is signed into. You clear it, save, and it comes back with your name. For a file you are about to hand to a stranger, this method is more effort than it is worth.</p>
+<h2>Method 2: Document Inspector (desktop PowerPoint)</h2>
+<ol>
+<li><strong>File → Info → Check for Issues → Inspect Document</strong></li>
+<li>Tick <strong>Document Properties and Personal Information</strong></li>
+<li><strong>Inspect</strong>, then <strong>Remove All</strong></li>
+<li>Save</li>
+</ol>
+<p>This is the official route and it works — it empties author, last-saved-by, company and custom properties in one pass. It also requires the desktop app, and it edits the file you have open, so run it on a copy. While you are in there, tick <strong>Comments and Revisions</strong> and <strong>Presentation Notes</strong> too: they are a different kind of leak with the same cause (see <a href="https://slidevaulte.com/blog/how-to-remove-speaker-notes-from-powerpoint/">removing speaker notes</a>).</p>
+<h2>Method 3: Make it automatic in the Trust Center</h2>
+<p><strong>File → Options → Trust Center → Trust Center Settings → Privacy Options</strong>, then tick <strong>Remove personal information from file properties on save</strong>.</p>
+<p>From then on, every file you save on that machine is scrubbed without asking. It is the right setting for anyone who sends decks to clients regularly. Two limits: it only applies to that machine and that Office profile, and it does nothing for the deck you already sent from your laptop last month.</p>
+<h2>Method 4: Edit the properties block directly</h2>
+<p>Unzip the <code>.pptx</code>, edit the three <code>docProps/*.xml</code> files in a text editor, rezip. Precise, scriptable, and easy to corrupt: OOXML is strict about element order and content types, and a malformed <code>core.xml</code> gets you a "PowerPoint found a problem with content" dialog on the recipient's machine.</p>
+<p>Worth it only if you are automating a pipeline. For a one-off deck, use Method 2 or 5.</p>
+<h2>Method 5: Clean it in the browser, including batches</h2>
+<p>Our free <a href="https://slidevaulte.com/tools/clean-metadata/">Clean Metadata tool</a> is the batch version. Drop in one file or forty, press the button, and it rewrites <code>docProps</code> inside your browser: author, last-saved-by, company, manager and custom properties are removed, and you get a report of every value it stripped so you can verify before sending.</p>
+<p>Multiple files come back as a ZIP. Nothing is uploaded — the deck is unpacked in browser memory and rewritten there. Slide content, design, fonts and dates inside the slides are untouched; the file keeps a valid structure and opens in PowerPoint, Google Slides and Keynote without a warning.</p>
+<h2>When this is not optional</h2>
+<ul>
+<li><strong>Job applications.</strong> Applicant tracking systems index document properties. A deck built on your current employer's template, submitted for a role elsewhere, has their name in it.</li>
+<li><strong>Template resale and licensing.</strong> Stock marketplaces reject submissions that still carry the original designer's author and company fields.</li>
+<li><strong>Client work under NDA.</strong> The custom properties field is where agencies leave the internal project code.</li>
+<li><strong>Anonymous review and blind submissions.</strong> Conference and grant systems often strip the first page and nothing else.</li>
+<li><strong>Anything going to a competitor.</strong> Template name and editing time tell them how the deck was made and how long you spent.</li>
+</ul>
+<h2>One honest caveat</h2>
+<p>Cleaning metadata does not make a deck anonymous in any deeper sense. Fonts, image sources, phrasing quirks and the file's creation date are all still there, and the timestamp on the original build stays in the slide XML. If identity genuinely cannot leak, start from a blank file created on the machine you are sending from — and clean that one too.</p>
+<p>Otherwise, spend the thirty seconds. The properties block is the part of the deck you never look at, which is exactly why it is worth a look before someone else does.</p>
+  </section>
+  <section class="prose">
+    <h2>Get the free templates</h2>
+    <p>Every template mentioned here is free to download and works with PowerPoint and Google Slides.</p>
+    <div class="detail-actions"><a class="btn btn-primary" href="/#templates">Browse all free templates</a><a class="btn btn-ghost" href="/blog/">More guides</a></div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="container foot">
+    <div>
+      <b>Slide<span>Vault</span></b>
+      <p class="hint">Free PowerPoint &amp; Google Slides templates for business and education.</p>
+    </div>
+    <div class="foot-links">
+      <a href="/#templates">Templates</a>
+      <a href="/templates/business/">Business</a>
+      <a href="/templates/marketing/">Marketing</a>
+      <a href="/templates/startup/">Startup</a>
+      <a href="/templates/sales/">Sales</a>
+      <a href="/templates/education/">Education</a>
+      <a href="/templates/healthcare/">Healthcare</a>
+      <a href="/blog/">Blog</a>
+      <a href="/tools/">PPT Tools</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="https://tools.slidevaulte.com/">Drainage Calculators</a>
+    </div>
+  </div>
+  <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
+</footer>
+<script src="/assets/nav.js?v=1" defer></script>
+</body>
+</html>
