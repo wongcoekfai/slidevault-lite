@@ -208,6 +208,15 @@ PAGE = """<!doctype html>
     <p>Join our list and we'll send you every Slide Vault deck in one drop — plus new releases.</p>
     <form action="/subscribe" method="POST" class="subscribe compact">
       <input type="hidden" name="source" value="bundle_detail" />
+      <div class="pay-poll">
+        <p class="q">Quick question — if we launch paid extras, what would you buy? <i>(optional)</i></p>
+        <div class="opts">
+          <label><input type="radio" name="want" value="premium-templates" /> 💎 Premium templates ($3–9)</label>
+          <label><input type="radio" name="want" value="pro-tools" /> ⚡ Pro tools (batch, no limits)</label>
+          <label><input type="radio" name="want" value="membership" /> 🎟️ All-access membership</label>
+          <label><input type="radio" name="want" value="nothing" /> 🙂 Nothing — free is enough</label>
+        </div>
+      </div>
       <input type="email" name="email" placeholder="you@company.com" required />
       <button class="btn btn-primary" type="submit">Send me the bundle</button>
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
@@ -342,7 +351,7 @@ CATS = [
      "Lesson plans, thesis defences, training courses and the workshops in between."),
 ]
 
-CSS_VER = "6"
+CSS_VER = "7"
 
 # ---------------------------------------------------------------- detail-page copy
 # Per-category editorial blocks. AdSense rejects sites whose template pages are
@@ -601,6 +610,15 @@ CAT_PAGE = """<!doctype html>
     <p>Join our list and we will send every Slide Vault deck in one drop, plus new releases.</p>
     <form action="/subscribe" method="POST" class="subscribe compact">
       <input type="hidden" name="source" value="cat_{cat}" />
+      <div class="pay-poll">
+        <p class="q">Quick question — if we launch paid extras, what would you buy? <i>(optional)</i></p>
+        <div class="opts">
+          <label><input type="radio" name="want" value="premium-templates" /> 💎 Premium templates ($3–9)</label>
+          <label><input type="radio" name="want" value="pro-tools" /> ⚡ Pro tools (batch, no limits)</label>
+          <label><input type="radio" name="want" value="membership" /> 🎟️ All-access membership</label>
+          <label><input type="radio" name="want" value="nothing" /> 🙂 Nothing — free is enough</label>
+        </div>
+      </div>
       <input type="email" name="email" placeholder="you@company.com" required />
       <button class="btn btn-primary" type="submit">Send me the bundle</button>
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />

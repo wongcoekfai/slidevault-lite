@@ -4,6 +4,10 @@
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Pay-interest poll answers (optional radio in subscribe forms).
+// Whitelist — anything else is dropped, so the column can never hold junk.
+const WANTS = new Set(["premium-templates", "pro-tools", "membership", "nothing"]);
+
 export async function onRequestPost(context) {
   const { env, request } = context;
 
@@ -27,19 +31,32 @@ export async function onRequestPost(context) {
 
   const source = (params.get("source") || "newsletter").slice(0, 32);
 
-  // Defensive: record the lead source if the D1 table has a `source` column;
-  // if not (column not added yet), fall back to the original insert so signups never break.
+  const rawWant = (params.get("want") || "").trim();
+  const want = WANTS.has(rawWant) ? rawWant : "";
+
+  // Storage strategy, most specific first:
+  //  1. email + created_at + source + want   (after "ALTER TABLE subscribers ADD COLUMN want TEXT")
+  //  2. no want column yet — fold the answer into source ("bundle_home__pro-tools") so the
+  //     poll data is still captured with zero migration
+  //  3. original insert — subscribe never breaks
   try {
     await env.DB.prepare(
-      "INSERT OR IGNORE INTO subscribers (email, created_at, source) VALUES (?, ?, ?)"
-    ).bind(email, Date.now(), source).run();
+      "INSERT OR IGNORE INTO subscribers (email, created_at, source, want) VALUES (?, ?, ?, ?)"
+    ).bind(email, Date.now(), source, want || null).run();
   } catch (e) {
     try {
+      const source2 = want ? `${source}__${want}` : source;
       await env.DB.prepare(
-        "INSERT OR IGNORE INTO subscribers (email, created_at) VALUES (?, ?)"
-      ).bind(email, Date.now()).run();
+        "INSERT OR IGNORE INTO subscribers (email, created_at, source) VALUES (?, ?, ?)"
+      ).bind(email, Date.now(), source2).run();
     } catch (e2) {
-      return htmlResponse(500, "Something went wrong. Please try again later.");
+      try {
+        await env.DB.prepare(
+          "INSERT OR IGNORE INTO subscribers (email, created_at) VALUES (?, ?)"
+        ).bind(email, Date.now()).run();
+      } catch (e3) {
+        return htmlResponse(500, "Something went wrong. Please try again later.");
+      }
     }
   }
 
