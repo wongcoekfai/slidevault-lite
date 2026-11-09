@@ -1,5 +1,6 @@
-# Old WordPress template URLs -> new static detail pages (301)
-/ppt_template/*  /templates/:splat/  301
+# Old WordPress template URLs -> new static detail pages: handled by
+# functions/ppt_template/[[path]].js (WP slugs were Capitalized; :splat
+# preserves case and sent those 301s to 404s — the function lowercases first).
 
 # Old WordPress utility pages -> homepage sections
 /shop-products/  /#templates  301
