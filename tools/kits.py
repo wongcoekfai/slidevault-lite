@@ -38,6 +38,7 @@ KITS = [
             "sales-proposal-template",
             "pricing-proposal-template",
             "project-proposal-template",
+            "client-onboarding-deck-template",
             "sales-qbr-template",
             "channel-partnership-template",
         ],
@@ -81,6 +82,21 @@ KITS = [
             "workshop-presentation-template",
             "training-course-template",
             "academic-defense-template",
+        ],
+    ),
+    dict(
+        id="recurring",
+        name="Operating Rhythm Kit",
+        eyebrow="Weekly / monthly / quarterly",
+        desc="The five decks you rebuild on a schedule — weekly update, monthly "
+             "review, quarterly OKR check, board pack and department report — "
+             "all in one consistent format, so next month takes ten minutes.",
+        slugs=[
+            "weekly-status-update-template",
+            "monthly-business-review-template",
+            "okr-quarterly-review-template",
+            "board-meeting-pack-template",
+            "department-monthly-report-template",
         ],
     ),
 ]

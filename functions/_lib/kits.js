@@ -9,7 +9,7 @@ export const KITS = {
   "client-lifecycle": {
     "name": "Client Lifecycle Kit",
     "zip": "/files/bundles/client-lifecycle-kit.zip",
-    "decks": 5
+    "decks": 6
   },
   "reporting": {
     "name": "Reporting Kit",
@@ -25,5 +25,10 @@ export const KITS = {
     "name": "Teaching Kit",
     "zip": "/files/bundles/teaching-kit.zip",
     "decks": 4
+  },
+  "recurring": {
+    "name": "Operating Rhythm Kit",
+    "zip": "/files/bundles/recurring-kit.zip",
+    "decks": 5
   }
 };

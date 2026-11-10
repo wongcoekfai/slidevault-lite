@@ -28,6 +28,12 @@ DECKS = [
     ("Clinical-Research-Template", "CLINICAL RESEARCH TEMPLATE", 12, ["Design", "Endpoints", "Safety", "Next Steps"]),
     ("Hospital-Annual-Report-Template", "HOSPITAL ANNUAL REPORT", 12, ["Activity", "Outcomes", "Staff", "Finance"]),
     ("Pharma-Launch-Template", "PHARMA LAUNCH TEMPLATE", 12, ["Product", "Market", "Access", "Launch Plan"]),
+    ("Monthly-Business-Review-Template", "MONTHLY BUSINESS REVIEW", 12, ["KPIs", "Trend", "Variance", "Decisions"]),
+    ("Weekly-Status-Update-Template", "WEEKLY STATUS UPDATE", 12, ["Snapshot", "Progress", "Risks", "Next Week"]),
+    ("OKR-Quarterly-Review-Template", "OKR QUARTERLY REVIEW", 12, ["Scorecard", "Wins", "Misses", "Next Quarter"]),
+    ("Board-Meeting-Pack-Template", "BOARD MEETING PACK", 12, ["Agenda", "Strategy", "Finance", "Resolutions"]),
+    ("Client-Onboarding-Deck-Template", "CLIENT ONBOARDING DECK", 12, ["Kickoff", "Scope", "Milestones", "Contacts"]),
+    ("Department-Monthly-Report-Template", "DEPARTMENT MONTHLY REPORT", 12, ["Activity", "Quality", "Staff", "Actions"]),
 ]
 
 

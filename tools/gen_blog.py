@@ -11,6 +11,7 @@ Each post becomes /blog/<slug>/index.html styled like the rest of the site,
 plus /blog/index.html listing every post. The sitemap is rebuilt to include
 blog URLs, so after editing templates run gen_pages.py first, then this one.
 """
+import html as html_mod
 import json
 import os
 import re
@@ -88,10 +89,10 @@ POST_PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{page_title}</title>
-<meta name="description" content="{desc}" />
-<meta property="og:title" content="{title}" />
-<meta property="og:description" content="{desc}" />
+<title>{page_title_html}</title>
+<meta name="description" content="{desc_html}" />
+<meta property="og:title" content="{title_html}" />
+<meta property="og:description" content="{desc_html}" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="{site}/blog/{slug}/" />
 <meta property="og:image" content="{image}" />
@@ -99,23 +100,23 @@ POST_PAGE = """<!doctype html>
 <link rel="canonical" href="{site}/blog/{slug}/" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="{title}" />
-<meta name="twitter:description" content="{desc}" />
+<meta name="twitter:title" content="{title_html}" />
+<meta name="twitter:description" content="{desc_html}" />
 <meta name="twitter:image" content="{image}" />
 <link rel="stylesheet" href="/assets/style.css?v=10" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
-{{"@context":"https://schema.org","@type":"BlogPosting","headline":"{title}","description":"{desc}","image":"{image}","datePublished":"{date}","dateModified":"{date}","author":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"publisher":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{site}/blog/{slug}/"}}}}
+{{"@context":"https://schema.org","@type":"BlogPosting","headline":"{json_title}","description":"{json_desc}","image":"{image}","datePublished":"{date}","dateModified":"{date}","author":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"publisher":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{site}/blog/{slug}/"}}}}
 </script>
 <script type="application/ld+json">
-{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{{"@type":"ListItem","position":1,"name":"Home","item":"{site}/"}},{{"@type":"ListItem","position":2,"name":"Blog","item":"{site}/blog/"}},{{"@type":"ListItem","position":3,"name":"{title}"}}]}}
+{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{{"@type":"ListItem","position":1,"name":"Home","item":"{site}/"}},{{"@type":"ListItem","position":2,"name":"Blog","item":"{site}/blog/"}},{{"@type":"ListItem","position":3,"name":"{json_title}"}}]}}
 </script>
 </head>
 <body>
 {header}
 <main class="container detail">
-  <p class="crumbs"><a href="/blog/">Blog</a> / <b>{title}</b></p>
-  <h1>{title}</h1>
+  <p class="crumbs"><a href="/blog/">Blog</a> / <b>{title_html}</b></p>
+  <h1>{title_html}</h1>
   <div class="meta-row"><span class="tag">{date}</span><span class="tag cat">{minutes} min read</span></div>
   <section class="prose blog-post">
 {content}
@@ -208,8 +209,12 @@ def main():
         image = p.get("image", SITE + "/assets/favicon.svg")
         page_title = (p["title"] + " | Slide Vault Blog") if len(p["title"]) <= 46 else p["title"]
         html = POST_PAGE.format(
-            title=p["title"], page_title=page_title, desc=p["description"], slug=p["slug"],
-            site=SITE, date=p["date"], minutes=minutes, image=image,
+            title_html=html_mod.escape(p["title"], quote=True),
+            desc_html=html_mod.escape(p["description"], quote=True),
+            page_title_html=html_mod.escape(page_title, quote=True),
+            json_title=json.dumps(p["title"], ensure_ascii=False)[1:-1],
+            json_desc=json.dumps(p["description"], ensure_ascii=False)[1:-1],
+            slug=p["slug"], site=SITE, date=p["date"], minutes=minutes, image=image,
             content=p["html"], header=HEADER, footer=FOOTER)
         d = os.path.join(ROOT, "blog", p["slug"])
         os.makedirs(d, exist_ok=True)

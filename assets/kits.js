@@ -57,6 +57,11 @@ window.KITS = [
         "url": "/templates/project-proposal-template/"
       },
       {
+        "slug": "client-onboarding-deck-template",
+        "title": "Client Onboarding Deck Template",
+        "url": "/templates/client-onboarding-deck-template/"
+      },
+      {
         "slug": "sales-qbr-template",
         "title": "Sales QBR Template",
         "url": "/templates/sales-qbr-template/"
@@ -162,6 +167,40 @@ window.KITS = [
         "slug": "academic-defense-template",
         "title": "Academic Defense Template",
         "url": "/templates/academic-defense-template/"
+      }
+    ]
+  },
+  {
+    "id": "recurring",
+    "name": "Operating Rhythm Kit",
+    "eyebrow": "Weekly / monthly / quarterly",
+    "desc": "The five decks you rebuild on a schedule — weekly update, monthly review, quarterly OKR check, board pack and department report — all in one consistent format, so next month takes ten minutes.",
+    "zip": "/files/bundles/recurring-kit.zip",
+    "decks": [
+      {
+        "slug": "weekly-status-update-template",
+        "title": "Weekly Status Update Template",
+        "url": "/templates/weekly-status-update-template/"
+      },
+      {
+        "slug": "monthly-business-review-template",
+        "title": "Monthly Business Review Template",
+        "url": "/templates/monthly-business-review-template/"
+      },
+      {
+        "slug": "okr-quarterly-review-template",
+        "title": "OKR Quarterly Review Template",
+        "url": "/templates/okr-quarterly-review-template/"
+      },
+      {
+        "slug": "board-meeting-pack-template",
+        "title": "Board Meeting Pack Template",
+        "url": "/templates/board-meeting-pack-template/"
+      },
+      {
+        "slug": "department-monthly-report-template",
+        "title": "Department Monthly Report Template",
+        "url": "/templates/department-monthly-report-template/"
       }
     ]
   }

@@ -75,7 +75,13 @@ Three mechanisms actually retain:
 3. **Tool hooks** — decks that are large, image-heavy or contain notes/metadata
    naturally send visitors to the 7 browser tools, keeping them on-site.
 
-## Tier 1 — recurring decks (ship these 6 first)
+## Tier 1 — recurring decks — SHIPPED 2026-11-10
+
+All 6 were generated with the `ppt-template-generator` skill (12 slides, 2 native
+charts, editable placeholders, speaker notes), rendered and visually checked in
+LibreOffice, then published with real slide previews. Five of them form the new
+**Operating Rhythm Kit** bundle; Client Onboarding joins the **Client Lifecycle
+Kit**. The table below is kept as the original sourcing rationale.
 
 | # | Target file | Cat | Cycle | Return trigger / internal links | Search terms |
 |---|---|---|---|---|---|
