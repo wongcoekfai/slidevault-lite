@@ -6,9 +6,19 @@
 //   EMAIL_FROM      — optional, defaults to "Slide Vault <hello@slidevaulte.com>"
 //   UNSUB_SECRET    — optional, used to sign unsubscribe links (falls back to the API key)
 
+import { KITS } from "./kits.js";
+
 const encoder = new TextEncoder();
 
 const SITE = "https://slidevaulte.com";
+
+// Only ids from the generated whitelist resolve to a bundle.
+function kitFor(id) {
+  return id && Object.prototype.hasOwnProperty.call(KITS, id) ? KITS[id] : null;
+}
+
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 function hex(buf) {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
@@ -29,11 +39,15 @@ export function unsubUrl(email, token) {
   return SITE + "/unsubscribe?e=" + encodeURIComponent(email) + "&t=" + token;
 }
 
-export function welcomeSubject() {
-  return "Your free PowerPoint templates (+ 7 browser tools)";
+export function welcomeSubject(kitId) {
+  const kit = kitFor(kitId);
+  return kit
+    ? "Your " + kit.name + " is ready (+ 7 browser tools)"
+    : "Your free PowerPoint templates (+ 7 browser tools)";
 }
 
-export function welcomeText(unsub, orgAddress) {
+export function welcomeText(unsub, orgAddress, kitId) {
+  const kit = kitFor(kitId);
   return [
     "YOUR FREE POWERPOINT TEMPLATES ARE READY",
     "=========================================",
@@ -45,6 +59,12 @@ export function welcomeText(unsub, orgAddress) {
     "",
     "Browse all 51 templates: " + SITE + "/#templates",
     "",
+    ...(kit ? [
+      "YOUR " + kit.name.toUpperCase() + " IS READY",
+      kit.decks + " editable .pptx decks in one ZIP:",
+      SITE + kit.zip,
+      "",
+    ] : []),
     "START WITH THESE",
     "- SaaS Startup Pitch Deck (12 slides, problem to ask):",
     "  " + SITE + "/templates/saas-startup-pitch-deck-template/",
@@ -76,12 +96,13 @@ export function welcomeText(unsub, orgAddress) {
   ].join("\n");
 }
 
-export function welcomeHtml(unsub, orgAddress) {
+export function welcomeHtml(unsub, orgAddress, kitId) {
+  const kit = kitFor(kitId);
   const link = (href, label) =>
     '<a href="' + href + '" style="color:#3b82f6;text-decoration:none;">' + label + "</a>";
 
   return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${welcomeSubject()}</title></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${welcomeSubject(kitId)}</title></head>
 <body style="margin:0;padding:0;background:#eef1f6;">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;">51 free .pptx templates and 7 privacy-first tools. No signup, no watermark.</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef1f6;padding:24px 0;">
@@ -102,6 +123,14 @@ export function welcomeHtml(unsub, orgAddress) {
         <a href="${SITE}/#templates" style="display:inline-block;padding:13px 26px;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;">Browse all free templates &rarr;</a>
       </td>
     </tr></table>
+
+    ${kit ? `<p style="margin:28px 0 8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8a94a8;">Your ${esc(kit.name)} is ready</p>
+    <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+      <td style="background:#e8f2fe;border-radius:8px;">
+        <a href="${SITE}${kit.zip}" style="display:inline-block;padding:13px 26px;color:#2563eb;font-size:15px;font-weight:600;text-decoration:none;">Download ${kit.decks} decks in one ZIP &rarr;</a>
+      </td>
+    </tr></table>
+    <p style="margin:10px 0 0;font-size:13px;line-height:1.6;color:#8a94a8;">Keep this email — the kit link works whenever you need it again.</p>` : ""}
 
     <p style="margin:28px 0 8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8a94a8;">Start with these</p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:15px;line-height:1.7;color:#3c4658;">
@@ -144,7 +173,7 @@ export function welcomeHtml(unsub, orgAddress) {
 
 // Sends the welcome email. Never throws: a failed send must not break signup.
 // Returns { sent, status?, reason? } for logging.
-export async function sendWelcome(env, email, unsub) {
+export async function sendWelcome(env, email, unsub, kitId) {
   if (!env || !env.BREVO_API_KEY) return { sent: false, reason: "no-api-key" };
 
   const fromRaw = env.EMAIL_FROM || "Slide Vault <hello@slidevaulte.com>";
@@ -161,9 +190,9 @@ export async function sendWelcome(env, email, unsub) {
   const payload = {
     sender,
     to: [{ email }],
-    subject: welcomeSubject(),
-    htmlContent: welcomeHtml(unsub, orgAddress),
-    textContent: welcomeText(unsub, orgAddress),
+    subject: welcomeSubject(kitId),
+    htmlContent: welcomeHtml(unsub, orgAddress, kitId),
+    textContent: welcomeText(unsub, orgAddress, kitId),
     headers: {
       "List-Unsubscribe": "<" + unsub + ">",
       "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",

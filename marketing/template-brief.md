@@ -103,15 +103,27 @@ Three mechanisms actually retain:
 | 12 | `Parent-Teacher-Conference-Template.pptx` | education | Twice-yearly recurring need; education has only 4 decks today |
 | 13 | `Patient-Education-Template.pptx` | healthcare | Clinics reuse it for every condition/procedure; near-zero competition in the current catalogue |
 
-## Cheaper than adding decks (do this alongside)
+## Cheaper than adding decks — SHIPPED 2026-11-10
 
-- **Kit navigation block** on detail pages: "Part of the Fundraising Kit" with 3–5
-  sibling links. Turns one download into a 4-page session — no new URL, no indexing cost.
-- **Bundle ZIP**: pack each kit's .pptx files into one download behind the existing
-  `/subscribe` form (D1 capture). Works today even without email sending.
-- **Tool hooks on detail pages**: for decks > 40 slides or with speaker notes, add
-  "Compress before emailing / Remove confidential notes" links to the tool pages.
-- **Homepage**: replace generic "More templates" with "Complete a kit".
+All four are live. Zero new URLs, zero new index requests, zero new templates.
+
+- **Kit navigation** — `tools/kits.py` defines 5 kits covering 24 existing decks.
+  `tools/gen_pages.py` renders "Complete the … Kit" with ordered sibling links on
+  those 24 detail pages, and their secondary CTA now points at the kit instead
+  of the generic catalogue.
+- **Bundle ZIP** — `tools/gen_bundles.py` builds deterministic ZIPs into
+  `files/bundles/`, plus `assets/kits.js` (homepage) and `functions/_lib/kits.js`
+  (subscribe whitelist). The `/subscribe` forms on home, 51 detail pages and 6
+  hubs have a kit picker; the success page hands over the ZIP immediately and
+  the Brevo welcome mail carries the same link.
+- **Tool hooks** — all 51 detail pages show "Before you send this deck"; the 7
+  heavy decks (>1 MB or >=30 slides) get compress / split / extract variants.
+- **Homepage** — "Complete a kit, not just a slide" with 5 cards and 24 internal
+  deck links; the subscribe block now promises a kit ZIP rather than a generic
+  full-library bundle.
+
+To change a kit: edit `tools/kits.py`, then run `python3 tools/gen_bundles.py`
+followed by `python3 tools/gen_pages.py`.
 
 ## Still do NOT add
 

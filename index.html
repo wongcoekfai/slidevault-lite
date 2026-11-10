@@ -17,7 +17,7 @@
   <meta name="twitter:title" content="Slide Vault — Free PPT Templates" />
   <meta name="twitter:description" content="Free, editable PowerPoint & Google Slides templates for business and education." />
   <meta name="twitter:image" content="https://slidevaulte.com/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
-  <link rel="stylesheet" href="assets/style.css?v=9" />
+  <link rel="stylesheet" href="assets/style.css?v=10" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebSite","name":"Slide Vault","url":"https://slidevaulte.com/","description":"Free PowerPoint & Google Slides templates for business and education."}
   </script>
@@ -67,6 +67,13 @@
       <h2>Most Popular Templates</h2>
       <p class="lead" style="max-width:640px;">The decks people download most from Slide Vault — pitch decks and business presentations lead the pack.</p>
       <div class="grid" id="popular-grid"><!-- rendered by app.js --></div>
+    </section>
+
+    <section id="kits" aria-label="Complete a template kit">
+      <h2>Complete a kit, not just a slide</h2>
+      <p class="lead" style="max-width:680px;">One job usually takes four or five decks. Pick the kit that matches what you are doing, open the decks you need now, or take the whole set in one ZIP.</p>
+      <div class="kit-grid" id="kit-grid"><!-- rendered by app.js from assets/kits.js --></div>
+      <p class="hint">Every deck is free on its own — the bundle just saves you the extra trips.</p>
     </section>
 
     <section id="templates">
@@ -127,8 +134,8 @@
     </section>
 
     <section id="subscribe" class="prose lead-magnet">
-      <h2>📦 Get the free template bundle</h2>
-      <p>Leave your email and we'll send you every Slide Vault deck in one drop — plus new releases. No design busywork, just the files.</p>
+      <h2>📦 Get a complete kit in one ZIP</h2>
+      <p>Choose a kit above. Leave your email and the ZIP is yours immediately — plus one short note when a new kit drops. No design busywork, just the files.</p>
       <!-- Submissions go to our own Pages Function + Cloudflare D1. No third party sees the address. -->
       <form action="/subscribe" method="POST" class="subscribe compact">
         <input type="hidden" name="source" value="bundle_home" />
@@ -141,12 +148,23 @@
             <label><input type="radio" name="want" value="nothing" /> 🙂 Nothing — free is enough</label>
           </div>
         </div>
+        <!-- Static options: the form works without JS. app.js only preselects ?kit= -->
+        <label class="kit-pick"><span>Your kit</span>
+          <select id="kit-select" name="kit" aria-label="Choose a template kit">
+            <option value="">Choose a kit (optional)</option>
+            <option value="fundraising" selected>Fundraising Kit — 5 decks</option>
+            <option value="client-lifecycle">Client Lifecycle Kit — 5 decks</option>
+            <option value="reporting">Reporting Kit — 5 decks</option>
+            <option value="clinical">Clinical &amp; Hospital Kit — 5 decks</option>
+            <option value="teaching">Teaching Kit — 4 decks</option>
+          </select>
+        </label>
         <input type="email" name="email" placeholder="you@example.com" required />
-        <button class="btn btn-primary" type="submit">Send me the bundle</button>
+        <button class="btn btn-primary" type="submit">Get the kit ZIP</button>
         <!-- honeypot: hidden from humans, bots may fill it -->
         <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
       </form>
-      <p class="hint">No spam. One email when we drop new decks. Stored only in our Cloudflare account.</p>
+      <p class="hint">No spam. One email when we drop a new kit. Stored only in our Cloudflare account.</p>
     </section>
   </main>
 
@@ -170,7 +188,8 @@
   </footer>
 
   <script src="assets/templates.js?v=10"></script>
-  <script src="assets/app.js?v=2"></script>
+  <script src="assets/kits.js?v=1"></script>
+  <script src="assets/app.js?v=3"></script>
   <script src="/assets/nav.js?v=1" defer></script>
 </body>
 </html>

@@ -288,3 +288,64 @@ h2 { font-size: 1.6rem; margin: 36px 0 18px; letter-spacing: -0.01em; }
   padding: 0; margin: 0; border: 0; border-radius: 0;
   background: transparent; accent-color: var(--accent-2);
 }
+
+/* ===== Kit picker inside every /subscribe form ===== */
+.kit-pick { display: flex; align-items: center; gap: 10px; flex: 1 1 100%; font-size: .85rem; color: var(--muted); }
+.kit-pick span { flex: 0 0 auto; }
+.subscribe select, .kit-pick select {
+  flex: 1; min-width: 220px; padding: 11px 14px; border-radius: 10px;
+  border: 1px solid #ffffff22; background: var(--bg); color: var(--text);
+  font: inherit; font-size: .9rem;
+}
+.subscribe select:focus { outline: 2px solid var(--accent); }
+
+/* ===== Detail page: "Part of the ... Kit" navigation ===== */
+.kit-box { margin: 24px 0 32px; padding: 24px 26px; border: 1px solid #22d3ee33; border-radius: var(--radius); background: linear-gradient(135deg, #122044, #101a33); }
+.kit-box h2 { margin: 4px 0 8px; font-size: 1.35rem; }
+.kit-eyebrow { margin: 0; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-2); }
+.kit-desc { margin: 0 0 18px; color: var(--muted); max-width: 720px; }
+.kit-steps { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 6px; }
+.kit-step { border-radius: 10px; }
+.kit-step a, .kit-step.current { display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: var(--text); border: 1px solid #ffffff0d; border-radius: 10px; background: #ffffff08; }
+.kit-step a:hover { border-color: var(--accent); background: #22d3ee12; }
+.kit-step.current { border-color: #22d3ee55; background: #22d3ee12; }
+.kit-num { flex: 0 0 24px; height: 24px; border-radius: 50%; background: #ffffff14; display: inline-flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 700; color: var(--accent-2); }
+.kit-step.current .kit-num { background: var(--accent-2); color: #04122b; }
+.kit-name { flex: 1; font-size: .94rem; }
+.kit-step.current .kit-name { font-weight: 600; }
+.kit-step em { font-style: normal; font-size: .74rem; color: var(--accent-2); background: #22d3ee1a; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.kit-arrow { color: var(--accent-2); }
+.kit-cta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+/* ===== Detail page: "Before you send this deck" tool hooks ===== */
+.tool-hooks { margin: 32px 0; padding: 22px 24px; background: var(--surface); border: 1px solid #ffffff0d; border-radius: var(--radius); }
+.tool-hooks h2 { margin: 0 0 8px; font-size: 1.3rem; }
+.tool-hooks > p { color: var(--muted); max-width: 720px; margin: 0 0 16px; }
+.tool-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.tool-link { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border: 1px solid #ffffff14; border-radius: 10px; background: #ffffff05; }
+.tool-link:hover { border-color: var(--accent); background: #3b82f614; }
+.tool-link b { font-size: .92rem; }
+.tool-link span { font-size: .8rem; color: var(--muted); line-height: 1.4; }
+.tool-hooks .hint a { color: var(--accent-2); text-decoration: underline; }
+
+/* ===== Homepage: "Complete a kit" cards ===== */
+#kits { margin: 8px 0 48px; }
+.kit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.kit-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid #ffffff0f; border-radius: var(--radius); padding: 22px; }
+.kit-card:hover { border-color: #22d3ee55; }
+.kit-card h3 { margin: 8px 0 6px; font-size: 1.15rem; }
+.kit-card-desc { color: var(--muted); font-size: .9rem; margin: 0 0 14px; flex: 1; }
+.kit-card-decks { list-style: none; padding: 0; margin: 0 0 18px; display: grid; gap: 6px; }
+.kit-card-decks li { display: flex; gap: 9px; align-items: baseline; font-size: .86rem; color: var(--muted); }
+.kit-card-decks a:hover { color: var(--accent-2); text-decoration: underline; }
+.kit-grid-num { flex: 0 0 18px; font-size: .72rem; color: var(--accent-2); }
+.kit-card .btn { align-self: flex-start; font-size: .86rem; padding: 9px 16px; }
+
+@media (max-width: 640px) {
+  .kit-grid { grid-template-columns: 1fr; }
+  .kit-box, .tool-hooks { padding: 18px; }
+  .kit-cta { flex-direction: column; align-items: flex-start; }
+  .kit-pick { flex-wrap: wrap; }
+  .kit-pick select { min-width: 0; width: 100%; }
+  .kit-step em { display: none; }
+}

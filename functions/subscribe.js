@@ -4,6 +4,9 @@
 // Uses URLSearchParams (no request.formData) to avoid the node:stream dependency.
 
 import { unsubToken, unsubUrl, sendWelcome } from "./_lib/welcome.js";
+// Generated from tools/kits.py by tools/gen_bundles.py — a strict whitelist so
+// the `kit` form field can never point at an arbitrary file on the site.
+import { KITS } from "./_lib/kits.js";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -33,6 +36,11 @@ export async function onRequestPost(context) {
   }
 
   const source = (params.get("source") || "newsletter").slice(0, 32);
+  const rawKit = (params.get("kit") || "").trim();
+  const kit = Object.prototype.hasOwnProperty.call(KITS, rawKit) ? KITS[rawKit] : null;
+  // Record the chosen kit alongside the source so D1 shows which bundle people
+  // actually want. Bounded length — the value can only come from the whitelist.
+  const storedSource = (source + (kit ? "__kit=" + rawKit : "")).slice(0, 64);
 
   const rawWant = (params.get("want") || "").trim();
   const want = WANTS.has(rawWant) ? rawWant : "";
@@ -50,11 +58,11 @@ export async function onRequestPost(context) {
   try {
     const r = await env.DB.prepare(
       "INSERT OR IGNORE INTO subscribers (email, created_at, source, want) VALUES (?, ?, ?, ?)"
-    ).bind(email, Date.now(), source, want || null).run();
+    ).bind(email, Date.now(), storedSource, want || null).run();
     isNew = !r.meta || r.meta.changes !== 0;
   } catch (e) {
     try {
-      const source2 = want ? `${source}__${want}` : source;
+      const source2 = want ? `${storedSource}__${want}` : storedSource;
       const r = await env.DB.prepare(
         "INSERT OR IGNORE INTO subscribers (email, created_at, source) VALUES (?, ?, ?)"
       ).bind(email, Date.now(), source2).run();
@@ -78,7 +86,7 @@ export async function onRequestPost(context) {
     const secret = env.UNSUB_SECRET || env.BREVO_API_KEY;
     const job = (async () => {
       const token = await unsubToken(secret, email);
-      const result = await sendWelcome(env, email, unsubUrl(email, token));
+      const result = await sendWelcome(env, email, unsubUrl(email, token), kit ? rawKit : "");
       if (!result.sent) console.warn("welcome email not sent:", JSON.stringify(result));
     })().catch((err) => console.warn("welcome email error:", String(err)));
 
@@ -88,18 +96,31 @@ export async function onRequestPost(context) {
 
   return htmlResponse(
     200,
-    mailReady
-      ? "Check your inbox — we just sent your free templates and the 7 browser tools. Nothing there in a minute? Look in spam and mark it as not spam."
-      : "You're subscribed! We'll email you when new decks drop."
+    kit
+      ? `Your ${kit.name} is ready. Download the ZIP below — we've also emailed you the link${mailReady ? "" : " (email delivery is being set up)"}.`
+      : (mailReady
+        ? "Check your inbox — we just sent your free templates and the 7 browser tools. Nothing there in a minute? Look in spam and mark it as not spam."
+        : "You're subscribed! We'll email you when new decks drop."),
+    kit
   );
 }
 
-function htmlResponse(status, message) {
+function safe(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function htmlResponse(status, message, kit) {
   // Success page doubles as a next step: subscribers who never open the email
-  // still get one-click paths into the template library and the tools.
+  // still get the bundle and one-click paths back into the library.
+  const bundle = status < 400 && kit
+    ? `<div class="bundle">
+    <a class="btn" href="${safe(kit.zip)}" download>&#11015; Download ${safe(kit.name)} ZIP</a>
+    <p>${kit.decks} editable .pptx decks &middot; no signup &middot; free for commercial use</p>
+  </div>`
+    : "";
   const actions = status < 400
     ? `<div class="actions">
-    <a class="btn" href="/#templates">Browse all templates</a>
+    <a class="btn" href="/#kits">Browse all kits</a>
     <a class="btn ghost" href="/tools/">Free PPT tools</a>
   </div>`
     : "";
@@ -116,10 +137,14 @@ function htmlResponse(status, message) {
   .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:0 0 18px}
   .btn{background:#3b82f6;color:#fff;border-radius:10px;padding:11px 20px;font-size:.92rem}
   .btn.ghost{background:transparent;color:#9fb0c8;border:1px solid #ffffff2b}
+  .bundle{background:#0e1632;border:1px solid #ffffff1f;border-radius:12px;padding:18px;margin:0 0 18px}
+  .bundle .btn{display:inline-block;background:linear-gradient(135deg,#3b82f6,#22d3ee);color:#04122b;font-weight:700}
+  .bundle p{font-size:.8rem;margin:10px 0 0;color:#9fb0c8}
 </style></head>
 <body><div class="card">
   <h1>${status < 400 ? "✅ Subscribed" : "⚠️ Notice"}</h1>
   <p>${message}</p>
+  ${bundle}
   ${actions}
   <a href="/">← Back to Slide Vault</a>
 </div></body></html>`;

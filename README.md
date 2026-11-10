@@ -96,6 +96,22 @@ a `N slides` badge.
 > `gallery: [...]` field is machine-generated — your `title / tag / cat / desc /
 > img / file` edits are preserved.
 
+## Kits & bundles
+
+`tools/kits.py` groups existing decks into 5 kits (no new pages). It drives the
+detail-page kit navigation, the homepage "Complete a kit" cards, and the ZIP a
+subscriber receives. After editing a kit:
+
+```bash
+python3 tools/gen_bundles.py   # rebuild files/bundles/*.zip + assets/kits.js + functions/_lib/kits.js
+python3 tools/gen_pages.py     # rebuild detail pages, category hubs, sitemap
+```
+
+ZIP builds are deterministic (fixed member order and timestamps), so re-running
+produces no git noise. `/subscribe` validates the `kit` field against the
+generated whitelist; the success page and the Brevo welcome mail both link to
+the matching bundle.
+
 ## Notes
 - **Large binaries**: the 13 `.pptx` total ~30 MB. Fine for Cloudflare Pages, but if the
   library grows, move files to **Cloudflare R2** (private) and point `download` at signed URLs.

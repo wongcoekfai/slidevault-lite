@@ -26,8 +26,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://slidevaulte.com"
 try:
     from sitemap import write_sitemap
+    from kits import KITS, primary_kit, kit_by_id, KIT_BY_CAT
 except ImportError:                       # invoked as `python3 -m tools.gen_pages`
     from tools.sitemap import write_sitemap
+    from tools.kits import KITS, primary_kit, kit_by_id, KIT_BY_CAT
 IMG_EXT = (".jpg", ".jpeg", ".png", ".webp")
 MAX_WIDTH = 1600
 
@@ -193,8 +195,10 @@ PAGE = """<!doctype html>
 
   <div class="detail-actions">
     <a class="btn btn-primary" href="/download?file={file}" rel="nofollow">&#11015; Download .pptx</a>
-    <a class="btn btn-ghost" href="/#templates">Browse all templates</a>
+    {browse_cta}
   </div>
+
+  {kit_box}
 
   <!-- ===== Monetization: Affiliate recommendations + Lead magnet ===== -->
   <section class="affiliate-box">
@@ -207,9 +211,9 @@ PAGE = """<!doctype html>
     <p class="hint">As an affiliate we may earn a commission at no extra cost to you.</p>
   </section>
 
-  <section class="lead-magnet">
-    <h2>📦 Get the full free template bundle</h2>
-    <p>Join our list and we'll send you every Slide Vault deck in one drop — plus new releases.</p>
+  <section class="lead-magnet" id="subscribe">
+    <h2>📦 {lead_title}</h2>
+    <p>{lead_copy}</p>
     <form action="/subscribe" method="POST" class="subscribe compact">
       <input type="hidden" name="source" value="bundle_detail" />
       <div class="pay-poll">
@@ -221,8 +225,9 @@ PAGE = """<!doctype html>
           <label><input type="radio" name="want" value="nothing" /> 🙂 Nothing — free is enough</label>
         </div>
       </div>
+      <label class="kit-pick"><span>Your kit</span><select name="kit" aria-label="Choose a template kit">{kit_options}</select></label>
       <input type="email" name="email" placeholder="you@company.com" required />
-      <button class="btn btn-primary" type="submit">Send me the bundle</button>
+      <button class="btn btn-primary" type="submit">Get the kit ZIP</button>
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
     </form>
     <p class="hint">No spam. Unsubscribe anytime. Stored only in our Cloudflare account.</p>
@@ -251,6 +256,8 @@ PAGE = """<!doctype html>
     <h2>File details</h2>
     <ul class="facts">{facts}</ul>
   </section>
+
+  {tool_hooks}
 
   <section class="prose">
     <h2>Frequently asked questions</h2>
@@ -363,7 +370,7 @@ CATS = [
      "Clinical evidence, hospital operations, patient education and the launches that follow."),
 ]
 
-CSS_VER = "9"
+CSS_VER = "10"
 
 # ---------------------------------------------------------------- detail-page copy
 # Per-category editorial blocks. AdSense rejects sites whose template pages are
@@ -521,6 +528,142 @@ def slide_outline(path, limit=8):
     return len(names), out
 
 
+# ---------------------------------------------------------------- retention blocks
+# Three things turn a one-off download into a longer visit without adding a
+# single new URL: kit navigation, tool hooks and a bundle behind /subscribe.
+
+def pptx_traits(path, size_bytes):
+    """What actually needs cleaning before this deck leaves the building."""
+    t = dict(notes=False, author=False, media=0, mb=size_bytes / 1048576.0)
+    try:
+        with zipfile.ZipFile(path) as z:
+            names = z.namelist()
+            t["media"] = len([n for n in names if n.startswith("ppt/media/")])
+            for n in names:
+                if re.match(r"ppt/notesSlides/notesSlide\d+\.xml$", n) and not t["notes"]:
+                    txt = " ".join(re.findall(r"<a:t>(.*?)</a:t>",
+                                              z.read(n).decode("utf-8", "ignore")))
+                    # ignore slide-number-only notes
+                    if len(re.sub(r"[\s\d‹#›.,]+", "", txt)) > 12:
+                        t["notes"] = True
+            if "docProps/core.xml" in names:
+                core = z.read("docProps/core.xml").decode("utf-8", "ignore")
+                t["author"] = bool(re.search(r"<(?:dc:creator|cp:lastModifiedBy)>[^<]+", core))
+    except Exception:
+        pass
+    return t
+
+
+def kit_options(selected=""):
+    """<option> list shared by detail pages, category hubs and the homepage."""
+    out = ['<option value="">Choose a kit (optional)</option>']
+    for k in KITS:
+        out.append('<option value="%s"%s>%s — %d decks</option>'
+                   % (k["id"], " selected" if k["id"] == selected else "",
+                      k["name"], len(k["slugs"])))
+    return "".join(out)
+
+
+KIT_BOX = """<section class="kit-box" id="kit">
+  <p class="kit-eyebrow">PART OF A KIT &middot; {eyebrow}</p>
+  <h2>Complete the {name}</h2>
+  <p class="kit-desc">{desc}</p>
+  <ol class="kit-steps">{steps}</ol>
+  <div class="kit-cta">
+    <a class="btn btn-primary" href="#subscribe">Get all {n} decks in one ZIP &rarr;</a>
+    <span class="hint">Or open them one by one — every deck is free, no signup needed.</span>
+  </div>
+</section>
+"""
+
+
+def kit_box_html(it, by_slug):
+    kit = primary_kit(it["slug"])
+    if not kit:
+        return ""
+    steps = []
+    for i, slug in enumerate(kit["slugs"], 1):
+        t = by_slug.get(slug)
+        if not t:
+            continue
+        if slug == it["slug"]:
+            steps.append('<li class="kit-step current"><span class="kit-num">%d</span>'
+                         '<span class="kit-name">%s</span><em>You are here</em></li>' % (i, t["title"]))
+        else:
+            steps.append('<li class="kit-step"><a href="/templates/%s/">'
+                         '<span class="kit-num">%d</span><span class="kit-name">%s</span>'
+                         '<span class="kit-arrow">&rarr;</span></a></li>' % (slug, i, t["title"]))
+    return KIT_BOX.format(eyebrow=kit["eyebrow"], name=kit["name"], desc=kit["desc"],
+                          steps="".join(steps), n=len(kit["slugs"]))
+
+
+def browse_cta_html(kit):
+    if not kit:
+        return '<a class="btn btn-ghost" href="/#templates">Browse all templates</a>'
+    return ('<a class="btn btn-ghost" href="#kit">Complete the %s &rarr;</a>' % kit["name"])
+
+
+TOOL_HOOKS = """<section class="tool-hooks" id="before-you-send">
+  <h2>Before you send this deck</h2>
+  <p>{lead}</p>
+  <div class="tool-links">{links}</div>
+  <p class="hint">Every tool runs locally in your browser — your files never leave your device. <a href="/tools/">See all 7 free PPT tools &rarr;</a></p>
+</section>
+"""
+
+
+def tool_link(href, label, note):
+    return ('<a class="tool-link" href="%s"><b>%s</b><span>%s</span></a>'
+            % (href, label, note))
+
+
+def tool_hooks_html(it):
+    t = it.get("traits") or {}
+    n, mb = it.get("slides_n") or 0, t.get("mb", 0)
+    heavy = mb >= 1.0 or n >= 30
+    bits = []
+    if heavy:
+        bits.append("At %s across %d slides, this is one of the heavier decks in the library."
+                    % (it["size"] or "over 1 MB", n))
+    if t.get("notes"):
+        bits.append("The .pptx also carries speaker notes with layout guidance, plus document "
+                    "properties from the source file — worth stripping before a client sees it.")
+    if not bits:
+        bits.append("Templates ship with speaker notes and document properties from the source "
+                    "file. Clean them up before the deck leaves your team.")
+    lead = " ".join(bits) + " These free browser tools do it in seconds:"
+    links = [
+        tool_link("/tools/remove-notes/", "Remove speaker notes",
+                  "Strip template guide text from the notes pane"),
+        tool_link("/tools/clean-metadata/", "Clean hidden metadata",
+                  "Clear author names and edit history"),
+    ]
+    if heavy:
+        links.append(tool_link("/tools/compress-ppt/", "Compress this deck",
+                               "Shrink embedded images before emailing"))
+        links.append(tool_link("/tools/split-ppt/", "Split into parts",
+                               "Send only the slides the recipient needs"))
+    else:
+        links.append(tool_link("/tools/ppt-stats/", "Check slides &amp; words",
+                               "See exactly what is inside the file"))
+        links.append(tool_link("/tools/compress-ppt/", "Compress before emailing",
+                               "Keep under your mail server's attachment limit"))
+    if t.get("media", 0) >= 8:
+        links.append(tool_link("/tools/extract-images/", "Extract images",
+                               "Reuse the artwork in other decks"))
+    return TOOL_HOOKS.format(lead=lead, links="".join(links))
+
+
+def lead_magnet_copy(kit):
+    if kit:
+        return ("Get the whole %s in one ZIP" % kit["name"],
+                "All %d decks, one download. Leave your email and the bundle is yours "
+                "immediately — we'll only write again when a new kit drops." % len(kit["slugs"]))
+    return ("Get a complete template kit in one ZIP",
+            "Pick a kit above and we'll hand you all of its decks in one download, "
+            "right after you subscribe. New kits land in your inbox occasionally — nothing else.")
+
+
 def section_html(it):
     """Builds the long-form body sections for one detail page."""
     cat = it["cat"]
@@ -628,9 +771,9 @@ CAT_PAGE = """<!doctype html>
     <div class="cat-chips">{chips}</div>
   </section>
 
-  <section class="lead-magnet">
-    <h2>Get the full free template bundle</h2>
-    <p>Join our list and we will send every Slide Vault deck in one drop, plus new releases.</p>
+  <section class="lead-magnet" id="subscribe">
+    <h2>📦 {lead_title}</h2>
+    <p>{lead_copy}</p>
     <form action="/subscribe" method="POST" class="subscribe compact">
       <input type="hidden" name="source" value="cat_{cat}" />
       <div class="pay-poll">
@@ -642,8 +785,9 @@ CAT_PAGE = """<!doctype html>
           <label><input type="radio" name="want" value="nothing" /> 🙂 Nothing — free is enough</label>
         </div>
       </div>
+      <label class="kit-pick"><span>Your kit</span><select name="kit" aria-label="Choose a template kit">{kit_options}</select></label>
       <input type="email" name="email" placeholder="you@company.com" required />
-      <button class="btn btn-primary" type="submit">Send me the bundle</button>
+      <button class="btn btn-primary" type="submit">Get the kit ZIP</button>
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
     </form>
     <p class="hint">No spam. Unsubscribe anytime. Stored only in our Cloudflare account.</p>
@@ -720,7 +864,11 @@ def build_category_pages(items):
                 continue
             chips.append('<a class="chip" href="/templates/%s/">%s templates</a>' % (c2, l2))
 
+        default_kit = kit_by_id(KIT_BY_CAT.get(cat, ""))
+        lead_title, lead_copy = lead_magnet_copy(default_kit)
         html = CAT_PAGE.format(
+            lead_title=lead_title, lead_copy=lead_copy,
+            kit_options=kit_options(default_kit["id"] if default_kit else ""),
             seo_title=seo_title,
             page_title=(seo_title + " | Slide Vault") if len(seo_title) <= 52 else seo_title,
             h1=h1, meta_desc=meta_desc, lead=lead,
@@ -781,6 +929,7 @@ def main():
             print("  %-52s %d image(s)" % (it["slug"], len(it["gallery"])))
 
     write_catalog(items)
+    by_slug = {t["slug"]: t for t in items}
 
     for it in items:
         related = [t for t in items if t["cat"] == it["cat"] and t["slug"] != it["slug"]]
@@ -807,9 +956,12 @@ def main():
 
         size = file_size(it["file"])
         it["size"] = size
-        it["slides_n"], it["outline"] = slide_outline(
-            os.path.join(ROOT, "files", it["file"]))
+        fpath = os.path.join(ROOT, "files", it["file"])
+        it["traits"] = pptx_traits(fpath, os.path.getsize(fpath) if os.path.isfile(fpath) else 0)
+        it["slides_n"], it["outline"] = slide_outline(fpath)
         sec = section_html(it)
+        kit = primary_kit(it["slug"])
+        lead_title, lead_copy = lead_magnet_copy(kit)
         faq_schema = '<script type="application/ld+json">\n%s\n</script>' % json.dumps(
             {"@context": "https://schema.org", "@type": "FAQPage",
              "mainEntity": [{"@type": "Question", "name": q,
@@ -825,6 +977,11 @@ def main():
             size=size, faq_schema=faq_schema,
             lead=sec["lead"], inside=sec["inside"], quality=sec["quality"],
             steps=sec["steps"], facts=sec["facts"], faq=sec["faq"], reading=sec["reading"],
+            browse_cta=browse_cta_html(kit),
+            kit_box=kit_box_html(it, by_slug),
+            tool_hooks=tool_hooks_html(it),
+            lead_title=lead_title, lead_copy=lead_copy,
+            kit_options=kit_options(kit["id"] if kit else ""),
             slide_count='<span class="tag slides">%d slides</span>' % it["slides_n"]
                         if it["slides_n"] > 1 else "",
             ogimg=(SITE + it["gallery"][0]) if it["gallery"] else "",

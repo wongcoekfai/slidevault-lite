@@ -213,7 +213,7 @@ PAGE = """<!doctype html>
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{site}/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css?v=9" />
+<link rel="stylesheet" href="/assets/style.css?v=10" />
 <script type="application/ld+json">
 {faq_schema}
 </script>
