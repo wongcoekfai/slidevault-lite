@@ -52,3 +52,71 @@ Then add a `healthcare` entry to `CATS` + `CAT_COPY` + `READING` in `tools/gen_p
 
 - More generic corporate/business decks — 21 already, newest generic ones (competitive analysis, UX research, PRD) rank at the bottom of downloads.
 - More marketing decks until the 9 above ship — marketing avg (11.1) is the lowest.
+
+---
+
+# Retention brief — what to add so visitors come back (2026-11-10)
+
+## Diagnosis first
+
+51 decks, 6 categories. D1 data (488 downloads / 42 decks, mean 11.6, range 6–18)
+is **flat**: no breakout hit and, more importantly, no reason for anyone to return
+a second time. Visitors browse the catalogue, take one or two decks, leave.
+Adding more of the same only increases the denominator and the indexing backlog
+(6 of the last 9 pages are still not indexed). So the goal is not quantity — it is
+**building return triggers and series**.
+
+Three mechanisms actually retain:
+
+1. **Recurring calendar decks** — something the user must redo weekly / monthly /
+   quarterly. The calendar itself brings them back.
+2. **Kits / series** — one job needs 3–5 decks. More pages and downloads per
+   session, and every page links to its siblings.
+3. **Tool hooks** — decks that are large, image-heavy or contain notes/metadata
+   naturally send visitors to the 7 browser tools, keeping them on-site.
+
+## Tier 1 — recurring decks (ship these 6 first)
+
+| # | Target file | Cat | Cycle | Return trigger / internal links | Search terms |
+|---|---|---|---|---|---|
+| 1 | `Monthly-Business-Review-Template.pptx` | business | monthly | Completes the month → quarter → year ladder with Sales QBR + Annual Report | monthly business review template, monthly report ppt |
+| 2 | `Weekly-Status-Update-Template.pptx` | business | weekly | Highest-frequency deck on the site; best subscription/bundle hook | weekly status report powerpoint, team update template |
+| 3 | `OKR-Quarterly-Review-Template.pptx` | business | quarterly | Pairs with existing OKR Planning: plan → review loop | okr review presentation, quarterly goals review |
+| 4 | `Board-Meeting-Pack-Template.pptx` | startup | quarterly | High-value B2B; ships with speaker notes + author metadata → links to Remove Notes / Clean Metadata | board meeting deck template, board pack ppt |
+| 5 | `Client-Onboarding-Deck-Template.pptx` | sales | per new client | Client lifecycle: Pricing Proposal → QBR → Onboarding | client onboarding presentation, kickoff deck template |
+| 6 | `Department-Monthly-Report-Template.pptx` | healthcare | monthly | Healthcare has only 5 decks; adds the one recurring hospital need | hospital monthly report ppt, department review template |
+
+## Tier 2 — complete the kits (one job, several downloads)
+
+| # | Target file | Cat | Kit | Links to |
+|---|---|---|---|---|
+| 7 | `Investor-One-Pager-Template.pptx` | startup | Fundraising Kit | Seed Pitch, Demo Day, Product Pitch, Investor Update |
+| 8 | `Financial-Model-Slides-Template.pptx` | startup | Fundraising Kit | Seed Pitch, Investor One-Pager |
+| 9 | `Renewal-Proposal-Template.pptx` | sales | Client Lifecycle Kit | Sales Proposal, Pricing Proposal, Sales QBR |
+| 10 | `Case-Study-One-Pager-Template.pptx` | sales | Client Lifecycle Kit | Renewal Proposal, Professional Agency Proposal |
+
+## Tier 3 — new high-frequency audience (only after Tier 1 indexes)
+
+| # | Target file | Cat | Why it retains |
+|---|---|---|---|
+| 11 | `Student-Project-Presentation-Template.pptx` | education | Semester cycle; students/teachers are the most repeat-heavy audience, strongest Pinterest pool |
+| 12 | `Parent-Teacher-Conference-Template.pptx` | education | Twice-yearly recurring need; education has only 4 decks today |
+| 13 | `Patient-Education-Template.pptx` | healthcare | Clinics reuse it for every condition/procedure; near-zero competition in the current catalogue |
+
+## Cheaper than adding decks (do this alongside)
+
+- **Kit navigation block** on detail pages: "Part of the Fundraising Kit" with 3–5
+  sibling links. Turns one download into a 4-page session — no new URL, no indexing cost.
+- **Bundle ZIP**: pack each kit's .pptx files into one download behind the existing
+  `/subscribe` form (D1 capture). Works today even without email sending.
+- **Tool hooks on detail pages**: for decks > 40 slides or with speaker notes, add
+  "Compress before emailing / Remove confidential notes" links to the tool pages.
+- **Homepage**: replace generic "More templates" with "Complete a kit".
+
+## Still do NOT add
+
+- Generic corporate / business decks (19 already; generic ones rank last).
+- Generic marketing decks (lowest per-deck average, 11.1).
+- One-off event decks (event plan, brand launch) — used once, never revisited.
+- More than 6 new decks in one batch while 6 URLs are still unindexed and AdSense
+  is pending: each new page needs its own crawl + index cycle.
