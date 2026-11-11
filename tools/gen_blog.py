@@ -77,6 +77,7 @@ FOOTER = """<footer class="site-footer">
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
+      <a href="/license/">License</a>
       <a href="https://tools.slidevaulte.com/">Drainage Calculators</a>
     </div>
   </div>
@@ -243,7 +244,8 @@ def main():
     urls = [("/", "1.0", "weekly"), ("/blog/", "0.8", "weekly"),
             ("/tools/", "0.8", "monthly"),
             ("/about/", "0.4", "yearly"), ("/contact/", "0.4", "yearly"),
-            ("/privacy/", "0.3", "yearly")]
+            ("/privacy/", "0.3", "yearly"),
+            ("/license/", "0.3", "yearly")]
     # Discover every /tools/<dir>/ on disk so new tools are never dropped when
     # this generator runs on its own.
     tools_dir = os.path.join(ROOT, "tools")

@@ -252,6 +252,8 @@ PAGE = """<!doctype html>
     <ol class="steps">{steps}</ol>
   </section>
 
+  {usage}
+
   <section class="prose">
     <h2>File details</h2>
     <ul class="facts">{facts}</ul>
@@ -304,6 +306,7 @@ PAGE = """<!doctype html>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
+      <a href="/license/">License</a>
       <a href="https://tools.slidevaulte.com/">Drainage Calculators</a>
     </div>
   </div>
@@ -452,8 +455,8 @@ READING = {
                "Writing a project proposal that gets approved")],
     "education": [("/blog/how-to-convert-ppt-to-pdf/",
                    "Exporting slides to PDF for handouts and LMS uploads"),
-                  ("/blog/google-slides-vs-powerpoint/",
-                   "Google Slides vs PowerPoint in the classroom")],
+                  ("/blog/how-to-import-pptx-into-google-slides/",
+                   "Importing a template into Google Slides without breaking it")],
     "healthcare": [("/blog/how-to-write-an-annual-report/",
                     "Writing an annual report that people actually read"),
                    ("/blog/how-to-convert-ppt-to-pdf/",
@@ -532,6 +535,23 @@ def slide_outline(path, limit=8):
 # Three things turn a one-off download into a longer visit without adding a
 # single new URL: kit navigation, tool hooks and a bundle behind /subscribe.
 
+def fonts_used(path, limit=3):
+    """Typefaces actually referenced by slides in the .pptx, most-used first."""
+    try:
+        z = zipfile.ZipFile(path)
+    except Exception:
+        return []
+    counts = {}
+    for name in z.namelist():
+        if re.match(r"ppt/slides/slide\d+\.xml$", name):
+            for tf in re.findall(r'typeface="([^"+][^"]*)"',
+                                 z.read(name).decode("utf-8", "ignore")):
+                counts[tf] = counts.get(tf, 0) + 1
+    ranked = sorted(counts.items(), key=lambda kv: -kv[1])
+    drop = {"+mn-lt", "+mj-lt", "+mn-ea", "+mj-ea"}
+    return [t for t, _ in ranked if t not in drop][:limit]
+
+
 def pptx_traits(path, size_bytes):
     """What actually needs cleaning before this deck leaves the building."""
     t = dict(notes=False, author=False, media=0, mb=size_bytes / 1048576.0)
@@ -552,6 +572,27 @@ def pptx_traits(path, size_bytes):
     except Exception:
         pass
     return t
+
+
+USAGE_BLOCK = """<section class="prose">
+    <h2>Using this template: the three things that trip people up</h2>
+    <ul class="checklist">
+      <li><b>Fonts:</b> the deck ships with {fonts}. If the machine you present from does not have one installed, PowerPoint swaps it silently and spacing can shift — pick a similar face from the font menu to fix it. In Google Slides, Calibri is replaced by Carlito (a metric-compatible twin), so line breaks survive; the full workaround list is in the <a href="/blog/powerpoint-template-fonts-not-working/">font troubleshooting guide</a>.</li>
+      <li><b>Brand colors:</b> recolor the whole deck at once instead of shape by shape — <b>View &rarr; Slide Master &rarr; Colors &rarr; Customize</b> (or Design &rarr; Variants &rarr; Colors), then edit Accent 1&ndash;6. Every card, chart and badge reads from the theme, so six swatches rebrand the entire file.</li>
+      <li><b>Charts carry sample data on purpose:</b> right-click any chart and choose <b>Edit Data</b> (Google Slides: click the chart, then the link icon &rarr; Open in Google Sheets) to drop in your own numbers. Layouts and colors stay as designed. Importing to Slides first? Follow the <a href="/blog/how-to-import-pptx-into-google-slides/">no-broken-layouts guide</a>.</li>
+    </ul>
+    <p>License: free for personal and commercial use — <a href="/license/">read the one-clause license</a>. Missing a deck you actually need? <a href="/contact/">Request a template</a> and we will build it.</p>
+  </section>
+
+"""
+
+
+def usage_html(fpath):
+    """Post-download guidance block: fonts, theme recoloring, chart data."""
+    fonts = fonts_used(fpath)
+    fl = (", ".join("<code>%s</code>" % html.escape(f) for f in fonts)
+          if fonts else "standard system typefaces (Calibri and Arial)")
+    return USAGE_BLOCK.format(fonts=fl)
 
 
 def kit_options(selected=""):
@@ -813,6 +854,7 @@ CAT_PAGE = """<!doctype html>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
+      <a href="/license/">License</a>
     </div>
   </div>
   <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
@@ -977,6 +1019,7 @@ def main():
             size=size, faq_schema=faq_schema,
             lead=sec["lead"], inside=sec["inside"], quality=sec["quality"],
             steps=sec["steps"], facts=sec["facts"], faq=sec["faq"], reading=sec["reading"],
+            usage=usage_html(fpath),
             browse_cta=browse_cta_html(kit),
             kit_box=kit_box_html(it, by_slug),
             tool_hooks=tool_hooks_html(it),
@@ -997,7 +1040,8 @@ def main():
     # never drops URLs (blog posts and tools pages are discovered dynamically)
     urls = [("/", "1.0", "weekly"), ("/blog/", "0.8", "weekly"),
             ("/about/", "0.4", "yearly"), ("/contact/", "0.4", "yearly"),
-            ("/privacy/", "0.3", "yearly")]
+            ("/privacy/", "0.3", "yearly"),
+            ("/license/", "0.3", "yearly")]
     urls += build_category_pages(items)
     urls += [("/templates/%s/" % it["slug"], "0.8", "monthly") for it in items]
     # free browser tools (tools/<name>/index.html)

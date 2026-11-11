@@ -34,6 +34,11 @@ DECKS = [
     ("Board-Meeting-Pack-Template", "BOARD MEETING PACK", 12, ["Agenda", "Strategy", "Finance", "Resolutions"]),
     ("Client-Onboarding-Deck-Template", "CLIENT ONBOARDING DECK", 12, ["Kickoff", "Scope", "Milestones", "Contacts"]),
     ("Department-Monthly-Report-Template", "DEPARTMENT MONTHLY REPORT", 12, ["Activity", "Quality", "Staff", "Actions"]),
+    ("Lecture-Deck-Template", "LECTURE DECK TEMPLATE", 12, ["Objectives", "Concepts", "Example", "Recap"]),
+    ("Course-Syllabus-Template", "COURSE SYLLABUS TEMPLATE", 12, ["Outcomes", "Schedule", "Grading", "Key Dates"]),
+    ("Training-Workshop-Template", "TRAINING WORKSHOP TEMPLATE", 12, ["Agenda", "Demo", "Hands-on", "30-Day Plan"]),
+    ("History-Timeline-Template", "HISTORY TIMELINE TEMPLATE", 12, ["Timeline", "Turning Points", "Figures", "Legacy"]),
+    ("Classroom-Quiz-Template", "CLASSROOM QUIZ TEMPLATE", 12, ["Warm-up", "Questions", "Scoreboard", "Reveal"]),
 ]
 
 

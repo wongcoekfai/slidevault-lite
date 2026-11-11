@@ -353,6 +353,7 @@ PAGE = """<!doctype html>
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
+      <a href="/license/">License</a>
       <a href="https://tools.slidevaulte.com/">Drainage Calculators</a>
     </div>
   </div>
