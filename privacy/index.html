@@ -65,24 +65,26 @@
   <p class="muted">Last updated: November 12, 2026</p>
 
   <h2>The short version</h2>
-  <p>We collect as little as possible. Downloads are counted and logged with a truncated network prefix and a daily, non-reversible identifier — never your full IP address. We use Google advertising (which sets cookies) to keep the templates free — you can opt out anytime. We never sell your email address.</p>
+  <p>We collect as little as possible. Downloads are counted and logged with a random, anonymous first-party identifier and a truncated network prefix — never your full IP address. We use Google advertising (which sets cookies) to keep the templates free — you can opt out anytime. We never sell your email address.</p>
 
   <h2>What we collect</h2>
   <h3>Email address (only if you subscribe)</h3>
   <p>If you fill in the subscribe form, we store your email address and the time you subscribed. It is used for one thing only: sending you a short note when new templates are published. Submissions are stored in a database inside our own Cloudflare account — no third-party email service sees them.</p>
 
   <h3>Download counts and diagnostics</h3>
-  <p>When you download a template we keep a running total and a per-day total for that file, plus one short-lived diagnostic event. That event records the UTC time, the file name, a <b>truncated IP network prefix</b> (for IPv4 the last octet is removed; for IPv6 only the first three groups are kept), the country and network / data-centre information Cloudflare already derives, the browser user agent, the referring page, and a one-way identifier derived from the IP that <b>changes every UTC day</b>.</p>
-  <p>We do <b>not</b> store your full IP address. The daily identifier cannot be reversed into an IP address and cannot be used to follow a visitor from one day to the next; it exists only so we can spot repeated or automated requests on the same day. Events are kept for <b>90 days</b>, live only in our own Cloudflare account, are never sold or shared, and are never used for advertising or profiling. If you prefer not to appear in this log at all, downloading is anonymous in the browser and requires no account — you can also <a href="/contact/">contact us</a> to ask for the removal of a specific event.</p>
+  <p>When you download a template we keep a running total and a per-day total for that file, plus one short-lived diagnostic event. That event records the UTC time, the file name, a <b>truncated IP network prefix</b> (for IPv4 the last octet is removed; for IPv6 only the first three groups are kept), the country and network / data-centre information Cloudflare already derives, the browser user agent, the referring page, and two anonymous identifiers.</p>
+  <p>The first is a <b>random first-party cookie</b> (<b>sv_vid</b>, a 32-character random string) that lets us distinguish one browser from another across visits — for example to tell a repeat download from genuine new interest. It contains no personal information, is never shared, and is not used for advertising. It lasts 180 days; clearing this site's cookies resets it, and downloads still work if you block cookies entirely. The second is a stable, one-way, non-reversible fingerprint derived from the masked network prefix, user agent and network operator, used only when no cookie is present (for example automated requests). It is a rough network-level signal rather than a user id: several people behind the same network may share it.</p>
+  <p>We do <b>not</b> store your full IP address in this log. Events are kept for <b>90 days</b>, live only in our own Cloudflare account, are never sold or shared, and are never used for advertising or profiling. Downloading requires no account, and you can <a href="/contact/">contact us</a> to ask for the removal of a specific event.</p>
 
   <h3>Advertising and cookies</h3>
-  <p>This site displays ads through Google AdSense. Google and its partners may use cookies — including the DoubleClick cookie — to serve ads based on your visits to this and other websites. See the next section for your opt-out choices.</p>
+  <p>This site displays ads through Google AdSense. Google and its partners may use cookies — including the DoubleClick cookie — to serve ads based on your visits to this and other websites. Separately from Google's advertising cookies, we set the single first-party <b>sv_vid</b> cookie described above; it holds only a random string and is not an advertising or tracking cookie. See the next section for your opt-out choices.</p>
 
   <h2>What we never do</h2>
   <ul>
     <li>We never sell, rent or share your email address.</li>
     <li>We never store your full IP address in our download log.</li>
-    <li>We never use download events for advertising, profiling, or cross-day tracking.</li>
+    <li>We never put a name, email address or IP address into the visitor cookie.</li>
+    <li>We never use download events or the visitor cookie for advertising, profiling, or cross-site tracking.</li>
     <li>We never send marketing email other than new-template announcements.</li>
   </ul>
 

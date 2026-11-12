@@ -9,6 +9,7 @@
 //     "https://slidevaulte.com/admin/download-events?days=7&limit=200"
 //   ...&format=csv   -> downloadable CSV for spreadsheets
 //   ...&file=Academic-Defense-Template.pptx -> one template
+//   ...&user=<sv_vid> -> every download from one anonymous visitor id
 //
 import { queryEvents } from "../_lib/download_events.js";
 
@@ -57,10 +58,11 @@ export async function onRequestGet(context) {
       days: url.searchParams.get("days"),
       limit: url.searchParams.get("limit"),
       file: url.searchParams.get("file"),
+      user: url.searchParams.get("user"),
     });
     if (url.searchParams.get("format") === "csv") {
       const columns = [
-        "ts", "day", "file", "ip", "visitor", "country", "city",
+        "ts", "day", "file", "ip", "user_id", "visitor", "country", "city",
         "asn", "as_org", "colo", "ua", "referer", "ray",
       ];
       return new Response(toCsv(out.rows, columns), {

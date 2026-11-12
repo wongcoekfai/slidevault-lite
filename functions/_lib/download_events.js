@@ -4,20 +4,31 @@
 // the authoritative lifetime counter is still `downloads`, and the UTC daily
 // rollup is still `download_daily`. Nothing here may ever block a 302.
 //
-// PRIVACY: by default we DO NOT write the full IP address. We store the
-// network prefix (IPv4 /24, IPv6 /48), the country/colo/ASN that Cloudflare
-// already derives, and a one-way HMAC identifier that ROTATES EVERY UTC DAY.
-// The identifier cannot be reversed to an IP and cannot link a visitor across
-// days. Set DOWNLOAD_LOG_FULL_IP=1 to store the full address instead — only
-// do that after updating the public privacy policy to disclose it.
+// VISITOR DISTINCTION (the point of this log):
+//   user_id  - a random first-party cookie (sv_vid, 32 hex chars, no personal
+//              data). Stable across days and downloads, so we can tell one
+//              browser from another, spot repeat downloads and returning
+//              visitors. Clearing site cookies resets it.
+//   visitor  - a stable, one-way HMAC fingerprint of the *masked* IP network
+//              prefix + user agent + network operator. Fallback for requests
+//              without a cookie (curl, crawlers, cookie blockers). It is NOT
+//              a user id: everyone behind the same NAT may share it.
+//
+// PRIVACY: by default we DO NOT write the full IP address. Both identifiers
+// are pseudonymous, neither contains the full address, and neither is used
+// for advertising or profiling. Set DOWNLOAD_LOG_FULL_IP=1 to store the full
+// address instead — only after updating the public privacy policy to say so.
 //
 // Rows are pruned lazily after DOWNLOAD_EVENT_RETENTION_DAYS (default 90).
 
 const RETENTION_DEFAULT = 90;
 
+export const VISITOR_COOKIE = "sv_vid";
+export const VISITOR_COOKIE_MAX_AGE = 180 * 24 * 60 * 60; // 180 days
+
 const COLUMNS = [
   "ts", "day", "file",
-  "ip", "visitor", "country", "city", "asn", "as_org", "colo",
+  "ip", "user_id", "visitor", "country", "city", "asn", "as_org", "colo",
   "ua", "referer", "ray",
 ];
 
@@ -28,6 +39,7 @@ const DDL = [
     "day TEXT NOT NULL," +
     "file TEXT NOT NULL," +
     "ip TEXT," +
+    "user_id TEXT," +
     "visitor TEXT," +
     "country TEXT," +
     "city TEXT," +
@@ -67,10 +79,41 @@ function maskIp(ip) {
   return "redacted";
 }
 
+function randomId() {
+  const bytes = new Uint8Array(16);
+  if (globalThis.crypto && globalThis.crypto.getRandomValues) {
+    globalThis.crypto.getRandomValues(bytes);
+  } else {
+    for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+  }
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Synchronous so the 302 can carry Set-Cookie; the async D1 write happens
+// later inside waitUntil. Strict validation prevents forged/injected values.
+export function resolveVisitor(request) {
+  const raw = (request && request.headers && request.headers.get("cookie")) || "";
+  for (const part of raw.split(";")) {
+    const idx = part.indexOf("=");
+    if (idx < 0) continue;
+    const name = part.slice(0, idx).trim();
+    const value = part.slice(idx + 1).trim();
+    if (name === VISITOR_COOKIE && /^[0-9a-f]{32}$/.test(value)) {
+      return { userId: value, setCookie: null };
+    }
+  }
+  const userId = randomId();
+  return {
+    userId,
+    setCookie: VISITOR_COOKIE + "=" + userId +
+      "; Path=/; Max-Age=" + VISITOR_COOKIE_MAX_AGE +
+      "; SameSite=Lax; Secure; HttpOnly",
+  };
+}
+
 // 16 hex chars of HMAC-SHA256. Falls back to a salted non-crypto mix only in
 // runtimes without WebCrypto (Workers and Node 22 always have it).
-async function dailyVisitor(secret, ip, day) {
-  const msg = String(secret) + "|" + String(ip) + "|" + day;
+async function hmac16(secret, msg) {
   const subtle = globalThis.crypto && globalThis.crypto.subtle;
   if (subtle) {
     const enc = new TextEncoder();
@@ -124,12 +167,24 @@ function retentionDays(env) {
 async function ensureSchema(env) {
   if (schemaReady) return;
   for (const sql of DDL) await env.DB.prepare(sql).run();
+  // Deployments that already had download_events before user_id existed.
+  // "duplicate column name" is expected on fresh tables and is ignored.
+  try {
+    await env.DB.prepare("ALTER TABLE download_events ADD COLUMN user_id TEXT").run();
+  } catch (e) {
+    // "duplicate column name" on fresh tables; expected and ignored.
+  }
+  // Must come AFTER the ALTER: on upgraded tables the column did not exist
+  // when the other two indexes were created.
+  await env.DB.prepare(
+    "CREATE INDEX IF NOT EXISTS idx_download_events_user ON download_events(user_id)"
+  ).run();
   schemaReady = true;
 }
 
 // ---------------------------------------------------------------- write
 
-export async function recordDownload(env, request, file, when = new Date()) {
+export async function recordDownload(env, request, file, when = new Date(), userId = "") {
   try {
     const ts = when.toISOString();
     const day = ts.slice(0, 10); // UTC
@@ -141,7 +196,9 @@ export async function recordDownload(env, request, file, when = new Date()) {
 
     const secret = (env && (env.DOWNLOAD_HASH_SECRET || env.UNSUB_SECRET)) ||
       "slidevault-download-events-v1";
-    const visitor = await dailyVisitor(secret, info.ip || "unknown", day);
+    const fingerprint = await hmac16(secret,
+      [secret, maskIp(info.ip), info.ua, info.asn, info.as_org].join("|"));
+    const user = /^[0-9a-f]{32}$/.test(userId) ? userId : "";
 
     await ensureSchema(env);
 
@@ -150,8 +207,8 @@ export async function recordDownload(env, request, file, when = new Date()) {
       "VALUES (" + COLUMNS.map(() => "?").join(", ") + ")"
     ).bind(
       ts, day, file,
-      storedIp, visitor, info.country, info.city, info.asn, info.as_org, info.colo,
-      info.ua, info.referer, info.ray
+      storedIp, user, fingerprint, info.country, info.city, info.asn, info.as_org,
+      info.colo, info.ua, info.referer, info.ray
     ).run();
 
     // Cheap, idempotent retention: once per UTC day per isolate.
@@ -179,6 +236,10 @@ export async function queryEvents(env, opts) {
   if (opts.file) {
     sql += " AND lower(file) = lower(?)";
     args.push(opts.file);
+  }
+  if (opts.user) {
+    sql += " AND user_id = ?";
+    args.push(opts.user);
   }
   sql += " ORDER BY ts DESC LIMIT ?";
   args.push(limit);

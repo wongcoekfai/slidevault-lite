@@ -2,9 +2,9 @@
 // Offline regression test for the per-download event log.
 // Mirrors tools/test-welcome-email.mjs: copies the Functions into a temp dir
 // as .mjs (Node needs ESM extensions), mocks D1 and Cloudflare request
-// metadata, then checks event fields, IP masking, daily-rotating visitors,
-// retention pruning, waitUntil vs await, admin auth/JSON/CSV, and the
-// pre-existing /downloads contract.
+// metadata, then checks event fields, IP masking, the first-party visitor
+// cookie, stable network fingerprints, schema upgrade order, retention
+// pruning, waitUntil vs await, admin auth/JSON/CSV, and the /downloads contract.
 //
 //   node tools/test-download-events.mjs
 
@@ -46,7 +46,7 @@ const recordDownload = async (...args) => {
   return (await imp(name)).recordDownload(...args);
 };
 
-const COLS = ["ts", "day", "file", "ip", "visitor", "country", "city",
+const COLS = ["ts", "day", "file", "ip", "user_id", "visitor", "country", "city",
   "asn", "as_org", "colo", "ua", "referer", "ray"];
 
 function makeDB(opts = {}) {
@@ -74,10 +74,14 @@ function makeDB(opts = {}) {
           if (sql.includes("FROM download_events") && sql.includes("SELECT")) {
             const from = rec.args[0];
             const hasFile = sql.includes("lower(file)");
-            const file = hasFile ? rec.args[1] : null;
-            const limit = rec.args[hasFile ? 2 : 1];
+            const hasUser = sql.includes("user_id = ?");
+            let i = 1;
+            const file = hasFile ? rec.args[i++] : null;
+            const user = hasUser ? rec.args[i++] : null;
+            const limit = rec.args[i];
             let rows = events.filter(r => r.day >= from &&
-              (!file || String(r.file).toLowerCase() === String(file).toLowerCase()));
+              (!file || String(r.file).toLowerCase() === String(file).toLowerCase()) &&
+              (!user || r.user_id === user));
             rows = rows.slice().sort((a, b) => b.ts.localeCompare(a.ts)).slice(0, limit);
             return Promise.resolve({ results: rows });
           }
@@ -138,23 +142,36 @@ const ok = (name, cond, extra = "") => {
   const r = await download(c);
   await settle(c);
   ok("正常下载 -> 302", r.status === 302);
+  ok("302 禁止共享缓存（保护 Set-Cookie）", r.headers.get("cache-control") === "private, no-store");
   ok("明细写入 1 条", d.inserted.length === 1, "got " + d.inserted.length);
   const e = d.inserted[0] || {};
   ok("ts 为 ISO UTC 毫秒时间", /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/.test(e.ts || ""), e.ts);
   ok("day 与 ts 一致", e.day === e.ts.slice(0, 10));
   ok("file 为 canonical 名", e.file === "Academic-Defense-Template.pptx");
   ok("IPv4 脱敏为 /24", e.ip === "203.0.113.0/24", e.ip);
-  ok("visitor 为 16 位 hex", /^[0-9a-f]{16}$/.test(e.visitor || ""), e.visitor);
+  const setCookie = r.headers.get("set-cookie") || "";
+  ok("首次下载下发 Set-Cookie 且属性齐全",
+    /^sv_vid=[0-9a-f]{32};/.test(setCookie) &&
+    setCookie.includes("Path=/") && setCookie.includes("Max-Age=15552000") &&
+    setCookie.includes("SameSite=Lax") && setCookie.includes("Secure") &&
+    setCookie.includes("HttpOnly"), setCookie);
+  ok("user_id 为 32 hex 且与 cookie 一致",
+    /^[0-9a-f]{32}$/.test(e.user_id || "") && setCookie.includes("sv_vid=" + e.user_id));
+  ok("visitor 为 16 位 hex 网络指纹", /^[0-9a-f]{16}$/.test(e.visitor || ""), e.visitor);
   ok("country/city/asn/ASN 组织/colo 齐全",
     e.country === "US" && e.city === "San Francisco" && e.asn === "13335" &&
     e.as_org === "CLOUDFLARENET" && e.colo === "SJC", JSON.stringify([e.country, e.city, e.asn, e.as_org, e.colo]));
   ok("UA 与 CF-Ray 记录", String(e.ua).includes("TestAgent") && e.ray === "8f1234abc-SIN");
   ok("referer 去掉查询串", e.referer === "https://slidevaulte.com/templates/academic-defense-template/", e.referer);
-  ok("events 表只建一次 + 2 索引（daily 表单独建一次）",
+  ok("events 表只建一次 + 3 索引 + ALTER 兼容旧表",
     d.calls.filter(x => x.sql.includes("CREATE TABLE IF NOT EXISTS download_events")).length === 1 &&
-    d.calls.filter(x => x.sql.includes("CREATE INDEX")).length === 2 &&
-    d.calls.filter(x => x.sql.includes("CREATE TABLE IF NOT EXISTS download_daily")).length === 1,
+    d.calls.filter(x => x.sql.includes("CREATE INDEX")).length === 3 &&
+    d.calls.filter(x => x.sql.includes("CREATE TABLE IF NOT EXISTS download_daily")).length === 1 &&
+    d.calls.some(x => x.sql.includes("ALTER TABLE download_events ADD COLUMN user_id")),
     JSON.stringify(d.calls.filter(x => x.sql.includes("CREATE ")).map(x => x.sql.slice(0, 58))));
+  const alterAt = d.calls.findIndex(x => x.sql.includes("ALTER TABLE download_events"));
+  const userIdxAt = d.calls.findIndex(x => x.sql.includes("idx_download_events_user"));
+  ok("ALTER 在建 user_id 索引之前（旧表升级顺序）", alterAt >= 0 && userIdxAt > alterAt);
   ok("按天惰性清理执行一次且 cutoff = 90 天", d.calls.filter(x => x.sql.includes("DELETE FROM download_events")).length === 1,
     JSON.stringify((d.calls.find(x => x.sql.includes("DELETE FROM download_events")) || {}).args));
   ok("累计计数与按天聚合仍写入", d.calls.some(x => x.sql.includes("INSERT INTO downloads")) &&
@@ -205,7 +222,7 @@ const ok = (name, cond, extra = "") => {
   ok("明细写库失败不影响 302", r.status === 302, "status " + r.status);
 }
 
-// ---------------------------------------------------------------- 4. IPv6 / full IP / visitor 轮换
+// ---------------------------------------------------------------- 4. IPv6 / full IP / 稳定网络指纹
 {
   const d = makeDB();
   await recordDownload({ DB: d.DB }, req("https://x.test/x", {
@@ -223,14 +240,15 @@ const ok = (name, cond, extra = "") => {
 {
   const d = makeDB();
   const env = { DB: d.DB, DOWNLOAD_HASH_SECRET: "test-secret" };
-  const rq = req("https://x.test/x", { headers: { "cf-connecting-ip": "203.0.113.47" } });
-  await recordDownload(env, rq, "Pitch-Deck-Template.pptx", new Date("2026-11-12T01:00:00Z"));
-  await recordDownload(env, rq, "Pitch-Deck-Template.pptx", new Date("2026-11-12T02:00:00Z"));
-  await recordDownload(env, rq, "Pitch-Deck-Template.pptx", new Date("2026-11-13T01:00:00Z"));
+  const rqA = req("https://x.test/x", { headers: { "cf-connecting-ip": "203.0.113.47", "user-agent": "UA-A" } });
+  const rqB = req("https://x.test/x", { headers: { "cf-connecting-ip": "203.0.113.47", "user-agent": "UA-B" } });
+  await recordDownload(env, rqA, "Pitch-Deck-Template.pptx", new Date("2026-11-12T01:00:00Z"));
+  await recordDownload(env, rqA, "Pitch-Deck-Template.pptx", new Date("2026-11-13T01:00:00Z"));
+  await recordDownload(env, rqB, "Pitch-Deck-Template.pptx", new Date("2026-11-13T01:00:00Z"));
   const [a, b, c] = d.inserted.map(x => x.visitor);
-  ok("同 IP 同一天 visitor 稳定", a === b);
-  ok("跨天 visitor 轮换", a !== c);
-  ok("visitor 不含原始 IP 串", !a.includes("203") && a.length === 16);
+  ok("同一网络跨天指纹稳定（不再按天轮换）", a === b);
+  ok("不同 UA -> 不同网络指纹", a !== c);
+  ok("指纹不含原始 IP 串", !a.includes("203") && a.length === 16);
 }
 {
   const d = makeDB();
@@ -239,6 +257,44 @@ const ok = (name, cond, extra = "") => {
     new Date("2026-11-12T01:00:00Z"));
   const del = d.calls.find(x => x.sql.includes("DELETE FROM download_events"));
   ok("自定义保留期生效（cutoff = 2026-10-13）", del && del.args[0] === "2026-10-13", JSON.stringify(del && del.args));
+}
+
+// ---------------------------------------------------------------- 4.5 用户区分（第一方 cookie）
+{
+  const id = "a".repeat(32);
+  const d = makeDB();
+  const c = ctx(d, req("https://x.test/download?file=Pitch-Deck-Template.pptx",
+    { headers: { ...HEADERS, cookie: "foo=1; sv_vid=" + id + "; bar=2" } }));
+  const r = await download(c); await settle(c);
+  ok("带合法 cookie -> 不再下发 Set-Cookie", r.headers.get("set-cookie") === null);
+  ok("复用 cookie 值作为 user_id", d.inserted[0].user_id === id);
+}
+{
+  const d = makeDB();
+  const c = ctx(d, req("https://x.test/download?file=Pitch-Deck-Template.pptx",
+    { headers: { ...HEADERS, cookie: "sv_vid=NOT-A-VALID-ID" } }));
+  const r = await download(c); await settle(c);
+  ok("伪造 cookie 被拒绝并重新生成",
+    /^sv_vid=[0-9a-f]{32};/.test(r.headers.get("set-cookie") || "") &&
+    d.inserted[0].user_id !== "NOT-A-VALID-ID");
+}
+{
+  const a = "a".repeat(32), b = "b".repeat(32);
+  const d = makeDB();
+  for (const id of [a, a, b]) {
+    const c = ctx(d, req("https://x.test/download?file=Pitch-Deck-Template.pptx",
+      { headers: { ...HEADERS, cookie: "sv_vid=" + id } }));
+    await download(c); await settle(c);
+  }
+  const ids = d.inserted.map(x => x.user_id);
+  ok("同一访客多次/跨天下载 user_id 稳定", ids[0] === ids[1] && ids[0] === a);
+  ok("不同访客 user_id 可区分", ids[2] === b && ids[2] !== ids[0]);
+}
+{
+  const d = makeDB();
+  await recordDownload({ DB: d.DB }, req("https://x.test/x", { headers: HEADERS }),
+    "Pitch-Deck-Template.pptx", new Date("2026-11-12T01:00:00Z"), "forged");
+  ok("recordDownload 拒绝非法 userId", d.inserted[0].user_id === "");
 }
 
 // ---------------------------------------------------------------- 5. 查询接口鉴权与输出
@@ -284,7 +340,21 @@ const TOKEN = "unit-test-token";
   const text = await r.text();
   ok("CSV 响应头正确", r.headers.get("content-type").includes("text/csv"));
   ok("CSV 含表头与转义后的引号", text.startsWith("ts,day,file,") && text.includes('"Mozilla, ""quoted"""'), text.slice(0, 180));
+  ok("CSV 表头含 user_id", text.split("\r\n")[0].includes("user_id"));
   ok("file 过滤传到 SQL", d.calls[0].sql.includes("lower(file) = lower(?)") && d.calls[0].args[1] === "A.pptx");
+}
+
+{
+  const today = new Date().toISOString().slice(0, 10);
+  const d = makeDB({ events: [
+    { ts: today + "T10:00:00.000Z", day: today, file: "A.pptx", user_id: "visitor-one" },
+    { ts: today + "T09:00:00.000Z", day: today, file: "B.pptx", user_id: "visitor-two" },
+  ] });
+  const r = await admin({ env: { DB: d.DB, DOWNLOAD_EVENTS_TOKEN: TOKEN },
+    request: req("https://x.test/admin/download-events?user=visitor-one", { headers: { authorization: "Bearer " + TOKEN } }) });
+  const j = await r.json();
+  ok("?user= 按匿名访客过滤", j.count === 1 && j.rows[0].user_id === "visitor-one" &&
+    d.calls[0].sql.includes("user_id = ?"), JSON.stringify(j.rows));
 }
 
 // ---------------------------------------------------------------- 6. /downloads 原契约回归

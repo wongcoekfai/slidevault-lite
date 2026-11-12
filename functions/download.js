@@ -5,7 +5,7 @@
 // so a request for a file we do not ship is rejected before anything is counted
 // (previously those requests counted once and then redirected to a 404).
 import { CANONICAL_FILES } from "./_lib/files.js";
-import { recordDownload } from "./_lib/download_events.js";
+import { recordDownload, resolveVisitor } from "./_lib/download_events.js";
 
 // The daily rollup table is created lazily: wrangler migrations are not always
 // available from the deploy environment, and a DDL must never block a download.
@@ -64,9 +64,11 @@ export async function onRequestGet(context) {
     // Rollup is observational; the lifetime counter above is authoritative.
   }
 
-  // Per-download detail row. Best effort and off the critical path: the 302
-  // is returned immediately while waitUntil finishes the D1 write.
-  const event = recordDownload(env, request, file, new Date());
+  // A random first-party id lets the event log distinguish one browser from
+  // another across days. resolveVisitor is sync so Set-Cookie can go on the
+  // 302; the D1 write itself stays off the critical path via waitUntil.
+  const { userId, setCookie } = resolveVisitor(request);
+  const event = recordDownload(env, request, file, new Date(), userId);
   if (typeof context.waitUntil === "function") {
     context.waitUntil(event);
   } else {
@@ -74,5 +76,12 @@ export async function onRequestGet(context) {
     await event;
   }
 
-  return Response.redirect(new URL("/files/" + file, url.origin).toString(), 302);
+  const headers = new Headers({
+    Location: new URL("/files/" + file, url.origin).toString(),
+    // This response may carry Set-Cookie: never let a shared cache serve it
+    // to a different visitor (or skip the counting Function entirely).
+    "Cache-Control": "private, no-store",
+  });
+  if (setCookie) headers.append("Set-Cookie", setCookie);
+  return new Response(null, { status: 302, headers });
 }
