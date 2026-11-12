@@ -52,23 +52,24 @@
           "<h3>" + esc(t.title) + "</h3>" +
           (t.desc ? "<p>" + esc(t.desc) + "</p>" : "") +
           '<div class="actions">' +
-            '<a class="btn btn-primary" href="/download?file=' + encodeURIComponent(t.file) + '" rel="nofollow" download>Download</a>' +
-            '<a class="btn btn-ghost" href="/templates/' + esc(t.slug) + '/">Details</a>' +
+            '<a class="btn btn-primary" href="/templates/' + esc(t.slug) + '/">View template</a>' +
+            '<a class="btn btn-ghost" href="/download?file=' + encodeURIComponent(t.file) + '" rel="nofollow" download>Download .pptx</a>' +
           "</div>" +
         "</div>" +
       "</article>"
     );
   }
 
-  // Most-downloaded templates (real D1 download counts, updated Nov 2026).
-  // Keep this list ordered by count; update when the numbers shift meaningfully.
+  // Most-downloaded templates, from the D1 counter snapshot on 2026-11-12
+  // (703 downloads across 49 files). Counts in comments are the raw totals.
+  // Re-check /downloads?days=30 before reshuffling this list.
   var POPULAR_SLUGS = [
-    "saas-startup-pitch-deck-template",
-    "light-startup-pitch-deck-template",
-    "professional-corporate-presentation-template-2",
-    "professional-business-presentation-template",
-    "nova-medical-healthcare-template",
-    "sales-proposal-template"
+    "academic-defense-template",                      // 53
+    "professional-business-presentation-template",    // 38
+    "nova-medical-healthcare-template",               // 35
+    "aether-financial-consulting-template",           // 30
+    "professional-corporate-presentation-template-2", // 24
+    "modern-tech-enterprise-app-ppt-template"         // 24
   ];
 
   function render(cat) {
