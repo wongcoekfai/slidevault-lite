@@ -4,5 +4,7 @@ Allow: /
 # megabytes of crawl budget. Keep Googlebot on the HTML pages.
 Disallow: /download
 Disallow: /downloads
+# Private, token-protected diagnostics endpoint: no index value.
+Disallow: /admin/
 
 Sitemap: https://slidevaulte.com/sitemap.xml

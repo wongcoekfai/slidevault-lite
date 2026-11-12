@@ -4,16 +4,16 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Privacy Policy — Slide Vault</title>
-<meta name="description" content="How Slide Vault handles your data: email subscriptions, advertising cookies, and your privacy choices." />
+<meta name="description" content="How Slide Vault handles your data: email subscriptions, anonymous download logs, advertising cookies, and your privacy choices." />
 <meta property="og:title" content="Privacy Policy — Slide Vault" />
-<meta property="og:description" content="How Slide Vault handles your data, cookies, and advertising." />
+<meta property="og:description" content="How Slide Vault handles your data, download logs, cookies, and advertising." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://slidevaulte.com/privacy/" />
 <meta property="og:image" content="https://slidevaulte.com/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
 <link rel="canonical" href="https://slidevaulte.com/privacy/" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Privacy Policy — Slide Vault" />
-<meta name="twitter:description" content="How Slide Vault handles your data, cookies, and advertising." />
+<meta name="twitter:description" content="How Slide Vault handles your data, download logs, cookies, and advertising." />
 <meta name="twitter:image" content="https://slidevaulte.com/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
 <link rel="stylesheet" href="/assets/style.css?v=10" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
@@ -25,7 +25,7 @@
   "@type": "WebPage",
   "name": "Privacy Policy - Slide Vault",
   "url": "https://slidevaulte.com/privacy/",
-  "description": "How Slide Vault handles your data: email subscriptions, advertising cookies, and your privacy choices."
+  "description": "How Slide Vault handles your data: email subscriptions, anonymous download logs, advertising cookies, and your privacy choices."
 }
 </script>
 </head>
@@ -62,17 +62,18 @@
 </header>
 <main class="container prose" style="max-width:760px;">
   <h1>Privacy Policy</h1>
-  <p class="muted">Last updated: October 29, 2026</p>
+  <p class="muted">Last updated: November 12, 2026</p>
 
   <h2>The short version</h2>
-  <p>We collect as little as possible. We use Google advertising (which sets cookies) to keep the templates free — you can opt out anytime. We never sell your email address.</p>
+  <p>We collect as little as possible. Downloads are counted and logged with a truncated network prefix and a daily, non-reversible identifier — never your full IP address. We use Google advertising (which sets cookies) to keep the templates free — you can opt out anytime. We never sell your email address.</p>
 
   <h2>What we collect</h2>
   <h3>Email address (only if you subscribe)</h3>
   <p>If you fill in the subscribe form, we store your email address and the time you subscribed. It is used for one thing only: sending you a short note when new templates are published. Submissions are stored in a database inside our own Cloudflare account — no third-party email service sees them.</p>
 
-  <h3>Anonymous download counts</h3>
-  <p>When you download a template, we count how many times each file was downloaded. We do <b>not</b> store your IP address or any identifier alongside it.</p>
+  <h3>Download counts and diagnostics</h3>
+  <p>When you download a template we keep a running total and a per-day total for that file, plus one short-lived diagnostic event. That event records the UTC time, the file name, a <b>truncated IP network prefix</b> (for IPv4 the last octet is removed; for IPv6 only the first three groups are kept), the country and network / data-centre information Cloudflare already derives, the browser user agent, the referring page, and a one-way identifier derived from the IP that <b>changes every UTC day</b>.</p>
+  <p>We do <b>not</b> store your full IP address. The daily identifier cannot be reversed into an IP address and cannot be used to follow a visitor from one day to the next; it exists only so we can spot repeated or automated requests on the same day. Events are kept for <b>90 days</b>, live only in our own Cloudflare account, are never sold or shared, and are never used for advertising or profiling. If you prefer not to appear in this log at all, downloading is anonymous in the browser and requires no account — you can also <a href="/contact/">contact us</a> to ask for the removal of a specific event.</p>
 
   <h3>Advertising and cookies</h3>
   <p>This site displays ads through Google AdSense. Google and its partners may use cookies — including the DoubleClick cookie — to serve ads based on your visits to this and other websites. See the next section for your opt-out choices.</p>
@@ -80,6 +81,8 @@
   <h2>What we never do</h2>
   <ul>
     <li>We never sell, rent or share your email address.</li>
+    <li>We never store your full IP address in our download log.</li>
+    <li>We never use download events for advertising, profiling, or cross-day tracking.</li>
     <li>We never send marketing email other than new-template announcements.</li>
   </ul>
 

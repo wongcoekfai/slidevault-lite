@@ -1,9 +1,11 @@
 // GET /download?file=Name.pptx
-// Increments the download counter in D1, then 302-redirects to the real file.
+// Counts the download (lifetime + UTC daily rollup + one detail event),
+// then 302-redirects to the real file.
 // CANONICAL_FILES is generated from assets/templates.js by tools/gen_pages.py,
 // so a request for a file we do not ship is rejected before anything is counted
 // (previously those requests counted once and then redirected to a 404).
 import { CANONICAL_FILES } from "./_lib/files.js";
+import { recordDownload } from "./_lib/download_events.js";
 
 // The daily rollup table is created lazily: wrangler migrations are not always
 // available from the deploy environment, and a DDL must never block a download.
@@ -60,6 +62,16 @@ export async function onRequestGet(context) {
     }
   } catch (e) {
     // Rollup is observational; the lifetime counter above is authoritative.
+  }
+
+  // Per-download detail row. Best effort and off the critical path: the 302
+  // is returned immediately while waitUntil finishes the D1 write.
+  const event = recordDownload(env, request, file, new Date());
+  if (typeof context.waitUntil === "function") {
+    context.waitUntil(event);
+  } else {
+    // Local test harnesses / runtimes without waitUntil.
+    await event;
   }
 
   return Response.redirect(new URL("/files/" + file, url.origin).toString(), 302);
