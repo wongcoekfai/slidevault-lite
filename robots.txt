@@ -4,6 +4,13 @@ Allow: /
 # megabytes of crawl budget. Keep Googlebot on the HTML pages.
 Disallow: /download
 Disallow: /downloads
+# Binary assets behind those redirects (.pptx / .zip bundles) are not web
+# pages either. Blocking them keeps multi-megabyte files off the crawl budget.
+Disallow: /files/
+# Leftover WordPress paths from an earlier platform; they 404 on this static
+# site and should never be requested again.
+Disallow: /wp-includes/
+Disallow: /feed/
 # Private, token-protected diagnostics endpoint: no index value.
 Disallow: /admin/
 
