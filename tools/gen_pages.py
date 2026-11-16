@@ -174,24 +174,36 @@ PAGE = """<!doctype html>
   <div class="container nav">
     <a class="brand" href="/">Slide<span>Vault</span></a>
     <nav>
-      <a href="/#templates">Templates</a>
-      <a href="/blog/">Blog</a>
-      <div class="nav-drop">
-        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
-        <div class="nav-menu">
-          <a href="/tools/">All PPT Tools</a>
-          <a href="/tools/merge-ppt/">Merge PPT</a>
-          <a href="/tools/compress-ppt/">Compress PPT</a>
-          <a href="/tools/split-ppt/">Split PPT</a>
-          <a href="/tools/extract-images/">Extract Images</a>
-          <a href="/tools/remove-notes/">Remove Notes</a>
-          <a href="/tools/clean-metadata/">Clean Metadata</a>
-          <a href="/tools/ppt-stats/">PPT Stats</a>
-        </div>
-      </div>
-      <a href="/about/">About</a>
-      <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
-    </nav>
+          <a href="/#templates">Templates</a>
+          <div class="nav-drop">
+            <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">Categories <span class="caret">&#9662;</span></button>
+            <div class="nav-menu">
+              <a href="/#templates">All templates</a>
+              <a href="/templates/business/">Business</a>
+              <a href="/templates/marketing/">Marketing</a>
+              <a href="/templates/startup/">Startup</a>
+              <a href="/templates/sales/">Sales</a>
+              <a href="/templates/education/">Education</a>
+              <a href="/templates/healthcare/">Healthcare</a>
+            </div>
+          </div>
+          <a href="/blog/">Blog</a>
+          <div class="nav-drop">
+            <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
+            <div class="nav-menu">
+              <a href="/tools/">All PPT Tools</a>
+              <a href="/tools/merge-ppt/">Merge PPT</a>
+              <a href="/tools/compress-ppt/">Compress PPT</a>
+              <a href="/tools/split-ppt/">Split PPT</a>
+              <a href="/tools/extract-images/">Extract Images</a>
+              <a href="/tools/remove-notes/">Remove Notes</a>
+              <a href="/tools/clean-metadata/">Clean Metadata</a>
+              <a href="/tools/ppt-stats/">PPT Stats</a>
+            </div>
+          </div>
+          <a href="/about/">About</a>
+          <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
+        </nav>
   </div>
 </header>
 <main class="container detail">
@@ -336,7 +348,7 @@ PAGE = """<!doctype html>
   <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
 </footer>
 <script src="/assets/gallery.js"></script>
-<script src="/assets/nav.js?v=1" defer></script>
+<script src="/assets/nav.js?v=2" defer></script>
 <script>
 fetch('/downloads?file={file}').then(r=>r.json()).then(d=>{{
   var el=document.getElementById('dl-count');
@@ -353,18 +365,18 @@ fetch('/downloads?file={file}').then(r=>r.json()).then(d=>{{
 # (cat, label, seo_title, h1, meta_desc, lead, howto, hub_intro)
 CATS = [
     ("business", "Business",
-     "Free Business Presentation Templates - 19 Editable Corporate Decks",
+     "Free Business Presentation Templates - 22 Editable Corporate Decks",
      "Free Business Presentation Templates",
-     "19 free business presentation templates for corporate reviews, board meetings and strategy offsites. Editable PowerPoint and Google Slides decks, no signup.",
-     "Nineteen editable business presentation templates for corporate reviews, board meetings, strategy offsites and team updates. Every deck is a real .pptx file that opens cleanly in PowerPoint and Google Slides. No signup, no watermark, and free for personal and commercial use.",
-     "If you are presenting to a board, start with the annual report or corporate template. For internal planning, the strategy or OKR deck fits better. For client-facing work, the proposal decks in the Sales category are a closer match. Teaching and training decks now live under Education. Every template is fully editable, so rebranding colours, fonts and layouts takes a few minutes.",
+     "22 free business presentation templates for corporate reviews, board meetings, weekly status updates and strategy offsites. Editable PowerPoint and Google Slides decks, no signup.",
+     "Twenty-two editable business presentation templates for corporate reviews, board meetings, weekly status updates, OKR planning and strategy offsites. Every deck is a real .pptx file that opens cleanly in PowerPoint and Google Slides. No signup, no watermark, and free for personal and commercial use.",
+     "If you are presenting to a board, start with the annual report or corporate template. For internal planning, the strategy, OKR planning or weekly status deck fits better. For client-facing work, the proposal decks in the Sales category are a closer match. Teaching and training decks now live under Education. Every template is fully editable, so rebranding colours, fonts and layouts takes a few minutes.",
      "Board decks, quarterly reviews, strategy offsites and all-hands updates all live here."),
     ("startup", "Startup",
-     "Free Startup Pitch Deck Templates - 5 Investor-Ready Decks",
+     "Free Startup Pitch Deck Templates - 9 Investor and Board Decks",
      "Free Startup Pitch Deck Templates",
-     "5 free startup pitch deck templates for pre-seed to Series A fundraising, plus a business plan deck. Problem, traction, market and ask slides, ready to edit.",
-     "Five investor-ready pitch deck templates for pre-seed through Series A fundraising, plus a business plan deck for bank and partner conversations. Each follows the structure investors actually screen for: problem, solution, market, traction and the ask.",
-     "Choose the dark pitch deck for demo days and stage presentations, or the light version if you are sending a PDF and want to keep ink low. If you are writing a fuller plan for a bank or grant application, use the business plan template instead. Once you have raised, the investor update deck keeps your monthly reporting consistent.",
+     "9 free startup templates: pitch decks for demo days and seed rounds, investor updates, board meeting packs and a business plan deck. Problem, traction, market and ask slides, ready to edit.",
+     "Nine startup templates covering pre-seed through Series A: pitch decks for demo days and seed rounds, product and investor-facing versions, monthly investor updates, and a board meeting pack for the governance that follows the round. Each follows the structure investors actually screen for: problem, solution, market, traction and the ask.",
+     "Choose the dark pitch deck for demo days and stage presentations, or the light version if you are sending a PDF and want to keep ink low. If you are writing a fuller plan for a bank or grant application, use the business plan template instead. Once you have raised, the investor update deck keeps monthly reporting consistent, and the board meeting pack structures the quarterly conversation.",
      "Fundraising decks and the investor communication that follows the round."),
     ("marketing", "Marketing",
      "Free Marketing Presentation Templates - 9 Campaign and Report Decks",
@@ -374,29 +386,29 @@ CATS = [
      "For recurring reporting, start with the marketing report template. For new business, the agency proposal and digital agency decks are built for pitches. For a one-off campaign, use the product or brand launch template, since both assume a channel plan and a timeline.",
      "Campaign reporting, pitches, launches and the brand assets that go with them."),
     ("sales", "Sales",
-     "Free Sales Presentation Templates - 3 Proposal and Performance Decks",
+     "Free Sales Presentation Templates - 7 Proposal and Performance Decks",
      "Free Sales Presentation Templates",
-     "3 free sales presentation templates for client proposals, project scoping and performance reviews. Pricing, pipeline and forecast slides ready to edit.",
-     "Three sales presentation templates for proposals, project scoping and performance reviews. Each is structured around the decision your buyer or leadership team needs to make, rather than around your product features.",
-     "Use the sales proposal template after discovery, when the buyer needs pricing options and a clear next step. The project proposal deck fits internal approval and scoping. For recurring reporting to leadership, use the sales performance template.",
+     "7 free sales presentation templates: proposals, pricing, quarterly business reviews, channel partnerships and client onboarding. Pricing, pipeline and forecast slides ready to edit.",
+     "Seven sales presentation templates covering the full cycle, from the first proposal to onboarding: pricing options, quarterly business reviews for leadership, and partnership decks for channel teams. Each is structured around the decision your buyer or leadership team needs to make, rather than around your product features.",
+     "Use the sales proposal template after discovery, when the buyer needs pricing options and a clear next step. The pricing proposal deck fits price-driven deals, and the QBR template structures the quarterly conversation with leadership. After signature, the client onboarding deck sets the first 30 days, and the channel partnership template covers reseller and partner conversations.",
      "Proposals that close, scoping that gets approved, and the reviews that follow."),
     ("education", "Education",
      "Free Education Presentation Templates - Lesson, Academic and Training Decks",
      "Free Education Presentation Templates",
-     "4 free education presentation templates: lesson plans, academic defence, staff training and workshop decks. Editable PowerPoint and Google Slides, no signup.",
-     "Four education presentation templates for the decks teachers, trainers and students actually rebuild: lesson plans, thesis and dissertation defence, staff training courses and workshop sessions. Every file is a plain .pptx, so it opens in PowerPoint, Google Slides or Keynote and stays editable.",
-     "For a class you teach weekly, the lesson plan template gives you a reusable structure with objectives, activities and assessment. For a thesis or dissertation defence, use the academic template, which is laid out around the argument rather than around decoration. Corporate trainers should start with the training course deck, and facilitators running a half-day session with the workshop template.",
+     "9 free education presentation templates: lecture decks, course syllabi, history timelines, classroom quizzes, lesson plans, academic defence and training decks. Editable PowerPoint and Google Slides, no signup.",
+     "Nine education presentation templates for the decks teachers, trainers and students actually rebuild: lecture decks, course syllabi, history timelines, classroom review games, lesson plans, thesis and dissertation defence, and staff training. Every file is a plain .pptx, so it opens in PowerPoint, Google Slides or Keynote and stays editable.",
+     "For a class you teach weekly, the lecture deck gives you a timed roadmap with objectives and a recap, and the lesson plan template adds activities and assessment. Course teams should start with the syllabus template, which doubles as the term contract. History and social studies teachers get a timeline-first deck, and the classroom quiz template turns revision into a game. For a thesis or dissertation defence, use the academic template, and corporate trainers should start with the training workshop deck.",
      "Lesson plans, thesis defences, training courses and the workshops in between."),
     ("healthcare", "Healthcare",
-     "Free Healthcare Presentation Templates - 5 Medical and Hospital Decks",
+     "Free Healthcare Presentation Templates - 6 Medical and Hospital Decks",
      "Free Healthcare Presentation Templates",
-     "5 free healthcare presentation templates for clinical research readouts, hospital annual reviews, patient education and pharma launches. Editable .pptx, no signup.",
-     "Five healthcare presentation templates for the decks medical teams rebuild every quarter: clinical study readouts, hospital and department yearly reviews, patient education and pharmaceutical launch briefs. Every file is a plain .pptx that opens in PowerPoint and Google Slides and stays editable.",
+     "6 free healthcare presentation templates for clinical research readouts, hospital and department reviews, patient education and pharma launches. Editable .pptx, no signup.",
+     "Six healthcare presentation templates for the decks medical teams rebuild every quarter: clinical study readouts, hospital and department reviews, patient education and pharmaceutical launch briefs. Every file is a plain .pptx that opens in PowerPoint and Google Slides and stays editable.",
      "For reporting a study, the clinical research template is structured around design, endpoints and safety. For a hospital or department yearly review, use the annual report deck. The patient education template fits community and waiting-room settings, and brand teams planning a drug or device launch should start with the pharma launch deck.",
      "Clinical evidence, hospital operations, patient education and the launches that follow."),
 ]
 
-CSS_VER = "10"
+CSS_VER = "11"
 
 # ---------------------------------------------------------------- detail-page copy
 # Per-category editorial blocks. AdSense rejects sites whose template pages are
@@ -866,25 +878,37 @@ CAT_PAGE = """<!doctype html>
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href="/">Slide<span>Vault</span></a>
-    <nav>
-      <a href="/#templates">Templates</a>
-      <a href="/blog/">Blog</a>
-      <div class="nav-drop">
-        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
-        <div class="nav-menu">
-          <a href="/tools/">All PPT Tools</a>
-          <a href="/tools/merge-ppt/">Merge PPT</a>
-          <a href="/tools/compress-ppt/">Compress PPT</a>
-          <a href="/tools/split-ppt/">Split PPT</a>
-          <a href="/tools/extract-images/">Extract Images</a>
-          <a href="/tools/remove-notes/">Remove Notes</a>
-          <a href="/tools/clean-metadata/">Clean Metadata</a>
-          <a href="/tools/ppt-stats/">PPT Stats</a>
-        </div>
-      </div>
-      <a href="/about/">About</a>
-      <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
-    </nav>
+        <nav>
+              <a href="/#templates">Templates</a>
+              <div class="nav-drop">
+                <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">Categories <span class="caret">&#9662;</span></button>
+                <div class="nav-menu">
+                  <a href="/#templates">All templates</a>
+                  <a href="/templates/business/">Business</a>
+                  <a href="/templates/marketing/">Marketing</a>
+                  <a href="/templates/startup/">Startup</a>
+                  <a href="/templates/sales/">Sales</a>
+                  <a href="/templates/education/">Education</a>
+                  <a href="/templates/healthcare/">Healthcare</a>
+                </div>
+              </div>
+              <a href="/blog/">Blog</a>
+              <div class="nav-drop">
+                <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
+                <div class="nav-menu">
+                  <a href="/tools/">All PPT Tools</a>
+                  <a href="/tools/merge-ppt/">Merge PPT</a>
+                  <a href="/tools/compress-ppt/">Compress PPT</a>
+                  <a href="/tools/split-ppt/">Split PPT</a>
+                  <a href="/tools/extract-images/">Extract Images</a>
+                  <a href="/tools/remove-notes/">Remove Notes</a>
+                  <a href="/tools/clean-metadata/">Clean Metadata</a>
+                  <a href="/tools/ppt-stats/">PPT Stats</a>
+                </div>
+              </div>
+              <a href="/about/">About</a>
+              <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
+            </nav>
   </div>
 </header>
 <main class="container cat-page">
@@ -955,7 +979,7 @@ CAT_PAGE = """<!doctype html>
   </div>
   <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
 </footer>
-<script src="/assets/nav.js?v=1" defer></script>
+<script src="/assets/nav.js?v=2" defer></script>
 </body>
 </html>
 """

@@ -31,30 +31,36 @@ HEADER = """<header class="site-header">
   <div class="container nav">
     <a class="brand" href="/">Slide<span>Vault</span></a>
     <nav>
-      <a href="/#templates">Templates</a>
-      <a href="/templates/business/">Business</a>
-      <a href="/templates/marketing/">Marketing</a>
-      <a href="/templates/startup/">Startup</a>
-      <a href="/templates/sales/">Sales</a>
-      <a href="/templates/education/">Education</a>
-      <a href="/templates/healthcare/">Healthcare</a>
-      <a href="/blog/">Blog</a>
-      <div class="nav-drop">
-        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
-        <div class="nav-menu">
-          <a href="/tools/">All PPT Tools</a>
-          <a href="/tools/merge-ppt/">Merge PPT</a>
-          <a href="/tools/compress-ppt/">Compress PPT</a>
-          <a href="/tools/split-ppt/">Split PPT</a>
-          <a href="/tools/extract-images/">Extract Images</a>
-          <a href="/tools/remove-notes/">Remove Notes</a>
-          <a href="/tools/clean-metadata/">Clean Metadata</a>
-          <a href="/tools/ppt-stats/">PPT Stats</a>
-        </div>
-      </div>
-      <a href="/about/">About</a>
-      <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
-    </nav>
+          <a href="/#templates">Templates</a>
+          <div class="nav-drop">
+            <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">Categories <span class="caret">&#9662;</span></button>
+            <div class="nav-menu">
+              <a href="/#templates">All templates</a>
+              <a href="/templates/business/">Business</a>
+              <a href="/templates/marketing/">Marketing</a>
+              <a href="/templates/startup/">Startup</a>
+              <a href="/templates/sales/">Sales</a>
+              <a href="/templates/education/">Education</a>
+              <a href="/templates/healthcare/">Healthcare</a>
+            </div>
+          </div>
+          <a href="/blog/">Blog</a>
+          <div class="nav-drop">
+            <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
+            <div class="nav-menu">
+              <a href="/tools/">All PPT Tools</a>
+              <a href="/tools/merge-ppt/">Merge PPT</a>
+              <a href="/tools/compress-ppt/">Compress PPT</a>
+              <a href="/tools/split-ppt/">Split PPT</a>
+              <a href="/tools/extract-images/">Extract Images</a>
+              <a href="/tools/remove-notes/">Remove Notes</a>
+              <a href="/tools/clean-metadata/">Clean Metadata</a>
+              <a href="/tools/ppt-stats/">PPT Stats</a>
+            </div>
+          </div>
+          <a href="/about/">About</a>
+          <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
+        </nav>
   </div>
 </header>"""
 
@@ -83,7 +89,7 @@ FOOTER = """<footer class="site-footer">
   </div>
   <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
 </footer>
-<script src="/assets/nav.js?v=1" defer></script>"""
+<script src="/assets/nav.js?v=2" defer></script>"""
 
 POST_PAGE = """<!doctype html>
 <html lang="en">
@@ -104,7 +110,7 @@ POST_PAGE = """<!doctype html>
 <meta name="twitter:title" content="{title_html}" />
 <meta name="twitter:description" content="{desc_html}" />
 <meta name="twitter:image" content="{image}" />
-<link rel="stylesheet" href="/assets/style.css?v=10" />
+<link rel="stylesheet" href="/assets/style.css?v=11" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"BlogPosting","headline":"{json_title}","description":"{json_desc}","image":"{image}","datePublished":"{date}","dateModified":"{date}","author":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"publisher":{{"@type":"Organization","name":"Slide Vault","url":"{site}/"}},"mainEntityOfPage":{{"@type":"WebPage","@id":"{site}/blog/{slug}/"}}}}
@@ -147,7 +153,7 @@ INDEX_PAGE = """<!doctype html>
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="canonical" href="{site}/blog/" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css?v=10" />
+<link rel="stylesheet" href="/assets/style.css?v=11" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6730005742175239" crossorigin="anonymous"></script>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"Blog","name":"Slide Vault Blog","url":"{site}/blog/","description":"Presentation tips, pitch deck guides and report writing templates."}}

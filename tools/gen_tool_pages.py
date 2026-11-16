@@ -213,7 +213,7 @@ PAGE = """<!doctype html>
 <meta name="twitter:description" content="{desc}" />
 <meta name="twitter:image" content="{site}/assets/img/SaaS-Startup-Pitch-Deck-Template.jpg" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-<link rel="stylesheet" href="/assets/style.css?v=10" />
+<link rel="stylesheet" href="/assets/style.css?v=11" />
 <script type="application/ld+json">
 {faq_schema}
 </script>
@@ -264,30 +264,36 @@ PAGE = """<!doctype html>
   <div class="container nav">
     <a class="brand" href="/">Slide<span>Vault</span></a>
     <nav>
-      <a href="/#templates">Templates</a>
-      <a href="/templates/business/">Business</a>
-      <a href="/templates/marketing/">Marketing</a>
-      <a href="/templates/startup/">Startup</a>
-      <a href="/templates/sales/">Sales</a>
-      <a href="/templates/education/">Education</a>
-      <a href="/templates/healthcare/">Healthcare</a>
-      <a href="/blog/">Blog</a>
-      <div class="nav-drop">
-        <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
-        <div class="nav-menu">
-          <a href="/tools/">All PPT Tools</a>
-          <a href="/tools/merge-ppt/">Merge PPT</a>
-          <a href="/tools/compress-ppt/">Compress PPT</a>
-          <a href="/tools/split-ppt/">Split PPT</a>
-          <a href="/tools/extract-images/">Extract Images</a>
-          <a href="/tools/remove-notes/">Remove Notes</a>
-          <a href="/tools/clean-metadata/">Clean Metadata</a>
-          <a href="/tools/ppt-stats/">PPT Stats</a>
-        </div>
-      </div>
-      <a href="/about/">About</a>
-      <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
-    </nav>
+          <a href="/#templates">Templates</a>
+          <div class="nav-drop">
+            <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">Categories <span class="caret">&#9662;</span></button>
+            <div class="nav-menu">
+              <a href="/#templates">All templates</a>
+              <a href="/templates/business/">Business</a>
+              <a href="/templates/marketing/">Marketing</a>
+              <a href="/templates/startup/">Startup</a>
+              <a href="/templates/sales/">Sales</a>
+              <a href="/templates/education/">Education</a>
+              <a href="/templates/healthcare/">Healthcare</a>
+            </div>
+          </div>
+          <a href="/blog/">Blog</a>
+          <div class="nav-drop">
+            <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">PPT Tools <span class="caret">&#9662;</span></button>
+            <div class="nav-menu">
+              <a href="/tools/">All PPT Tools</a>
+              <a href="/tools/merge-ppt/">Merge PPT</a>
+              <a href="/tools/compress-ppt/">Compress PPT</a>
+              <a href="/tools/split-ppt/">Split PPT</a>
+              <a href="/tools/extract-images/">Extract Images</a>
+              <a href="/tools/remove-notes/">Remove Notes</a>
+              <a href="/tools/clean-metadata/">Clean Metadata</a>
+              <a href="/tools/ppt-stats/">PPT Stats</a>
+            </div>
+          </div>
+          <a href="/about/">About</a>
+          <a class="btn btn-ghost" href="/#subscribe">Subscribe</a>
+        </nav>
   </div>
 </header>
 <main class="container tool-prose" style="max-width:820px;">
@@ -368,7 +374,7 @@ PAGE = """<!doctype html>
 # hidden button in the DOM harmlessly)
 SCRIPTS = """<script src="/assets/tools/pptx-lite.js?v=1" defer></script>
 <script src="/assets/tools/{logic}.js?v=1" defer></script>
-<script src="/assets/nav.js?v=1" defer></script>"""
+<script src="/assets/nav.js?v=2" defer></script>"""
 
 
 def main():
