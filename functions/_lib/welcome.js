@@ -57,7 +57,7 @@ export function welcomeText(unsub, orgAddress, kitId) {
     "Everything on Slide Vault is free to download, fully editable and free for",
     "commercial use -- no signup walls, no watermarks.",
     "",
-    "Browse all 51 templates: " + SITE + "/#templates",
+    "Browse all free templates: " + SITE + "/#templates",
     "",
     ...(kit ? [
       "YOUR " + kit.name.toUpperCase() + " IS READY",
@@ -104,7 +104,7 @@ export function welcomeHtml(unsub, orgAddress, kitId) {
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${welcomeSubject(kitId)}</title></head>
 <body style="margin:0;padding:0;background:#eef1f6;">
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;">51 free .pptx templates and 7 privacy-first tools. No signup, no watermark.</div>
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Free .pptx templates and 7 privacy-first tools. No signup, no watermark.</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef1f6;padding:24px 0;">
 <tr><td align="center">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:92%;background:#ffffff;border-radius:12px;overflow:hidden;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">

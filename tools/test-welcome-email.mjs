@@ -18,11 +18,18 @@ const DIR = join(tmpdir(), `svtest-${process.pid}`);
 
 rmSync(DIR, { recursive: true, force: true });
 mkdirSync(join(DIR, "_lib"), { recursive: true });
-cpSync(join(ROOT, "functions", "_lib", "welcome.js"), join(DIR, "_lib", "welcome.mjs"));
+const { readFileSync, writeFileSync } = await import("node:fs");
+// welcome.js and subscribe.js both import the generated kit whitelist, so the
+// temp .mjs copies need kits.js copied too and every import path rewritten.
+cpSync(join(ROOT, "functions", "_lib", "kits.js"), join(DIR, "_lib", "kits.mjs"));
+writeFileSync(join(DIR, "_lib", "welcome.mjs"),
+  readFileSync(join(ROOT, "functions", "_lib", "welcome.js"), "utf8")
+    .replace('"./kits.js"', '"./kits.mjs"'));
 for (const name of ["subscribe.js", "unsubscribe.js"]) {
-  const src = await import("node:fs").then((fs) => fs.readFileSync(join(ROOT, "functions", name), "utf8"));
-  await import("node:fs").then((fs) =>
-    fs.writeFileSync(join(DIR, name.replace(/\.js$/, ".mjs")), src.replace('"./_lib/welcome.js"', '"./_lib/welcome.mjs"')));
+  const src = readFileSync(join(ROOT, "functions", name), "utf8");
+  writeFileSync(join(DIR, name.replace(/\.js$/, ".mjs")), src
+    .replace('"./_lib/welcome.js"', '"./_lib/welcome.mjs"')
+    .replace('"./_lib/kits.js"', '"./_lib/kits.mjs"'));
 }
 
 const calls = [];
@@ -73,7 +80,7 @@ const check = (cond, msg) => { console.log((cond ? "  ✓ " : "  ✗ ") + msg); 
   const body = await res.text();
   check(res.status === 200, "status 200");
   check(body.includes("Check your inbox"), "success page mentions the inbox");
-  check(body.includes("/#templates") && body.includes("/tools/"), "success page offers next steps");
+  check(body.includes("/#kits") && body.includes("/tools/"), "success page offers next steps");
   check(calls.length === 1 && calls[0].url.includes("api.brevo.com/v3/smtp/email"), "one Brevo call to smtp/email");
   const payload = JSON.parse(calls[0].init.body);
   check(payload.to[0].email === "ada@example.com", "email lowercased + trimmed");
