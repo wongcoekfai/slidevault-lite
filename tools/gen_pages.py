@@ -34,6 +34,27 @@ IMG_EXT = (".jpg", ".jpeg", ".png", ".webp")
 MAX_WIDTH = 1600
 
 
+def affiliate_slots():
+    """Single source of truth: site_config.json. Regenerated pages never
+    reintroduce a broken YOUR_... tracking link again."""
+    try:
+        with open(os.path.join(ROOT, "site_config.json"), encoding="utf-8") as f:
+            cfg = json.load(f).get("affiliate", {})
+    except (OSError, ValueError):
+        cfg = {}
+    canva = (cfg.get("canva_url") or "").strip()
+    envato = (cfg.get("envato_url") or "").strip()
+    return {
+        "aff_canva_url": canva or "https://www.canva.com/",
+        "aff_envato_url": envato or "https://elements.envato.com/",
+        "aff_canva_rel": "sponsored noopener" if canva else "noopener",
+        "aff_envato_rel": "sponsored noopener" if envato else "noopener",
+        "aff_hint": ("As an affiliate we may earn a commission at no extra cost to you."
+                     if (canva or envato) else
+                     "These are optional third-party tools. We do not earn a commission from these links."),
+    }
+
+
 # ---------------------------------------------------------------- utilities
 
 def natural_key(s):
@@ -240,10 +261,10 @@ PAGE = """<!doctype html>
     <h2>Finish your deck faster</h2>
     <p>Free template + the right tools = done in minutes. These are the tools we actually use:</p>
     <div class="aff-row">
-      <a class="aff-btn" href="https://www.canva.com/?YOUR_CANVA_AFF_PARAMS" target="_blank" rel="sponsored noopener">Try Canva Pro<span>design anywhere</span></a>
-      <a class="aff-btn alt" href="https://1.envato.market/YOUR_ENVATO_AFF_ID" target="_blank" rel="sponsored noopener">Millions of assets on Envato<span>photos, fonts, video</span></a>
+      <a class="aff-btn" href="{aff_canva_url}" target="_blank" rel="{aff_canva_rel}">Try Canva Pro<span>design anywhere</span></a>
+      <a class="aff-btn alt" href="{aff_envato_url}" target="_blank" rel="{aff_envato_rel}">Millions of assets on Envato<span>photos, fonts, video</span></a>
     </div>
-    <p class="hint">As an affiliate we may earn a commission at no extra cost to you.</p>
+    <p class="hint">{aff_hint}</p>
   </section>
 
   <section class="lead-magnet" id="subscribe">
@@ -342,7 +363,7 @@ PAGE = """<!doctype html>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
       <a href="/license/">License</a>
-      <a href="https://tools.slidevaulte.com/">Drainage Calculators</a>
+      <a href="https://tools.slidevaulte.com/" rel="nofollow">Drainage Calculators</a>
     </div>
   </div>
   <div class="container"><p class="hint copyright">&copy; 2026 SLIDE VAULT &middot; Hosted statically on Cloudflare Pages.</p></div>
@@ -1133,6 +1154,7 @@ def main():
                             for q, a in faq_pairs(it["title"])]}, ensure_ascii=False)
 
         html = PAGE.format(
+            **affiliate_slots(),
             title=it["title"], seo=it["seo"], page_title=(it["seo"] + " | Slide Vault")
                      if len(it["seo"]) <= 52 else it["seo"],
             desc=it["desc"], body=it["body"],

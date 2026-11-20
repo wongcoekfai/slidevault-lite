@@ -11,6 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Rebuild homepage index and apply site config
+        run: |
+          python3 tools/fix_home.py
+          python3 tools/apply_config.py
+          python3 tools/apply_config.py --check
+
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:

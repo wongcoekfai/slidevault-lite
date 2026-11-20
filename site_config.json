@@ -1,0 +1,11 @@
+{
+  "_readme": "Site-wide IDs live here only. Fill the values, then run: python3 tools/apply_config.py (and commit). Empty affiliate values ship plain official links instead of broken tracking URLs; an empty analytics token ships no beacon script.",
+  "affiliate": {
+    "canva_url": "",
+    "envato_url": ""
+  },
+  "analytics": {
+    "cloudflare_web_analytics_token": "",
+    "google_site_verification": ""
+  }
+}

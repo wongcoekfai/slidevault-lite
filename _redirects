@@ -2,5 +2,6 @@
 # functions/ppt_template/[[path]].js (WP slugs were Capitalized; :splat
 # preserves case and sent those 301s to 404s — the function lowercases first).
 
+# www -> apex is handled by functions/_middleware.js; Pages _redirects is path-only.
 # Old WordPress utility pages -> homepage sections
 /shop-products/  /#templates  301
