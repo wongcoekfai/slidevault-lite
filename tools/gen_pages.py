@@ -431,6 +431,10 @@ CATS = [
 
 CSS_VER = "11"
 
+# Real cumulative download counts per deck (measured from the /downloads JSON API,
+# refreshed 2026-11-25). Drives the popularity order of "Related templates".
+DL_COUNTS = {'Academic-Defense-Template': 143, 'Professional-Business-Presentation-Template': 78, 'AETHER-Financial-Consulting-Template-1': 74, 'NOVA-Medical-Healthcare-Template': 73, 'Annual-Report-Template': 65, 'Professional-Corporate-Presentation-Template': 54, 'Healthcare-Presentation-Template': 53, 'Modern-Tech-Enterprise-App-PPT-Template': 51, 'Tech-Design-Review-Template': 45, 'Intelligent-Enterprise-Digital-PPT-Template-2': 44, 'SaaS-Startup-Pitch-Deck-Template': 37, 'Clinical-Research-Template': 35, 'Training-Course-Template': 33, 'Annual-Summary-PPT-Template': 32, 'Pitch-Deck-Template': 31, 'Sales-Proposal-Template': 30, 'Monthly-Business-Review-Template': 29, 'VERITAS-Real-Estate-Property-Template': 28, 'Project-Proposal-Template': 28, 'Professional-Marketing-Report-Template': 28, 'UX-Research-Template': 27, 'SynergyOS-Business-PPT-Template': 27, 'Light-Startup-Pitch-Deck-Template': 27, 'Professional-Agency-Proposal-Template': 26, 'Digital-Marketing-Advertising-Agency-Premium-Template': 26, 'Legal-Compliance-Template': 24, 'Creative-Portfolio-Template': 23, 'Product-Launch-Template': 22, 'Business-Plan-Template': 22, 'Workshop-Presentation-Template': 21, 'Lecture-Deck-Template': 21, 'All-Hands-Template': 21, 'Nonprofit-Program-Template': 20, 'Investor-Update-Template': 20, 'Lesson-Plan-Template': 19, 'Hospital-Annual-Report-Template': 19, 'Real-Estate-Presentation-Template': 18, 'Marketing-Plan-Template': 18, 'Event-Plan-Template': 18, 'Brand-Launch-Template': 18, 'Sales-Performance-Template': 17, 'PRD-Review-Template': 17, 'Competitive-Analysis-Template': 17, 'Classroom-Quiz-Template': 16, 'Pharma-Launch-Template': 15, 'OKR-Planning-Template': 15, 'Media-Kit-Template': 15, 'Recruiting-Presentation-Template': 14, 'History-Timeline-Template': 14, 'Course-Syllabus-Template': 11, 'Weekly-Status-Update-Template': 10, 'Seed-Pitch-Deck-Template': 9, 'Department-Monthly-Report-Template': 9, 'Demo-Day-Pitch-Deck-Template': 9, 'Training-Workshop-Template': 8, 'Product-Pitch-Deck-Template': 8, 'Pricing-Proposal-Template': 8, 'Board-Meeting-Pack-Template': 8, 'OKR-Quarterly-Review-Template': 7, 'Client-Onboarding-Deck-Template': 7, 'Channel-Partnership-Template': 6, 'Sales-QBR-Template': 5}
+
 # ---------------------------------------------------------------- detail-page copy
 # Per-category editorial blocks. AdSense rejects sites whose template pages are
 # 200-word download shells with identical boilerplate, so every detail page gets
@@ -1117,10 +1121,13 @@ def main():
     by_slug = {t["slug"]: t for t in items}
 
     for it in items:
-        related = [t for t in items if t["cat"] == it["cat"] and t["slug"] != it["slug"]]
+        _pop = lambda t: DL_COUNTS.get(t["file"].rsplit(".", 1)[0], 0)
+        related = sorted([t for t in items if t["cat"] == it["cat"] and t["slug"] != it["slug"]],
+                         key=_pop, reverse=True)
         if len(related) < 3:
-            extra = [t for t in items
-                     if t["slug"] not in [r["slug"] for r in related] and t["slug"] != it["slug"]]
+            extra = sorted([t for t in items
+                     if t["slug"] not in [r["slug"] for r in related] and t["slug"] != it["slug"]],
+                     key=_pop, reverse=True)
             related += extra
         related = related[:3]
 

@@ -39,6 +39,10 @@ DECKS = [
     ("Training-Workshop-Template", "TRAINING WORKSHOP TEMPLATE", 12, ["Agenda", "Demo", "Hands-on", "30-Day Plan"]),
     ("History-Timeline-Template", "HISTORY TIMELINE TEMPLATE", 12, ["Timeline", "Turning Points", "Figures", "Legacy"]),
     ("Classroom-Quiz-Template", "CLASSROOM QUIZ TEMPLATE", 12, ["Warm-up", "Questions", "Scoreboard", "Reveal"]),
+    ("Proposal-Defense-Template", "PROPOSAL DEFENSE TEMPLATE", 12, ["Question", "Gap", "Method", "Timeline"]),
+    ("Midterm-Review-Template", "MIDTERM REVIEW TEMPLATE", 12, ["Scorecard", "Progress", "Risks", "Asks"]),
+    ("Literature-Review-Template", "LITERATURE REVIEW TEMPLATE", 12, ["Themes", "Evidence", "Gap", "Synthesis"]),
+    ("Nursing-Handoff-Template", "NURSING HANDOFF TEMPLATE", 12, ["SBAR", "Panel", "Tasks", "Watch List"]),
 ]
 
 
