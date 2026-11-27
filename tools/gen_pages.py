@@ -195,7 +195,6 @@ PAGE = """<!doctype html>
   <div class="container nav">
     <a class="brand" href="/">Slide<span>Vault</span></a>
     <nav>
-          <a href="/#templates">Templates</a>
           <div class="nav-drop">
             <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">Categories <span class="caret">&#9662;</span></button>
             <div class="nav-menu">
@@ -904,7 +903,6 @@ CAT_PAGE = """<!doctype html>
   <div class="container nav">
     <a class="brand" href="/">Slide<span>Vault</span></a>
         <nav>
-              <a href="/#templates">Templates</a>
               <div class="nav-drop">
                 <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false">Categories <span class="caret">&#9662;</span></button>
                 <div class="nav-menu">
